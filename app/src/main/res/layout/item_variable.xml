@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:id="@+id/containeritemlocal">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/txtnombrevariable"
+            android:text="Variable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="false"
+            android:padding="3dp"
+            android:textColor="@android:color/darker_gray"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
+    </LinearLayout>
+</FrameLayout>

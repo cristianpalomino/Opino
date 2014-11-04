@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    android:background="@color/color_celeste">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_opino"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="50dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="20"
+            android:hint="Usuario"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/edtusuario"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/edittext_registro"
+            android:padding="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="PATRICIA.GARCIA@OPINO.PE" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:imeOptions="actionDone"
+            android:background="@drawable/edittext_registro"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:maxLines="20"
+            android:layout_marginBottom="10dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/edtpassword"
+            android:text="a" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Entrar"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="@drawable/holo_flat_button_verde_claro"
+            android:id="@+id/btnentrar" />
+    </LinearLayout>
+</FrameLayout>

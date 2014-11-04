@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    android:background="@android:color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_marginBottom="55dp">
+
+        <LinearLayout
+            android:id="@+id/containerencuesta"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"></LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enviar"
+        android:id="@+id/btnenviar"
+        android:background="@drawable/holo_flat_button_verde_claro"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:layout_margin="5dp"
+        android:layout_gravity="left|bottom" />
+</FrameLayout>

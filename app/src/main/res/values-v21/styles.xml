@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Opino" parent="android:Theme.Material.Light">
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_opino</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Opino</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Opino</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Opino</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Opino</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Opino</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_opino</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_opino</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Opino</item>
+    </style>
+
+    <style name="Dialog_Animation_UP_DOWN">
+        <item name="android:windowEnterAnimation">@anim/abajo_arriba_b</item>
+        <item name="android:windowExitAnimation">@anim/arriba_abajo_b</item>
+    </style>
+
+    <style name="Dialog_Animation_DOWN_UP">
+        <item name="android:windowEnterAnimation">@anim/abajo_arriba</item>
+        <item name="android:windowExitAnimation">@anim/arriba_abajo</item>
+    </style>
+
+
+    <style name="ActionBar.Solid.Opino" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@drawable/ab_solid_opino</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_opino</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_opino</item>
+        <item name="progressBarStyle">@style/ProgressBar.Opino</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Opino" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">@drawable/ab_transparent_opino</item>
+        <item name="progressBarStyle">@style/ProgressBar.Opino</item>
+    </style>
+
+    <style name="PopupMenu.Opino" parent="@style/Widget.AppCompat.Light.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_opino</item>
+    </style>
+
+    <style name="DropDownListView.Opino" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_opino</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Opino" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_opino</item>
+    </style>
+
+    <style name="DropDownNav.Opino" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_opino</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_opino</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_opino</item>
+    </style>
+
+    <style name="ProgressBar.Opino" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_opino</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.Opino" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_opino</item>
+    </style>
+
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Opino.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Opino</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Opino</item>
+    </style>
+
+</resources>

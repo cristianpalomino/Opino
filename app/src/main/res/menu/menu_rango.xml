@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_rango_1"
+        android:showAsAction="ifRoom|withText"
+        android:title="1"
+        android:visible="true"/>
+    <item
+        android:id="@+id/menu_rango_2"
+        android:showAsAction="ifRoom|withText"
+        android:title="2"
+        android:visible="true"/>
+    <item
+        android:id="@+id/menu_rango_3"
+        android:showAsAction="ifRoom|withText"
+        android:title="3"
+        android:visible="true"/>
+    <item
+        android:id="@+id/menu_rango_4"
+        android:showAsAction="ifRoom|withText"
+        android:title="4"
+        android:visible="true"/>
+    <item
+        android:id="@+id/menu_rango_5"
+        android:showAsAction="ifRoom|withText"
+        android:title="5"
+        android:visible="true"/>
+</menu>
