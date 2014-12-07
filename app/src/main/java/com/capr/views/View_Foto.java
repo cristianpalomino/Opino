@@ -1,6 +1,9 @@
 package com.capr.views;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -8,12 +11,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.capr.beans.Foto_DTO;
 import com.capr.beans.Imagen_DTO;
 import com.capr.beans.Respuesta_DTO;
 import com.capr.dialog.Dialog_Foto;
 import com.capr.opino.R;
+import com.nhaarman.supertooltips.ToolTip;
+import com.nhaarman.supertooltips.ToolTipRelativeLayout;
+import com.nhaarman.supertooltips.ToolTipView;
 
 import org.json.JSONObject;
 
@@ -44,6 +52,7 @@ public class View_Foto extends View_Opino implements PopupMenu.OnMenuItemClickLi
     @Override
     protected void initView() {
         super.initView();
+
         ImageButton imageButton = (ImageButton)getView().findViewById(R.id.imageButton);
         imageButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -52,6 +61,14 @@ public class View_Foto extends View_Opino implements PopupMenu.OnMenuItemClickLi
                 popupMenu.inflate(R.menu.menu_foto);
                 popupMenu.setOnMenuItemClickListener(View_Foto.this);
                 popupMenu.show();
+            }
+        });
+
+        imageButton.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getOpino(),foto_dto.getRespuesta_dto().getVariable_nombre(),Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
     }

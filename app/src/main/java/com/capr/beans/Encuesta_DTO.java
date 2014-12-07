@@ -36,6 +36,8 @@ public class Encuesta_DTO {
     private ArrayList<Sub_Comentario_DTO> sub_comentario_dtos = new ArrayList<Sub_Comentario_DTO>();
     private ArrayList<Rango_DTO> rango_dtos = new ArrayList<Rango_DTO>();
     private Timer_DTO timer_dto;
+    private Atencion_DTO atencion_dto;
+    private Directo_Indirecto_DTO directo_indirecto_dto;
 
     public Encuesta_DTO() {
     }
@@ -51,53 +53,53 @@ public class Encuesta_DTO {
     public JSONObject getEncuesta_json() {
         JSONObject jsonObject = new JSONObject();
         try {
-            if(getEncuesta_recurso_id().endsWith("null")){
-                jsonObject.put("recurso_id",JSONObject.NULL);
-            }else{
-                jsonObject.put("recurso_id",getEncuesta_recurso_id());
+            if (getEncuesta_recurso_id().endsWith("null")) {
+                jsonObject.put("recurso_id", JSONObject.NULL);
+            } else {
+                jsonObject.put("recurso_id", getEncuesta_recurso_id());
             }
-            if(getEncuesta_campana_id().endsWith("null")){
-                jsonObject.put("campana_id",JSONObject.NULL);
-            }else{
-                jsonObject.put("campana_id",getEncuesta_campana_id());
+            if (getEncuesta_campana_id().endsWith("null")) {
+                jsonObject.put("campana_id", JSONObject.NULL);
+            } else {
+                jsonObject.put("campana_id", getEncuesta_campana_id());
             }
-            if(getEncuesta_descripcion().endsWith("null")){
-                jsonObject.put("descripcion",JSONObject.NULL);
-            }else{
-                jsonObject.put("descripcion",getEncuesta_descripcion());
+            if (getEncuesta_descripcion().endsWith("null")) {
+                jsonObject.put("descripcion", JSONObject.NULL);
+            } else {
+                jsonObject.put("descripcion", getEncuesta_descripcion());
             }
 
             JSONArray jsonArray = new JSONArray();
 
-            if(getFoto_dto() != null){
+            if (getFoto_dto() != null) {
                 jsonArray.put(getFoto_dto().getRespuesta_dto().getRespuesta_json());
             }
 
-            if(getSi_no_dto() != null){
+            if (getSi_no_dto() != null) {
                 for (int i = 0; i < getSi_no_dto().size(); i++) {
                     jsonArray.put(getSi_no_dto().get(i).getRespuesta_dto().getRespuesta_json());
                 }
             }
 
-            if(getComentario_dto() != null){
+            if (getComentario_dto() != null) {
                 for (int i = 0; i < getComentario_dto().size(); i++) {
                     jsonArray.put(getComentario_dto().get(i).getRespuesta_dto().getRespuesta_json());
                 }
             }
 
-            if(getSub_comentario_dto() != null){
+            if (getSub_comentario_dto() != null) {
                 for (int i = 0; i < getSub_comentario_dto().size(); i++) {
                     jsonArray.put(getSub_comentario_dto().get(i).getRespuesta_dto().getRespuesta_json());
                 }
             }
 
-            if(getRango_dto() != null){
+            if (getRango_dto() != null) {
                 for (int i = 0; i < getRango_dto().size(); i++) {
                     jsonArray.put(getRango_dto().get(i).getRespuesta_dto().getRespuesta_json());
                 }
             }
 
-            jsonObject.put("respuestas",jsonArray);
+            jsonObject.put("respuestas", jsonArray);
 
             return jsonObject;
         } catch (JSONException e) {
@@ -179,10 +181,25 @@ public class Encuesta_DTO {
         return timer_dto;
     }
 
+    public void setAtencion_dto(Atencion_DTO atencion_dto) {
+        this.atencion_dto = atencion_dto;
+    }
+
+    public Atencion_DTO getAtencion_dto() {
+        return atencion_dto;
+    }
+
+    public Directo_Indirecto_DTO getDirecto_indirecto_dto() {
+        return directo_indirecto_dto;
+    }
+
+    public void setDirecto_indirecto_dto(Directo_Indirecto_DTO directo_indirecto_dto) {
+        this.directo_indirecto_dto = directo_indirecto_dto;
+    }
+
     /**
      * Getter's and Setter's de las View's Encuestas
      */
-
 
 
     public Foto_DTO getFoto_dto() {
@@ -225,19 +242,19 @@ public class Encuesta_DTO {
         this.rango_dtos = rango_dto;
     }
 
-    public void addRango_DTO(Rango_DTO rango_dto){
+    public void addRango_DTO(Rango_DTO rango_dto) {
         rango_dtos.add(rango_dto);
     }
 
-    public void addSi_No_DTO(Si_No_DTO si_no_dto){
+    public void addSi_No_DTO(Si_No_DTO si_no_dto) {
         si_no_dtos.add(si_no_dto);
     }
 
-    public void addComentario_DTO(Comentario_DTO comentario_dto){
+    public void addComentario_DTO(Comentario_DTO comentario_dto) {
         comentario_dtos.add(comentario_dto);
     }
 
-    public void addSub_Comentario_DTO(Sub_Comentario_DTO sub_comentario_dto){
+    public void addSub_Comentario_DTO(Sub_Comentario_DTO sub_comentario_dto) {
         sub_comentario_dtos.add(sub_comentario_dto);
     }
 }

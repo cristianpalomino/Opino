@@ -29,24 +29,24 @@ public class View_Encuesta extends View_Opino {
     private LinearLayout container_sub_comentario;
     private FrameLayout container_general;
 
-    public View_Encuesta(Context context,Encuesta_DTO encuesta_dto) {
+    public View_Encuesta(Context context, Encuesta_DTO encuesta_dto) {
         super(context, R.layout.item_encuesta);
-        this.encuesta_dto=encuesta_dto;
+        this.encuesta_dto = encuesta_dto;
     }
 
-    public View_Encuesta(Context context, AttributeSet attrs, int defStyleAttr,Encuesta_DTO encuesta_dto) {
+    public View_Encuesta(Context context, AttributeSet attrs, int defStyleAttr, Encuesta_DTO encuesta_dto) {
         super(context, attrs, defStyleAttr, R.layout.item_encuesta);
-        this.encuesta_dto=encuesta_dto;
+        this.encuesta_dto = encuesta_dto;
     }
 
-    public View_Encuesta(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes,Encuesta_DTO encuesta_dto) {
+    public View_Encuesta(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes, Encuesta_DTO encuesta_dto) {
         super(context, attrs, defStyleAttr, defStyleRes, R.layout.item_encuesta);
-        this.encuesta_dto=encuesta_dto;
+        this.encuesta_dto = encuesta_dto;
     }
 
-    public View_Encuesta(Context context, AttributeSet attrs,Encuesta_DTO encuesta_dto) {
+    public View_Encuesta(Context context, AttributeSet attrs, Encuesta_DTO encuesta_dto) {
         super(context, attrs, R.layout.item_encuesta);
-        this.encuesta_dto=encuesta_dto;
+        this.encuesta_dto = encuesta_dto;
     }
 
 
@@ -68,57 +68,63 @@ public class View_Encuesta extends View_Opino {
         nombreencuesta.setText(encuesta_dto.getEncuesta_descripcion());
         nombreencuesta.setTypeface(Util_Fonts.setPNASemiBold(getContext()));
 
-        String variable = getOpino().getVariable_dto().getVariable_nombre();
-        if (!variable.equals("Calidad") && !variable.equals("Interacción")) {
-            if (encuesta_dto.getFoto_dto() != null) {
-                view_foto.setFoto_dto(encuesta_dto.getFoto_dto());
-                view_foto.setVisibility(View.VISIBLE);
-            }
+        if (encuesta_dto.getFoto_dto() != null) {
+            view_foto.setFoto_dto(encuesta_dto.getFoto_dto());
+            view_foto.setVisibility(View.VISIBLE);
+        }
 
-            if (encuesta_dto.getRango_dto() != null) {
-                for (int i = 0; i < encuesta_dto.getRango_dto().size(); i++) {
-                    View_Rango view = new View_Rango(getOpino());
-                    view.setRango_dto(encuesta_dto.getRango_dto().get(i));
-                    container_rango.addView(view);
-                }
+        if (encuesta_dto.getRango_dto() != null) {
+            for (int i = 0; i < encuesta_dto.getRango_dto().size(); i++) {
+                View_Rango view = new View_Rango(getOpino());
+                view.setRango_dto(encuesta_dto.getRango_dto().get(i));
+                container_rango.addView(view);
             }
+        }
 
-            if (encuesta_dto.getSi_no_dto() != null) {
-                for (int i = 0; i < encuesta_dto.getSi_no_dto().size(); i++) {
-                    View_Si_No view = new View_Si_No(getOpino());
-                    view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i));
-                    container_switch.addView(view);
-                }
+        if (encuesta_dto.getSi_no_dto() != null) {
+            for (int i = 0; i < encuesta_dto.getSi_no_dto().size(); i++) {
+                View_Si_No view = new View_Si_No(getOpino());
+                view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i));
+                container_switch.addView(view);
             }
+        }
 
-            if (encuesta_dto.getComentario_dto() != null) {
-                for (int i = 0; i < encuesta_dto.getComentario_dto().size(); i++) {
-                    View_Comentario view = new View_Comentario(getOpino());
-                    view.setComentario_dto(encuesta_dto.getComentario_dto().get(i));
-                    container_comentario.addView(view);
-                }
+        if (encuesta_dto.getComentario_dto() != null) {
+            for (int i = 0; i < encuesta_dto.getComentario_dto().size(); i++) {
+                View_Comentario view = new View_Comentario(getOpino());
+                view.setComentario_dto(encuesta_dto.getComentario_dto().get(i));
+                container_comentario.addView(view);
             }
+        }
 
-            if (encuesta_dto.getSub_comentario_dto() != null) {
-                for (int i = 0; i < encuesta_dto.getSub_comentario_dto().size(); i++) {
-                    View_Sub_Comentario view = new View_Sub_Comentario(getOpino());
-                    view.setSub_comentario_dto(encuesta_dto.getSub_comentario_dto().get(i));
-                    container_sub_comentario.addView(view);
-                }
+        if (encuesta_dto.getSub_comentario_dto() != null) {
+            for (int i = 0; i < encuesta_dto.getSub_comentario_dto().size(); i++) {
+                View_Sub_Comentario view = new View_Sub_Comentario(getOpino());
+                view.setSub_comentario_dto(encuesta_dto.getSub_comentario_dto().get(i));
+                container_sub_comentario.addView(view);
             }
-        } else if (variable.equals("Calidad")) {
-            if (encuesta_dto.getSi_no_dto() != null) {
-                for (int i = 0; i < encuesta_dto.getSi_no_dto().size(); i++) {
-                    View_Si_No view = new View_Si_No(getOpino());
-                    view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i));
-                    container_general.addView(view);
-                }
+        }
+        if (encuesta_dto.getSi_no_dto() != null) {
+            for (int i = 0; i < encuesta_dto.getSi_no_dto().size(); i++) {
+                View_Si_No view = new View_Si_No(getOpino());
+                view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i));
+                container_general.addView(view);
             }
-            if (encuesta_dto.getTimer_dto() != null){
-                View_Timer view_timer = new View_Timer(getOpino());
-                view_timer.setTimer_dto(encuesta_dto.getTimer_dto());
-                container_general.addView(view_timer);
-            }
+        }
+        if (encuesta_dto.getTimer_dto() != null) {
+            View_Timer view_timer = new View_Timer(getOpino());
+            view_timer.setTimer_dto(encuesta_dto.getTimer_dto());
+            container_general.addView(view_timer);
+        }
+        if (encuesta_dto.getAtencion_dto() != null) {
+            View_Atencion view_atencion = new View_Atencion(getOpino());
+            view_atencion.setatencion_dto(encuesta_dto.getAtencion_dto());
+            container_general.addView(view_atencion);
+        }
+        if (encuesta_dto.getDirecto_indirecto_dto() != null) {
+            View_Directo_Indirecto view_directo_indirecto = new View_Directo_Indirecto(getOpino());
+            view_directo_indirecto.setDirecto_Indirecto_DTO(encuesta_dto.getDirecto_indirecto_dto());
+            container_general.addView(view_directo_indirecto);
         }
     }
 

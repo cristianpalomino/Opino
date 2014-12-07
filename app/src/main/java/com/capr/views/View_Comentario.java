@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.capr.beans.Comentario_DTO;
 import com.capr.opino.R;
@@ -44,6 +45,14 @@ public class View_Comentario extends View_Opino implements TextWatcher {
         edtcomentario = (EditText) getView().findViewById(R.id.edtcomentario);
         edtcomentario.setTypeface(Util_Fonts.setPNALight(getOpino()));
         edtcomentario.addTextChangedListener(this);
+
+        edtcomentario.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getOpino(),comentario_dto.getRespuesta_dto().getVariable_nombre(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     public Comentario_DTO getComentario_dto() {

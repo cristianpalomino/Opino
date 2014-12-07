@@ -1,6 +1,7 @@
 package com.capr.views;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.widget.PopupMenu;
@@ -8,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.capr.beans.Respuesta_DTO;
 import com.capr.beans.Timer_DTO;
@@ -24,8 +26,9 @@ public class View_Timer extends View_Opino {
 
     private Timer_DTO timer_dto;
     private TextView txttimer;
-
-    long startTime = 0;
+    int time = 0;
+    Timer t;
+    TimerTask task;
 
     public View_Timer(Context context) {
         super(context, R.layout.view_timer);
@@ -50,22 +53,31 @@ public class View_Timer extends View_Opino {
         txttimer = (TextView) getView().findViewById(R.id.txttimer);
         txttimer.setTypeface(Util_Fonts.setPNASemiBold(getContext()));
 
-        final Handler timerHandler = new Handler();
-        Runnable timerRunnable = new Runnable() {
-
+        Timer t = new Timer();
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                long millis = System.currentTimeMillis() - startTime;
-                int seconds = (int) (millis / 1000);
-                int minutes = seconds / 60;
-                seconds = seconds % 60;
-                txttimer.setText(String.format("%d:%02d", minutes, seconds));
-                timerHandler.postDelayed(this, 500);
+                getOpino().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        time += 1;
+                        int minutes = (time % 3600) / 60;
+                        int seconds = time % 60;
+                        String timeString = String.format("%02d:%02d", minutes, seconds);
+                        txttimer.setText(timeString);
+                    }
+                });
             }
         };
+        t.scheduleAtFixedRate(task, 0, 1000);
 
-        startTime = System.currentTimeMillis();
-        timerHandler.postDelayed(timerRunnable, 0);
+        txttimer.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getOpino(),timer_dto.getRespuesta_dto().getVariable_nombre(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     public Timer_DTO getTimer_dto() {

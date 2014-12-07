@@ -14,6 +14,7 @@ public class Opino_WS {
     public static final String WS_OBTENER_INFORMACION = "http://dev-opino-websaurio-com-w2e6bowtidfy.runscope.net/api/campanas/locales/%/seccion?seccion=#";
     public static final String WS_OBTENER_VARIABLES = "http://dev-opino-websaurio-com-w2e6bowtidfy.runscope.net/api/variables/";
     public static final String WS_SUBIR_INFORMACION = "http://dev-opino-websaurio-com-w2e6bowtidfy.runscope.net/api/campanas/locales/%/responder?seccion=#";
+    public static final String WS_UPDATE_LOCATION = "http://dev-opino-websaurio-com-w2e6bowtidfy.runscope.net/api/locales/%";
     public static final String WS_SUBIR_IMAGENES = "http://dev-opino-websaurio-com-w2e6bowtidfy.runscope.net/api/campanas/locales/%/responder/imagen";
 
 }

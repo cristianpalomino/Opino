@@ -2,13 +2,19 @@ package com.capr.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.capr.beans.Imagen_DTO;
+import com.capr.opino.Opino;
 import com.capr.opino.R;
 import com.squareup.picasso.Picasso;
 
@@ -54,6 +60,25 @@ public class Dialog_Foto extends AlertDialog {
         setView(view);
 
         ImageView imgfoto = (ImageView)view.findViewById(R.id.imgfoto);
-        Picasso.with(getContext()).load("file://" + Uri.parse(imagen_dto.getImagenData())).into(imgfoto);
+
+        Uri uri = Uri.parse(imagen_dto.getImagenData());
+        Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
+        imgfoto.setImageBitmap(bitmap);
+    }
+
+    public String getRealPathFromURI(Uri contentUri)
+    {
+        try
+        {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            Cursor cursor = ((Opino)getContext()).managedQuery(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        catch (Exception e)
+        {
+            return contentUri.getPath();
+        }
     }
 }

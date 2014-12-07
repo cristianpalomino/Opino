@@ -1,44 +1,38 @@
 package com.capr.views;
 
 import android.content.Context;
-import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.capr.beans.Imagen_DTO;
-import com.capr.beans.Si_No_DTO;
-import com.capr.dialog.Dialog_Foto;
+import com.capr.beans.Directo_Indirecto_DTO;
 import com.capr.opino.R;
 import com.capr.utils.Util_Fonts;
 
 /**
  * Created by Gantz on 21/10/14.
  */
-public class View_Si_No extends View_Opino implements CompoundButton.OnCheckedChangeListener {
+public class View_Directo_Indirecto extends View_Opino implements CompoundButton.OnCheckedChangeListener {
 
-    private Si_No_DTO si_no_dto;
+    private Directo_Indirecto_DTO directo_indirecto_dto;
 
 
-    public View_Si_No(Context context) {
+    public View_Directo_Indirecto(Context context) {
         super(context, R.layout.view_si_no);
     }
 
-    public View_Si_No(Context context, AttributeSet attrs, int defStyleAttr) {
+    public View_Directo_Indirecto(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr, R.layout.view_si_no);
     }
 
-    public View_Si_No(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public View_Directo_Indirecto(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes, R.layout.view_si_no);
     }
 
-    public View_Si_No(Context context, AttributeSet attrs) {
+    public View_Directo_Indirecto(Context context, AttributeSet attrs) {
         super(context, attrs, R.layout.view_si_no);
     }
 
@@ -56,18 +50,18 @@ public class View_Si_No extends View_Opino implements CompoundButton.OnCheckedCh
         switch_si_no.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(getOpino(),si_no_dto.getRespuesta_dto().getVariable_nombre(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getOpino(), directo_indirecto_dto.getRespuesta_dto().getVariable_nombre(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
     }
 
-    public Si_No_DTO getSi_no_dto() {
-        return si_no_dto;
+    public Directo_Indirecto_DTO getDirecto_Indirecto_DTO() {
+        return directo_indirecto_dto;
     }
 
-    public void setSi_no_dto(Si_No_DTO si_no_dto) {
-        this.si_no_dto = si_no_dto;
+    public void setDirecto_Indirecto_DTO(Directo_Indirecto_DTO directo_indirecto_dto) {
+        this.directo_indirecto_dto = directo_indirecto_dto;
     }
 
     /**
@@ -80,10 +74,10 @@ public class View_Si_No extends View_Opino implements CompoundButton.OnCheckedCh
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
             ((TextView)getView().findViewById(R.id.txtsino)).setText("Si");
-            getSi_no_dto().getRespuesta_dto().setRespuesta_string("1");
+            getDirecto_Indirecto_DTO().getRespuesta_dto().setRespuesta_string("1");
         } else {
             ((TextView)getView().findViewById(R.id.txtsino)).setText("No");
-            getSi_no_dto().getRespuesta_dto().setRespuesta_string("0");
+            getDirecto_Indirecto_DTO().getRespuesta_dto().setRespuesta_string("0");
         }
     }
 }

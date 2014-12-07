@@ -13,14 +13,14 @@ public class Local_DTO {
     private String local_direccion;
     private String local_distrito;
     private String local_canal;
-    private Double local_latitud;
-    private Double local_longitud;
+    private String local_latitud;
+    private String local_longitud;
     private JSONObject local_json;
 
     public Local_DTO() {
     }
 
-    public Local_DTO(String local_id, JSONObject local_json, Double local_longitud, Double local_latitud, String local_canal, String local_distrito, String local_direccion, String local_nombre) {
+    public Local_DTO(String local_id, JSONObject local_json, String local_longitud, String local_latitud, String local_canal, String local_distrito, String local_direccion, String local_nombre) {
         this.local_id = local_id;
         this.local_json = local_json;
         this.local_longitud = local_longitud;
@@ -96,29 +96,29 @@ public class Local_DTO {
         this.local_canal = local_canal;
     }
 
-    public Double getLocal_latitud() {
+    public String getLocal_latitud() {
         try {
-            return local_json.getDouble("latitud");
+            return local_json.getString("latitud");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return 0.0;
+        return "No_Latitud";
     }
 
-    public void setLocal_latitud(Double local_latitud) {
+    public void setLocal_latitud(String local_latitud) {
         this.local_latitud = local_latitud;
     }
 
-    public Double getLocal_longitud() {
+    public String getLocal_longitud() {
         try {
-            return local_json.getDouble("longitud");
+            return local_json.getString("longitud");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return 0.0;
+        return "No_Longitud";
     }
 
-    public void setLocal_longitud(Double local_longitud) {
+    public void setLocal_longitud(String local_longitud) {
         this.local_longitud = local_longitud;
     }
 

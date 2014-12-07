@@ -11,6 +11,7 @@ public class Respuesta_DTO {
     private String respuesta_recurso_id;
     private String respuesta_tipo;
     private String respuesta_variable_id;
+    private String variable_nombre;
     private String respuesta_string;
     private int respuesta_int = 0;
 
@@ -112,6 +113,15 @@ public class Respuesta_DTO {
             e.printStackTrace();
         }
         return "No_Tipo";
+    }
+
+    public String getVariable_nombre() {
+        try {
+            return respuesta_json.getString("variable_nombre");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "No_variable_nombre";
     }
 
     public void setRespuesta_json(JSONObject respuesta_json) {

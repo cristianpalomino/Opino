@@ -22,7 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.capr.adapter.Adapter_Encuesta;
+import com.capr.beans.Atencion_DTO;
 import com.capr.beans.Comentario_DTO;
+import com.capr.beans.Directo_Indirecto_DTO;
 import com.capr.beans.Encuesta_DTO;
 import com.capr.beans.Foto_DTO;
 import com.capr.beans.Imagen_DTO;
@@ -73,6 +75,7 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
         getOpino().getSupportActionBar().setIcon(R.drawable.logo_opino);
     }
 
@@ -126,6 +129,18 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
                                     timer_dto.settim_estado(false);
                                     encuesta_dto.setTimer_dto(timer_dto);
                                     break;
+                                case 5:
+                                    Directo_Indirecto_DTO directo_indirecto_dto = new Directo_Indirecto_DTO();
+                                    directo_indirecto_dto.setRespuesta_dto(respuesta_dto);
+                                    directo_indirecto_dto.setSi_no_estado(false);
+                                    encuesta_dto.setDirecto_indirecto_dto(directo_indirecto_dto);
+                                    break;
+                                case 6:
+                                    Atencion_DTO atencion_dto = new Atencion_DTO();
+                                    atencion_dto.setRespuesta_dto(respuesta_dto);
+                                    atencion_dto.setrango_estado(false);
+                                    encuesta_dto.setAtencion_dto(atencion_dto);
+                                    break;
                                 case 7:
                                     Foto_DTO foto_dto = new Foto_DTO();
                                     foto_dto.setRespuesta_dto(respuesta_dto);
@@ -165,10 +180,7 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
         btnenviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 showDialog();
-
-
                 try {
                     Interface_Upload_Image interface_upload_image = new Modulo_Upload_Image();
                     ArrayList<Imagen_DTO> imagen_dtos = new ArrayList<Imagen_DTO>();
