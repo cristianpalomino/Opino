@@ -2,23 +2,20 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    >
-
+    android:padding="2.5dp"
+    android:layout_gravity="center">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="NO"
-        android:id="@+id/txtsino"
-        android:maxLines="1"
-        android:lines="1"
-        android:layout_gravity="center_horizontal"
+        android:text="Name"
+        android:visibility="gone"
         android:gravity="center"
-        />
+        android:id="@+id/nombre_subvariable"
+        android:layout_gravity="center_vertical" />
 
     <ToggleButton
         android:id="@+id/switch_si_no"
@@ -29,5 +26,16 @@
         android:gravity="center"
         android:textColor="@android:color/transparent"
         android:checked="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="NO"
+        android:id="@+id/txtsino"
+        android:maxLines="1"
+        android:lines="1"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center" />
 
 </LinearLayout>

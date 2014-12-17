@@ -9,10 +9,10 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DCDCDC">
+        android:background="#DCDCDC"
+        android:orientation="vertical">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -40,14 +40,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/container_general">
 
-                <view
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    class="com.capr.views.View_Foto"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:gravity="center"
-                    android:id="@+id/view_foto" />
             </FrameLayout>
 
             <!--
@@ -104,6 +96,39 @@
             -->
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:textColor="@color/plomo_oscuro_concrete"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp" />
+
+        <LinearLayout
+            android:id="@+id/container_general_v2"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="3dp"
+            android:layout_gravity="center_horizontal">
+
+            <view
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                class="com.capr.views.View_Foto"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                android:gravity="center"
+                android:id="@+id/view_foto" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:id="@+id/textView2"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:id="@+id/container_rango"
@@ -114,7 +139,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:id="@+id/container_switch"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -123,8 +148,16 @@
 
             </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:id="@+id/textView3"
+            android:textColor="@color/plomo_claro_clouds"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp" />
+
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:id="@+id/container_comentario"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

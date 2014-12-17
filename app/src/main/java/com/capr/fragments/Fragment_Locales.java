@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -51,6 +54,7 @@ public class Fragment_Locales extends Fragment_Opino implements AdapterView.OnIt
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         getOpino().getSupportActionBar().setIcon(R.drawable.logo_opino);
         getOpino().getSupportActionBar().setTitle("Locales");
     }
@@ -119,6 +123,28 @@ public class Fragment_Locales extends Fragment_Opino implements AdapterView.OnIt
         Local_DTO local_dto = (Local_DTO) parent.getItemAtPosition(position);
         getOpino().setLocal_dto(local_dto);
         getOpino().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.animator.izquierda_derecha_b,R.animator.izquierda_derecha_b).add(R.id.container, Fragment_Variables.newInstance(),Fragment_Variables.class.getName()).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_usuario,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_logout){
+            Session_Manager session_manager = new Session_Manager(getOpino());
+            session_manager.cerrarSession();
+            getOpino().clearHistory();
+
+            if(session_manager.isLogin()){
+                getOpino().getSupportFragmentManager().beginTransaction().replace(R.id.container,Fragment_Locales.newInstance()).commit();
+            }else{
+                getOpino().getSupportFragmentManager().beginTransaction().replace(R.id.container,Fragment_Login.newInstance()).commit();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
         /*

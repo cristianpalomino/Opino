@@ -19,6 +19,7 @@ import com.capr.beans.Imagen_DTO;
 import com.capr.beans.Respuesta_DTO;
 import com.capr.dialog.Dialog_Foto;
 import com.capr.opino.R;
+import com.capr.utils.Util_Fonts;
 import com.nhaarman.supertooltips.ToolTip;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 import com.nhaarman.supertooltips.ToolTipView;
@@ -100,6 +101,9 @@ public class View_Foto extends View_Opino implements PopupMenu.OnMenuItemClickLi
 
     public void setFoto_dto(Foto_DTO foto_dto) {
         this.foto_dto = foto_dto;
+        TextView nombre = (TextView)getView().findViewById(R.id.nombre_subvariable);
+        nombre.setTypeface(Util_Fonts.setPNALight(getOpino()));
+        nombre.setText(foto_dto.getRespuesta_dto().getVariable_nombre());
     }
 
     public Foto_DTO getFoto_dto() {

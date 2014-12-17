@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
+    android:layout_height="match_parent"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
     android:paddingBottom="5dp"
+    android:gravity="center"
     >
 
-    <EditText
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Comentario"
-        android:maxLines="4"
-        android:background="@drawable/edittext_registro"
-        android:imeOptions="actionDone"
-        android:padding="10dp"
-        android:id="@+id/edtcomentario" />
-</LinearLayout>
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Name"
+            android:gravity="center"
+            android:id="@+id/nombre_subvariable"
+            android:layout_gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Comentario"
+            android:layout_gravity="center"
+            android:maxLines="4"
+            android:gravity="center"
+            android:background="@drawable/edittext_registro"
+            android:imeOptions="actionDone"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:id="@+id/edtcomentario" />
+    </LinearLayout>
+
+</FrameLayout>

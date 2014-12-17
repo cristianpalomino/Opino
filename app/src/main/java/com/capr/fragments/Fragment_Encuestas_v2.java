@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,6 +30,7 @@ import com.capr.beans.Encuesta_DTO;
 import com.capr.beans.Foto_DTO;
 import com.capr.beans.Imagen_DTO;
 import com.capr.beans.Local_DTO;
+import com.capr.beans.Precio_DTO;
 import com.capr.beans.Rango_DTO;
 import com.capr.beans.Respuesta_DTO;
 import com.capr.beans.Si_No_DTO;
@@ -146,6 +148,12 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
                                     foto_dto.setRespuesta_dto(respuesta_dto);
                                     foto_dto.setFoto_estado(false);
                                     encuesta_dto.setFoto_dto(foto_dto);
+                                    break;
+                                case 8:
+                                    Precio_DTO precio_dto = new Precio_DTO();
+                                    precio_dto.setRespuesta_dto(respuesta_dto);
+                                    precio_dto.setprecio_estado(false);
+                                    encuesta_dto.addPrecio_DTO(precio_dto);
                                     break;
                             }
                         }
@@ -289,5 +297,11 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
             e.printStackTrace();
             hideDialog();
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_update_location).setVisible(false).setEnabled(false);
+        super.onPrepareOptionsMenu(menu);
     }
 }

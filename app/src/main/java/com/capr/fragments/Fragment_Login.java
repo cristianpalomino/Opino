@@ -83,7 +83,7 @@ public class Fragment_Login extends Fragment_Opino implements View.OnClickListen
 
                 hideDialog();
 
-                getOpino().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.animator.abajo_arriba, R.animator.arriba_abajo).replace(R.id.container, Fragment_Locales.newInstance()).commit();
+                getOpino().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.animator.abajo_arriba, R.animator.arriba_abajo).replace(R.id.container, Fragment_Locales.newInstance(),Fragment_Locales.class.getName()).commit();
             }
 
             @Override

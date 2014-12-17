@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.capr.beans.Comentario_DTO;
 import com.capr.beans.Encuesta_DTO;
@@ -28,6 +29,7 @@ public class View_Encuesta extends View_Opino {
     private LinearLayout container_comentario;
     private LinearLayout container_sub_comentario;
     private FrameLayout container_general;
+    private LinearLayout container_general_v2;
 
     public View_Encuesta(Context context, Encuesta_DTO encuesta_dto) {
         super(context, R.layout.item_encuesta);
@@ -64,8 +66,9 @@ public class View_Encuesta extends View_Opino {
         container_comentario = (LinearLayout) getView().findViewById(R.id.container_comentario);
         container_sub_comentario = (LinearLayout) getView().findViewById(R.id.container_sub_comentario);
         container_general = (FrameLayout) getView().findViewById(R.id.container_general);
+        container_general_v2 = (LinearLayout) getView().findViewById(R.id.container_general_v2);
 
-        nombreencuesta.setText(encuesta_dto.getEncuesta_descripcion());
+        nombreencuesta.setText(encuesta_dto.getEncuesta_descripcion().toUpperCase());
         nombreencuesta.setTypeface(Util_Fonts.setPNASemiBold(getContext()));
 
         if (encuesta_dto.getFoto_dto() != null) {
@@ -73,19 +76,27 @@ public class View_Encuesta extends View_Opino {
             view_foto.setVisibility(View.VISIBLE);
         }
 
-        if (encuesta_dto.getRango_dto() != null) {
-            for (int i = 0; i < encuesta_dto.getRango_dto().size(); i++) {
-                View_Rango view = new View_Rango(getOpino());
-                view.setRango_dto(encuesta_dto.getRango_dto().get(i));
-                container_rango.addView(view);
-            }
-        }
-
         if (encuesta_dto.getSi_no_dto() != null) {
             for (int i = 0; i < encuesta_dto.getSi_no_dto().size(); i++) {
                 View_Si_No view = new View_Si_No(getOpino());
-                view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i));
-                container_switch.addView(view);
+                view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i), View.VISIBLE);
+                if (i >= 2) {
+                    container_switch.addView(view);
+                } else {
+                    container_general_v2.addView(view);
+                }
+            }
+        }
+
+        if (encuesta_dto.getPrecio_dtos().size() > 0) {
+            for (int i = 0; i < encuesta_dto.getPrecio_dtos().size(); i++) {
+                View_Precio view = new View_Precio(getOpino());
+                view.setComentario_dto(encuesta_dto.getPrecio_dtos().get(i));
+                if (i == 0) {
+                    container_general_v2.addView(view);
+                } else {
+                    container_comentario.addView(view);
+                }
             }
         }
 
@@ -104,27 +115,57 @@ public class View_Encuesta extends View_Opino {
                 container_sub_comentario.addView(view);
             }
         }
-        if (encuesta_dto.getSi_no_dto() != null) {
-            for (int i = 0; i < encuesta_dto.getSi_no_dto().size(); i++) {
-                View_Si_No view = new View_Si_No(getOpino());
-                view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i));
-                container_general.addView(view);
+
+        String variable = getOpino().getVariable_dto().getVariable_nombre();
+        if (variable.equals("Calidad")) {
+            if (encuesta_dto.getTimer_dto() != null) {
+                View_Timer view_timer = new View_Timer(getOpino());
+                view_timer.setTimer_dto(encuesta_dto.getTimer_dto());
+                container_general.addView(view_timer);
             }
+            if (encuesta_dto.getAtencion_dto() != null) {
+                View_Atencion view_atencion = new View_Atencion(getOpino());
+                view_atencion.setatencion_dto(encuesta_dto.getAtencion_dto());
+                container_general.addView(view_atencion);
+            }
+            if (encuesta_dto.getDirecto_indirecto_dto() != null) {
+                View_Directo_Indirecto view_directo_indirecto = new View_Directo_Indirecto(getOpino());
+                view_directo_indirecto.setDirecto_Indirecto_DTO(encuesta_dto.getDirecto_indirecto_dto());
+                container_general.addView(view_directo_indirecto);
+            }
+            if (encuesta_dto.getRango_dto() != null) {
+                for (int i = 0; i < encuesta_dto.getRango_dto().size(); i++) {
+                    View_Rango view = new View_Rango(getOpino());
+                    view.setRango_dto(encuesta_dto.getRango_dto().get(i), View.GONE);
+                    container_general.addView(view);
+                }
+            }
+            container_general_v2.setVisibility(GONE);
         }
-        if (encuesta_dto.getTimer_dto() != null) {
-            View_Timer view_timer = new View_Timer(getOpino());
-            view_timer.setTimer_dto(encuesta_dto.getTimer_dto());
-            container_general.addView(view_timer);
-        }
-        if (encuesta_dto.getAtencion_dto() != null) {
-            View_Atencion view_atencion = new View_Atencion(getOpino());
-            view_atencion.setatencion_dto(encuesta_dto.getAtencion_dto());
-            container_general.addView(view_atencion);
-        }
-        if (encuesta_dto.getDirecto_indirecto_dto() != null) {
-            View_Directo_Indirecto view_directo_indirecto = new View_Directo_Indirecto(getOpino());
-            view_directo_indirecto.setDirecto_Indirecto_DTO(encuesta_dto.getDirecto_indirecto_dto());
-            container_general.addView(view_directo_indirecto);
+        else {
+            if (encuesta_dto.getTimer_dto() != null) {
+                View_Timer view_timer = new View_Timer(getOpino());
+                view_timer.setTimer_dto(encuesta_dto.getTimer_dto());
+                container_general_v2.addView(view_timer);
+            }
+            if (encuesta_dto.getAtencion_dto() != null) {
+                View_Atencion view_atencion = new View_Atencion(getOpino());
+                view_atencion.setatencion_dto(encuesta_dto.getAtencion_dto());
+                container_general_v2.addView(view_atencion);
+            }
+            if (encuesta_dto.getDirecto_indirecto_dto() != null) {
+                View_Directo_Indirecto view_directo_indirecto = new View_Directo_Indirecto(getOpino());
+                view_directo_indirecto.setDirecto_Indirecto_DTO(encuesta_dto.getDirecto_indirecto_dto());
+                container_general_v2.addView(view_directo_indirecto);
+            }
+            if (encuesta_dto.getRango_dto() != null) {
+                for (int i = 0; i < encuesta_dto.getRango_dto().size(); i++) {
+                    View_Rango view = new View_Rango(getOpino());
+                    view.setRango_dto(encuesta_dto.getRango_dto().get(i), View.VISIBLE);
+                    container_switch.addView(view);
+                }
+            }
+            container_general_v2.setVisibility(View.VISIBLE);
         }
     }
 

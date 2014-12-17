@@ -217,9 +217,6 @@ public class Opino extends ActionBarActivity {
         this.mCapturedImageURI = mCapturedImageURI;
     }
 
-
-
-
     public void setLocal_dto(Local_DTO local_dto) {
         this.local_dto = local_dto;
     }

@@ -4,38 +4,37 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.capr.beans.Comentario_DTO;
+import com.capr.beans.Precio_DTO;
 import com.capr.opino.R;
 import com.capr.utils.Util_Fonts;
 
 /**
  * Created by Gantz on 21/10/14.
  */
-public class View_Comentario extends View_Opino implements TextWatcher {
+public class View_Precio extends View_Opino implements TextWatcher {
 
-    private Comentario_DTO comentario_dto;
+    private Precio_DTO precio_dto;
     private EditText edtcomentario;
 
 
-    public View_Comentario(Context context) {
+    public View_Precio(Context context) {
         super(context, R.layout.view_comentario);
     }
 
-    public View_Comentario(Context context, AttributeSet attrs, int defStyleAttr) {
+    public View_Precio(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr, R.layout.view_comentario);
     }
 
-    public View_Comentario(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public View_Precio(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes, R.layout.view_comentario);
     }
 
-    public View_Comentario(Context context, AttributeSet attrs) {
+    public View_Precio(Context context, AttributeSet attrs) {
         super(context, attrs, R.layout.view_comentario);
     }
 
@@ -50,26 +49,23 @@ public class View_Comentario extends View_Opino implements TextWatcher {
         edtcomentario.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(getOpino(), comentario_dto.getRespuesta_dto().getVariable_nombre(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getOpino(), precio_dto.getRespuesta_dto().getVariable_nombre(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
     }
 
-    public Comentario_DTO getComentario_dto() {
-        return comentario_dto;
+    public Precio_DTO getComentario_dto() {
+        return precio_dto;
     }
 
-    public void setComentario_dto(Comentario_DTO comentario_dto) {
-        this.comentario_dto = comentario_dto;
+    public void setComentario_dto(Precio_DTO precio_dto) {
+        this.precio_dto = precio_dto;
 
-        TextView nombre = (TextView)getView().findViewById(R.id.nombre_subvariable);
+        TextView nombre = (TextView) getView().findViewById(R.id.nombre_subvariable);
         nombre.setTypeface(Util_Fonts.setPNALight(getOpino()));
-        nombre.setText(comentario_dto.getRespuesta_dto().getVariable_nombre());
-
-        if (comentario_dto.getRespuesta_dto().getVariable_nombre().toString().equals("PRECIO")) {
-            edtcomentario.setHint("S/.");
-        }
+        nombre.setText(precio_dto.getRespuesta_dto().getVariable_nombre());
+        edtcomentario.setHint(precio_dto.getRespuesta_dto().getVariable_nombre().toString());
     }
 
     /**

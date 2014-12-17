@@ -66,8 +66,12 @@ public class View_Si_No extends View_Opino implements CompoundButton.OnCheckedCh
         return si_no_dto;
     }
 
-    public void setSi_no_dto(Si_No_DTO si_no_dto) {
+    public void setSi_no_dto(Si_No_DTO si_no_dto,int visibility) {
         this.si_no_dto = si_no_dto;
+        TextView nombre = (TextView)getView().findViewById(R.id.nombre_subvariable);
+        nombre.setVisibility(visibility);
+        nombre.setTypeface(Util_Fonts.setPNALight(getOpino()));
+        nombre.setText(si_no_dto.getRespuesta_dto().getVariable_nombre());
     }
 
     /**

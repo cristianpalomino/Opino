@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -54,6 +55,7 @@ public class Fragment_Encuestas extends Fragment_Opino implements AdapterView.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
         getOpino().getSupportActionBar().setIcon(R.drawable.logo_opino);
         getOpino().getSupportActionBar().setTitle("Encuesta");
     }
@@ -175,5 +177,11 @@ public class Fragment_Encuestas extends Fragment_Opino implements AdapterView.On
         Local_DTO local_dto = (Local_DTO) parent.getItemAtPosition(position);
         getOpino().setLocal_dto(local_dto);
         getOpino().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.animator.izquierda_derecha_b, R.animator.izquierda_derecha_b).add(R.id.container, Fragment_Encuestas.newInstance(), Fragment_Encuestas.class.getName()).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_update_location).setVisible(false).setEnabled(false);
+        super.onPrepareOptionsMenu(menu);
     }
 }

@@ -35,9 +35,11 @@ public class Encuesta_DTO {
     private ArrayList<Comentario_DTO> comentario_dtos = new ArrayList<Comentario_DTO>();
     private ArrayList<Sub_Comentario_DTO> sub_comentario_dtos = new ArrayList<Sub_Comentario_DTO>();
     private ArrayList<Rango_DTO> rango_dtos = new ArrayList<Rango_DTO>();
+    private ArrayList<Precio_DTO> precio_dtos = new ArrayList<Precio_DTO>();
     private Timer_DTO timer_dto;
     private Atencion_DTO atencion_dto;
     private Directo_Indirecto_DTO directo_indirecto_dto;
+    private Precio_DTO precio_dto;
 
     public Encuesta_DTO() {
     }
@@ -256,6 +258,27 @@ public class Encuesta_DTO {
 
     public void addSub_Comentario_DTO(Sub_Comentario_DTO sub_comentario_dto) {
         sub_comentario_dtos.add(sub_comentario_dto);
+    }
+
+    public ArrayList<Precio_DTO> getPrecio_dtos() {
+        return precio_dtos;
+    }
+
+    public void setPrecio_dtos(ArrayList<Precio_DTO> precio_dtos) {
+        this.precio_dtos = precio_dtos;
+    }
+
+    public void addPrecio_DTO(Precio_DTO precio_dto) {
+        precio_dtos.add(precio_dto);
+    }
+
+
+    public Precio_DTO getPrecio_dto() {
+        return precio_dto;
+    }
+
+    public void setPrecio_dto(Precio_DTO precio_dto) {
+        this.precio_dto = precio_dto;
     }
 }
 

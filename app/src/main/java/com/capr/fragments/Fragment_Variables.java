@@ -118,11 +118,12 @@ public class Fragment_Variables extends Fragment_Opino implements AdapterView.On
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         /**
          * Validate if need location
-         */
         Local_DTO local_dto = getOpino().getLocal_dto();
         if (local_dto.getLocal_latitud().equals("") || local_dto.getLocal_latitud() == null) {
             inflater.inflate(R.menu.menu_local, menu);
         }
+         */
+        inflater.inflate(R.menu.menu_local, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -135,5 +136,11 @@ public class Fragment_Variables extends Fragment_Opino implements AdapterView.On
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_logout).setVisible(false).setEnabled(false);
+        super.onPrepareOptionsMenu(menu);
     }
 }

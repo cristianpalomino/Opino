@@ -4,9 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Check-In"
-        android:id="@+id/action_update_location"
+        android:title="Salir"
+        android:id="@+id/action_logout"
         app:showAsAction="always"
-        android:icon="@drawable/ic_action_place"
+        android:icon="@drawable/ic_salir"
         />
+
 </menu>

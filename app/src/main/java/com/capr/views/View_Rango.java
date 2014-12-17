@@ -77,8 +77,12 @@ public class View_Rango extends View_Opino implements PopupMenu.OnMenuItemClickL
         return rango_dto;
     }
 
-    public void setRango_dto(Rango_DTO rango_dto) {
+    public void setRango_dto(Rango_DTO rango_dto,int visibility) {
         this.rango_dto = rango_dto;
+        TextView nombre = (TextView)getView().findViewById(R.id.nombre_subvariable);
+        nombre.setVisibility(visibility);
+        nombre.setTypeface(Util_Fonts.setPNALight(getOpino()));
+        nombre.setText(rango_dto.getRespuesta_dto().getVariable_nombre());
     }
 
     @Override
