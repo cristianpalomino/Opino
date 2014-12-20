@@ -25,6 +25,8 @@ public class Encuesta_DTO {
     private ArrayList<Respuesta_DTO> encuesta_respuesta_dtos;
 
     private JSONObject encuesta_json;
+    private String id_local;
+    private String id_variable;
 
     /**
      * View's Encuesta
@@ -46,6 +48,23 @@ public class Encuesta_DTO {
 
     public Encuesta_DTO(JSONObject encuesta_json) {
         this.encuesta_json = encuesta_json;
+    }
+
+
+    public String getId_local() {
+        return id_local;
+    }
+
+    public String getId_variable() {
+        return id_variable;
+    }
+
+    public void setId_local(String id_local) {
+        this.id_local = id_local;
+    }
+
+    public void setId_variable(String id_variable) {
+        this.id_variable = id_variable;
     }
 
     public boolean isEncuesta_estado() {

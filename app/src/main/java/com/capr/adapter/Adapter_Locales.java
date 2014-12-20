@@ -36,7 +36,7 @@ public class Adapter_Locales extends RecyclerView.Adapter<Adapter_Locales.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Local_DTO local_dto = local_dtos.get(position);
-        holder.txtnombrelocal.setText(local_dto.getLocal_nombre());
+        holder.txtnombrelocal.setText(local_dto.getLocal_nombre().toUpperCase());
         holder.txtdireccionlocal.setText(local_dto.getLocal_direccion());
         holder.cvlocal.setBackgroundColor(Color.parseColor(local_dto.getLocal_canal()));
     }

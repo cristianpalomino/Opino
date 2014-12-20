@@ -1,7 +1,14 @@
 package com.capr.beans;
 
+import android.content.Context;
+
+import com.capr.service.Local_Service;
+import com.capr.service.Variable_Service;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Gantz on 19/10/14.
@@ -15,6 +22,10 @@ public class Local_DTO {
     private String local_canal;
     private String local_latitud;
     private String local_longitud;
+    private boolean completado;
+
+    private ArrayList<Variable_DTO> variable_dtos;
+
     private JSONObject local_json;
 
     public Local_DTO() {
@@ -29,6 +40,14 @@ public class Local_DTO {
         this.local_distrito = local_distrito;
         this.local_direccion = local_direccion;
         this.local_nombre = local_nombre;
+    }
+
+    public boolean isCompletado() {
+        return completado;
+    }
+
+    public void setCompletado(boolean completado) {
+        this.completado = completado;
     }
 
     public String getLocal_id() {
@@ -128,5 +147,18 @@ public class Local_DTO {
 
     public void setLocal_json(JSONObject local_json) {
         this.local_json = local_json;
+    }
+
+    public ArrayList<Variable_DTO> getVariable_dtos() {
+        return variable_dtos;
+    }
+
+    public void setVariable_dtos(ArrayList<Variable_DTO> variable_dtos,Context context,boolean state) {
+        this.variable_dtos = variable_dtos;
+        /**
+         * Save to Db
+         */
+        Variable_Service variable_service = new Variable_Service(context,state);
+        variable_service.addVariables(variable_dtos);
     }
 }

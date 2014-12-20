@@ -27,6 +27,7 @@ import com.capr.fragments.Fragment_Locales;
 import com.capr.fragments.Fragment_Login;
 import com.capr.session.Session_Manager;
 import com.capr.views.View_Foto;
+import com.shamanland.fab.FloatingActionButton;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +37,7 @@ import java.util.Date;
 
 public class Opino extends ActionBarActivity {
 
+    protected boolean online;
     protected Session_Manager session_manager;
     protected Local_DTO local_dto;
     protected Variable_DTO variable_dto;
@@ -240,4 +242,13 @@ public class Opino extends ActionBarActivity {
     public Imagen_DTO getImagen_dto() {
         return imagen_dto;
     }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
 }

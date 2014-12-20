@@ -41,67 +41,7 @@
                 android:id="@+id/container_general">
 
             </FrameLayout>
-
-            <!--
-            <LinearLayout
-                android:id="@+id/containerencuesta"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content">
-
-
-                <view
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    class="com.capr.views.View_Foto"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:gravity="center"
-                    android:id="@+id/view_foto" />
-
-                <view
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    class="com.capr.views.View_Si_No"
-                    android:layout_marginLeft="5dp"
-                    android:visibility="gone"
-                    android:gravity="center"
-                    android:id="@+id/view_si_no" />
-
-                <view
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    class="com.capr.views.View_Rango"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/view_rango" />
-
-            </LinearLayout>
-
-            <view
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                class="com.capr.views.View_Comentario"
-                android:visibility="gone"
-                android:id="@+id/view_comentario" />
-
-            <view
-                class="com.capr.views.View_Sub_Comentario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/view_sub_comentario" />
-            -->
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:textColor="@color/plomo_oscuro_concrete"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp" />
 
         <LinearLayout
             android:id="@+id/container_general_v2"
@@ -121,60 +61,15 @@
                 android:id="@+id/view_foto" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:id="@+id/textView2"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp" />
-
         <LinearLayout
             android:orientation="horizontal"
-            android:id="@+id/container_rango"
+            android:id="@+id/container_extra"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
             android:layout_gravity="center_horizontal">
 
         </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/container_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center">
-
-            </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:id="@+id/textView3"
-            android:textColor="@color/plomo_claro_clouds"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/container_comentario"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center">
-
-            </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/container_sub_comentario"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center">
-
-            </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

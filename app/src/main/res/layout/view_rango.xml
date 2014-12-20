@@ -2,30 +2,42 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="75dp"
     android:layout_height="wrap_content"
     android:padding="5dp"
     >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Name"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
-        android:id="@+id/nombre_subvariable"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_horizontal">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Rango"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:id="@+id/btnrango"
-        android:background="@android:color/darker_gray"
-        android:padding="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Name"
+            android:gravity="center"
+            android:visibility="gone"
+            android:lines="1"
+            android:maxLines="1"
+            android:ems="7"
+            android:id="@+id/nombre_subvariable"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Rango"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:id="@+id/btnrango"
+            android:background="@android:color/darker_gray"
+            android:padding="10dp"/>
+    </LinearLayout>
+
 </LinearLayout>

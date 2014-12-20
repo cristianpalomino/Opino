@@ -24,10 +24,7 @@ public class View_Encuesta extends View_Opino {
 
     private TextView nombreencuesta;
     private View_Foto view_foto;
-    private LinearLayout container_rango;
-    private LinearLayout container_switch;
-    private LinearLayout container_comentario;
-    private LinearLayout container_sub_comentario;
+    private LinearLayout container_extra;
     private FrameLayout container_general;
     private LinearLayout container_general_v2;
 
@@ -61,41 +58,89 @@ public class View_Encuesta extends View_Opino {
 
         nombreencuesta = (TextView) getView().findViewById(R.id.txtnombreencuesta);
         view_foto = (View_Foto) getView().findViewById(R.id.view_foto);
-        container_rango = (LinearLayout) getView().findViewById(R.id.container_rango);
-        container_switch = (LinearLayout) getView().findViewById(R.id.container_switch);
-        container_comentario = (LinearLayout) getView().findViewById(R.id.container_comentario);
-        container_sub_comentario = (LinearLayout) getView().findViewById(R.id.container_sub_comentario);
+        container_extra = (LinearLayout) getView().findViewById(R.id.container_extra);
         container_general = (FrameLayout) getView().findViewById(R.id.container_general);
         container_general_v2 = (LinearLayout) getView().findViewById(R.id.container_general_v2);
 
         nombreencuesta.setText(encuesta_dto.getEncuesta_descripcion().toUpperCase());
         nombreencuesta.setTypeface(Util_Fonts.setPNASemiBold(getContext()));
 
+        String variable = getOpino().getVariable_dto().getVariable_nombre();
+
         if (encuesta_dto.getFoto_dto() != null) {
             view_foto.setFoto_dto(encuesta_dto.getFoto_dto());
             view_foto.setVisibility(View.VISIBLE);
         }
 
-        if (encuesta_dto.getSi_no_dto() != null) {
-            for (int i = 0; i < encuesta_dto.getSi_no_dto().size(); i++) {
-                View_Si_No view = new View_Si_No(getOpino());
-                view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i), View.VISIBLE);
-                if (i >= 2) {
-                    container_switch.addView(view);
-                } else {
-                    container_general_v2.addView(view);
+        /**
+         * Para SKU's
+         */
+        if(variable.equals("Sku")){
+            if (encuesta_dto.getSi_no_dto() != null) {
+                for (int i = 0; i < encuesta_dto.getSi_no_dto().size(); i++) {
+                    View_Si_No view = new View_Si_No(getOpino());
+                    view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i), View.VISIBLE);
+
+                    String nombre = encuesta_dto.getSi_no_dto().get(i).getRespuesta_dto().getVariable_nombre();
+                    if(nombre.equals("EXHIBIDO") || nombre.equals("SINO")){
+                        container_general_v2.addView(view);
+                    }else{
+                        container_extra.addView(view);
+                    }
+
+                    /*
+                    if (i < 2) {
+                        container_general_v2.addView(view);
+                    } else {
+                        container_extra.addView(view);
+                    }
+                    */
+                }
+            }
+        }else if(variable.equals("Afiche")){
+            if (encuesta_dto.getSi_no_dto() != null) {
+                for (int i = 0; i < encuesta_dto.getSi_no_dto().size(); i++) {
+                    View_Si_No view = new View_Si_No(getOpino());
+                    view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i), View.VISIBLE);
+                    if (i < 3) {
+                        container_general_v2.addView(view);
+                    } else {
+                        container_extra.addView(view);
+                    }
+                }
+            }
+        }else if(variable.equals("Promoción")){
+            if (encuesta_dto.getSi_no_dto() != null) {
+                for (int i = 0; i < encuesta_dto.getSi_no_dto().size(); i++) {
+                    View_Si_No view = new View_Si_No(getOpino());
+                    view.setSi_no_dto(encuesta_dto.getSi_no_dto().get(i), View.VISIBLE);
+
+                    String nombre = encuesta_dto.getSi_no_dto().get(i).getRespuesta_dto().getVariable_nombre();
+                    if(nombre.equals("PRESENTE")){
+                        container_general_v2.addView(view);
+                    }else{
+                        container_extra.addView(view);
+                    }
+
+                        /*
+                    if (i == 0) {
+                        container_general_v2.addView(view);
+                    } else {
+                        container_extra.addView(view);
+                    }
+                    */
                 }
             }
         }
 
-        if (encuesta_dto.getPrecio_dtos().size() > 0) {
+        if (encuesta_dto.getPrecio_dtos() != null) {
             for (int i = 0; i < encuesta_dto.getPrecio_dtos().size(); i++) {
                 View_Precio view = new View_Precio(getOpino());
                 view.setComentario_dto(encuesta_dto.getPrecio_dtos().get(i));
-                if (i == 0) {
+                if(i == 0){
                     container_general_v2.addView(view);
-                } else {
-                    container_comentario.addView(view);
+                }else{
+                    container_extra.addView(view);
                 }
             }
         }
@@ -104,7 +149,7 @@ public class View_Encuesta extends View_Opino {
             for (int i = 0; i < encuesta_dto.getComentario_dto().size(); i++) {
                 View_Comentario view = new View_Comentario(getOpino());
                 view.setComentario_dto(encuesta_dto.getComentario_dto().get(i));
-                container_comentario.addView(view);
+                container_extra.addView(view);
             }
         }
 
@@ -112,11 +157,35 @@ public class View_Encuesta extends View_Opino {
             for (int i = 0; i < encuesta_dto.getSub_comentario_dto().size(); i++) {
                 View_Sub_Comentario view = new View_Sub_Comentario(getOpino());
                 view.setSub_comentario_dto(encuesta_dto.getSub_comentario_dto().get(i));
-                container_sub_comentario.addView(view);
+                container_extra.addView(view);
             }
         }
 
-        String variable = getOpino().getVariable_dto().getVariable_nombre();
+        if (encuesta_dto.getTimer_dto() != null) {
+            View_Timer view_timer = new View_Timer(getOpino());
+            view_timer.setTimer_dto(encuesta_dto.getTimer_dto());
+            container_general_v2.addView(view_timer);
+        }
+
+        if (encuesta_dto.getAtencion_dto() != null) {
+            View_Atencion view_atencion = new View_Atencion(getOpino());
+            view_atencion.setatencion_dto(encuesta_dto.getAtencion_dto());
+            container_general_v2.addView(view_atencion);
+        }
+        if (encuesta_dto.getDirecto_indirecto_dto() != null) {
+            View_Directo_Indirecto view_directo_indirecto = new View_Directo_Indirecto(getOpino());
+            view_directo_indirecto.setDirecto_Indirecto_DTO(encuesta_dto.getDirecto_indirecto_dto());
+            container_general_v2.addView(view_directo_indirecto);
+        }
+        if (encuesta_dto.getRango_dto() != null) {
+            for (int i = 0; i < encuesta_dto.getRango_dto().size(); i++) {
+                View_Rango view = new View_Rango(getOpino());
+                view.setRango_dto(encuesta_dto.getRango_dto().get(i), View.VISIBLE);
+                container_extra.addView(view);
+            }
+        }
+        container_general_v2.setVisibility(View.VISIBLE);
+
         if (variable.equals("Calidad")) {
             if (encuesta_dto.getTimer_dto() != null) {
                 View_Timer view_timer = new View_Timer(getOpino());
@@ -141,31 +210,6 @@ public class View_Encuesta extends View_Opino {
                 }
             }
             container_general_v2.setVisibility(GONE);
-        }
-        else {
-            if (encuesta_dto.getTimer_dto() != null) {
-                View_Timer view_timer = new View_Timer(getOpino());
-                view_timer.setTimer_dto(encuesta_dto.getTimer_dto());
-                container_general_v2.addView(view_timer);
-            }
-            if (encuesta_dto.getAtencion_dto() != null) {
-                View_Atencion view_atencion = new View_Atencion(getOpino());
-                view_atencion.setatencion_dto(encuesta_dto.getAtencion_dto());
-                container_general_v2.addView(view_atencion);
-            }
-            if (encuesta_dto.getDirecto_indirecto_dto() != null) {
-                View_Directo_Indirecto view_directo_indirecto = new View_Directo_Indirecto(getOpino());
-                view_directo_indirecto.setDirecto_Indirecto_DTO(encuesta_dto.getDirecto_indirecto_dto());
-                container_general_v2.addView(view_directo_indirecto);
-            }
-            if (encuesta_dto.getRango_dto() != null) {
-                for (int i = 0; i < encuesta_dto.getRango_dto().size(); i++) {
-                    View_Rango view = new View_Rango(getOpino());
-                    view.setRango_dto(encuesta_dto.getRango_dto().get(i), View.VISIBLE);
-                    container_switch.addView(view);
-                }
-            }
-            container_general_v2.setVisibility(View.VISIBLE);
         }
     }
 

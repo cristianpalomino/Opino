@@ -65,7 +65,7 @@ public class View_Precio extends View_Opino implements TextWatcher {
         TextView nombre = (TextView) getView().findViewById(R.id.nombre_subvariable);
         nombre.setTypeface(Util_Fonts.setPNALight(getOpino()));
         nombre.setText(precio_dto.getRespuesta_dto().getVariable_nombre());
-        edtcomentario.setHint(precio_dto.getRespuesta_dto().getVariable_nombre().toString());
+        //edtcomentario.setHint(precio_dto.getRespuesta_dto().getVariable_nombre().toString());
     }
 
     /**

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:paddingLeft="3dp"
     android:paddingRight="3dp"
     android:paddingBottom="5dp"
@@ -12,25 +12,29 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="65dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Name"
+            android:lines="1"
+            android:maxLines="1"
+            android:ems="7"
             android:gravity="center"
             android:id="@+id/nombre_subvariable"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:visibility="visible" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Comentario"
+            android:hint="...."
             android:layout_gravity="center"
-            android:maxLines="4"
+            android:maxLines="5"
             android:gravity="center"
             android:background="@drawable/edittext_registro"
             android:imeOptions="actionDone"
@@ -39,4 +43,4 @@
             android:id="@+id/edtcomentario" />
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

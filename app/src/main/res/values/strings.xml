@@ -5,4 +5,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="aviso_lista">Sin internet,\nconectese a un red,\nuse el FlatButton
+para actualizar\ny usarlo OFF LINE</string>
 </resources>

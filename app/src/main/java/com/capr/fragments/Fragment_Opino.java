@@ -63,10 +63,11 @@ public class Fragment_Opino extends Fragment {
         return (Opino) getActivity();
     }
 
-    public void showDialog(){
+    public Dialog_Opino showDialog(){
         dialog_opino = new Dialog_Opino(getOpino());
         dialog_opino.getWindow().setWindowAnimations(R.style.Dialog_Animation_UP_DOWN);
-        dialog_opino.show();
+
+        return dialog_opino;
     }
 
     public void hideDialog(){

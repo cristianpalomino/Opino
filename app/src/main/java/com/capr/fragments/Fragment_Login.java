@@ -65,7 +65,9 @@ public class Fragment_Login extends Fragment_Opino implements View.OnClickListen
      */
     @Override
     public void onClick(View v) {
-        showDialog();
+        final Dialog_Opino dialog_opino = showDialog();
+        dialog_opino.setText("Validando usuario...!");
+        dialog_opino.show();
 
         RequestParams params = new RequestParams();
         params.put("username",edtusuario.getText().toString());
@@ -80,17 +82,21 @@ public class Fragment_Login extends Fragment_Opino implements View.OnClickListen
                 Usuario_DTO usuario_dto = new Usuario_DTO();
                 usuario_dto.setUsuario_json(response);
                 session_manager.crearSession(usuario_dto);
-
-                hideDialog();
-
                 getOpino().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.animator.abajo_arriba, R.animator.arriba_abajo).replace(R.id.container, Fragment_Locales.newInstance(),Fragment_Locales.class.getName()).commit();
+                dialog_opino.hide();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                dialog_opino.hide();
                 super.onFailure(statusCode, headers, responseString, throwable);
-                Log.e(Fragment_Login.class.getName(),responseString);
-                hideDialog();
+                Log.e(Fragment_Login.class.getName(), responseString);
+            }
+
+            @Override
+            public void onFinish() {
+                dialog_opino.hide();
+                super.onFinish();
             }
         });
     }

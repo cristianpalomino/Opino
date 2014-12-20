@@ -63,7 +63,7 @@ public class Adapter_Locales_v2 extends BaseAdapter {
         holder.nombrelocal.setTypeface(Util_Fonts.setPNASemiBold(mContext));
         holder.direccionlocal.setTypeface(Util_Fonts.setPNALight(mContext));
 
-        holder.nombrelocal.setText(local_dto.getLocal_nombre());
+        holder.nombrelocal.setText(local_dto.getLocal_nombre().toUpperCase());
         holder.direccionlocal.setText(local_dto.getLocal_direccion() + ", " + local_dto.getLocal_distrito());
         holder.containeritemlocal.setBackgroundColor(Color.parseColor(local_dto.getLocal_canal()));
 

@@ -4,6 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_modo"
+        android:title="Modo"
+        app:showAsAction="always"
+        app:actionLayout="@layout/opino_switch"
+        />
+
+    <item
         android:title="Salir"
         android:id="@+id/action_logout"
         app:showAsAction="always"

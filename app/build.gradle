@@ -35,5 +35,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.mcxiaoke.volley:library:1.0.9'
     compile 'com.shamanland:fab:0.0.5'
+    compile 'com.mcxiaoke.volley:library:1.0.9'
     compile 'com.android.support:cardview-v7:21.0.+'
 }

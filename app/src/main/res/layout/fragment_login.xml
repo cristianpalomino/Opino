@@ -37,6 +37,7 @@
             android:maxLines="1"
             android:background="@drawable/edittext_registro"
             android:padding="10dp"
+            android:textColor="@android:color/darker_gray"
             android:layout_gravity="center_horizontal"
             android:text="Cristian" />
 
@@ -49,6 +50,7 @@
             android:padding="10dp"
             android:singleLine="true"
             android:maxLines="20"
+            android:textColor="@android:color/darker_gray"
             android:layout_marginBottom="10dp"
             android:inputType="textPassword"
             android:ems="10"

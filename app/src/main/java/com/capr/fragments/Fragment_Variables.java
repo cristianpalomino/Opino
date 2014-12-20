@@ -19,6 +19,7 @@ import com.capr.beans.Variable_DTO;
 import com.capr.interfaces.Interface_Update_Location;
 import com.capr.modulos.Modulo_Update_Location;
 import com.capr.opino.R;
+import com.capr.service.Variable_Service;
 import com.capr.utils.Util_Fonts;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
  */
 public class Fragment_Variables extends Fragment_Opino implements AdapterView.OnItemClickListener {
 
-    protected ListView lista_locales;
+    protected ListView lista_variables;
     protected Adapter_Variables adapter_variables;
 
     public static final Fragment_Variables newInstance() {
@@ -54,19 +55,26 @@ public class Fragment_Variables extends Fragment_Opino implements AdapterView.On
         TextView titulo = (TextView) getView().findViewById(R.id.txtvariableslocal);
         titulo.setTypeface(Util_Fonts.setPNASemiBold(getOpino()));
 
-        lista_locales = (ListView) getView().findViewById(R.id.lista_variables);
-        lista_locales.setOnItemClickListener(this);
-        adapter_variables = new Adapter_Variables(getOpino(), variable_dtos());
-        lista_locales.setAdapter(adapter_variables);
-    }
+        lista_variables = (ListView) getView().findViewById(R.id.lista_variables);
+        lista_variables.setOnItemClickListener(this);
+        ArrayList<Variable_DTO> variable_dtos = null;
 
-    private ArrayList<Variable_DTO> variable_dtos() {
-        ArrayList<Variable_DTO> variable_dtos = new ArrayList<Variable_DTO>();
-        variable_dtos.add(new Variable_DTO("sku", "Sku"));
-        variable_dtos.add(new Variable_DTO("afiche", "Afiche"));
-        variable_dtos.add(new Variable_DTO("promocion", "Promoción"));
-        variable_dtos.add(new Variable_DTO("calidad", "Calidad"));
-        return variable_dtos;
+        if (getOpino().isOnline()) {
+            /**
+             * Get from Db
+             */
+            Variable_Service variable_service = new Variable_Service(getOpino());
+            variable_dtos = variable_service.getVariables(getOpino().getLocal_dto().getLocal_id());
+        } else {
+            /**
+             * Get from Db
+             */
+            Variable_Service variable_service = new Variable_Service(getOpino());
+            variable_dtos = variable_service.getVariables(getOpino().getLocal_dto().getLocal_id());
+        }
+
+        adapter_variables = new Adapter_Variables(getOpino(),variable_dtos);
+        lista_variables.setAdapter(adapter_variables);
     }
 
     @Override
@@ -141,6 +149,7 @@ public class Fragment_Variables extends Fragment_Opino implements AdapterView.On
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_logout).setVisible(false).setEnabled(false);
+        menu.findItem(R.id.action_modo).setVisible(false).setEnabled(false);
         super.onPrepareOptionsMenu(menu);
     }
 }

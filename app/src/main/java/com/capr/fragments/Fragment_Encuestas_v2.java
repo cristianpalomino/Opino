@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.capr.adapter.Adapter_Encuesta;
 import com.capr.beans.Atencion_DTO;
 import com.capr.beans.Comentario_DTO;
+import com.capr.beans.Core_DTO;
 import com.capr.beans.Directo_Indirecto_DTO;
 import com.capr.beans.Encuesta_DTO;
 import com.capr.beans.Foto_DTO;
@@ -36,10 +37,13 @@ import com.capr.beans.Respuesta_DTO;
 import com.capr.beans.Si_No_DTO;
 import com.capr.beans.Sub_Comentario_DTO;
 import com.capr.beans.Timer_DTO;
+import com.capr.dialog.Dialog_Opino;
 import com.capr.interfaces.Interface_Upload_Image;
 import com.capr.modulos.Modulo_Upload_Image;
 import com.capr.opino.R;
+import com.capr.service.Core_Service;
 import com.capr.session.Session_Manager;
+import com.capr.utils.Connectivity;
 import com.capr.utils.Util_Fonts;
 import com.capr.views.View_Encuesta;
 import com.capr.ws.Opino_WS;
@@ -85,105 +89,23 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
     protected void initView() {
         super.initView();
 
-        showDialog();
+        Dialog_Opino dialog_opino = showDialog();
+        dialog_opino.setText("Espere por favor");
+        dialog_opino.show();
 
-        Session_Manager session_manager = new Session_Manager(getOpino());
-        AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-        asyncHttpClient.addHeader("Token", session_manager.getSession().getUsuario_token());
-        asyncHttpClient.get(getOpino(), Opino_WS.WS_OBTENER_INFORMACION.replace("%", getOpino().getLocal_dto().getLocal_id()).replace("#", getOpino().getVariable_dto().getVariable_id()), null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                super.onSuccess(statusCode, headers, response);
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        Encuesta_DTO encuesta_dto = new Encuesta_DTO(response.getJSONObject(i));
-
-                        for (int j = 0; j < encuesta_dto.getEncuesta_respuesta_dtos().size(); j++) {
-                            Respuesta_DTO respuesta_dto = encuesta_dto.getEncuesta_respuesta_dtos().get(j);
-                            switch (Integer.parseInt(respuesta_dto.getRespuesta_tipo())){
-                                case 0:
-                                    Si_No_DTO si_no_dto = new Si_No_DTO();
-                                    si_no_dto.setRespuesta_dto(respuesta_dto);
-                                    si_no_dto.setSi_no_estado(false);
-                                    encuesta_dto.addSi_No_DTO(si_no_dto);
-                                    break;
-                                case 1:
-                                    Comentario_DTO comentario_dto = new Comentario_DTO();
-                                    comentario_dto.setRespuesta_dto(respuesta_dto);
-                                    comentario_dto.setcomentario_estado(false);
-                                    encuesta_dto.addComentario_DTO(comentario_dto);
-                                    break;
-                                case 2:
-                                    Sub_Comentario_DTO sub_comentario_dto = new Sub_Comentario_DTO();
-                                    sub_comentario_dto.setRespuesta_dto(respuesta_dto);
-                                    sub_comentario_dto.setsubcomentario_estado(false);
-                                    encuesta_dto.addSub_Comentario_DTO(sub_comentario_dto);
-                                    break;
-                                case 3:
-                                    Rango_DTO rango_dto = new Rango_DTO();
-                                    rango_dto.setRespuesta_dto(respuesta_dto);
-                                    rango_dto.setrango_estado(false);
-                                    encuesta_dto.addRango_DTO(rango_dto);
-                                    break;
-                                case 4:
-                                    Timer_DTO timer_dto = new Timer_DTO();
-                                    timer_dto.setRespuesta_dto(respuesta_dto);
-                                    timer_dto.settim_estado(false);
-                                    encuesta_dto.setTimer_dto(timer_dto);
-                                    break;
-                                case 5:
-                                    Directo_Indirecto_DTO directo_indirecto_dto = new Directo_Indirecto_DTO();
-                                    directo_indirecto_dto.setRespuesta_dto(respuesta_dto);
-                                    directo_indirecto_dto.setSi_no_estado(false);
-                                    encuesta_dto.setDirecto_indirecto_dto(directo_indirecto_dto);
-                                    break;
-                                case 6:
-                                    Atencion_DTO atencion_dto = new Atencion_DTO();
-                                    atencion_dto.setRespuesta_dto(respuesta_dto);
-                                    atencion_dto.setrango_estado(false);
-                                    encuesta_dto.setAtencion_dto(atencion_dto);
-                                    break;
-                                case 7:
-                                    Foto_DTO foto_dto = new Foto_DTO();
-                                    foto_dto.setRespuesta_dto(respuesta_dto);
-                                    foto_dto.setFoto_estado(false);
-                                    encuesta_dto.setFoto_dto(foto_dto);
-                                    break;
-                                case 8:
-                                    Precio_DTO precio_dto = new Precio_DTO();
-                                    precio_dto.setRespuesta_dto(respuesta_dto);
-                                    precio_dto.setprecio_estado(false);
-                                    encuesta_dto.addPrecio_DTO(precio_dto);
-                                    break;
-                            }
-                        }
-
-                        hideDialog();
-
-                        encuesta_dtos.add(encuesta_dto);
-                    }
-
-                    linearLayout = (LinearLayout)getView().findViewById(R.id.containerencuesta);
-                    for (int i = 0; i < encuesta_dtos.size(); i++) {
-                        View_Encuesta view_encuesta = new View_Encuesta(getOpino(),encuesta_dtos.get(i));
-                        view_encuesta.init();
-                        linearLayout.addView(view_encuesta);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        if (Connectivity.isConnected(getOpino())) {
+            if (getOpino().isOnline()) {
+                initRequest();
+            } else {
+                updateView();
             }
+        } else {
+            updateView();
+        }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                Log.e(Fragment_Locales.class.getName(), responseString);
-                hideDialog();
-            }
-        });
+        dialog_opino.hide();
 
-        Button btnenviar = (Button)getView().findViewById(R.id.btnenviar);
+        Button btnenviar = (Button) getView().findViewById(R.id.btnenviar);
         btnenviar.setTypeface(Util_Fonts.setPNASemiBold(getOpino()));
         btnenviar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,15 +118,15 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
                     for (int i = 0; i < encuesta_dtos.size(); i++) {
                         View_Encuesta view_encuesta = (View_Encuesta) linearLayout.getChildAt(i);
                         Imagen_DTO imagen_dto = view_encuesta.getView_foto().getImagen_dto();
-                        if(imagen_dto != null){
+                        if (imagen_dto != null) {
                             imagen_dto.setImagenRecurso(encuesta_dtos.get(i).getEncuesta_recurso_id());
 
-                            Log.e("IMAGEN",imagen_dto.getImagenFile().getAbsolutePath());
+                            Log.e("IMAGEN", imagen_dto.getImagenFile().getAbsolutePath());
                             imagen_dtos.add(imagen_dto);
                         }
                     }
 
-                    interface_upload_image.uploadImages(getOpino(),imagen_dtos);
+                    interface_upload_image.uploadImages(getOpino(), imagen_dtos);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -269,13 +191,13 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
         getOpino().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.animator.izquierda_derecha_b, R.animator.izquierda_derecha_b).add(R.id.container, Fragment_Encuestas_v2.newInstance(), Fragment_Encuestas_v2.class.getName()).addToBackStack(null).commit();
     }
 
-    public void uploadData(final JSONArray jsonarray_encuesta_completa,String idLocal,String variable) throws JSONException {
+    public void uploadData(final JSONArray jsonarray_encuesta_completa, String idLocal, String variable) throws JSONException {
         try {
             Session_Manager session_manager = new Session_Manager(getOpino());
             ByteArrayEntity entity = new ByteArrayEntity(jsonarray_encuesta_completa.toString().getBytes("UTF-8"));
             AsyncHttpClient asyncHttpClient_response = new AsyncHttpClient();
             asyncHttpClient_response.addHeader("Token", session_manager.getSession().getUsuario_token());
-            asyncHttpClient_response.addHeader("Content-Type","application/json");
+            asyncHttpClient_response.addHeader("Content-Type", "application/json");
 
             asyncHttpClient_response.post(getOpino(), Opino_WS.WS_SUBIR_INFORMACION.replace("%", idLocal).replace("#", variable), entity, null, new JsonHttpResponseHandler() {
                 @Override
@@ -303,5 +225,203 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
     public void onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_update_location).setVisible(false).setEnabled(false);
         super.onPrepareOptionsMenu(menu);
+    }
+
+    private void initRequest() {
+        final Dialog_Opino dialog_opino = showDialog();
+        dialog_opino.setText("Obteniendo Información.");
+        dialog_opino.show();
+
+        Session_Manager session_manager = new Session_Manager(getOpino());
+        AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+        asyncHttpClient.addHeader("Token", session_manager.getSession().getUsuario_token());
+        asyncHttpClient.get(getOpino(), Opino_WS.WS_OBTENER_INFORMACION.replace("%", getOpino().getLocal_dto().getLocal_id()).replace("#", getOpino().getVariable_dto().getVariable_id()), null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    for (int i = 0; i <response.length(); i++) {
+                        Encuesta_DTO encuesta_dto = new Encuesta_DTO(response.getJSONObject(i));
+
+                        for (int j = 0; j < encuesta_dto.getEncuesta_respuesta_dtos().size(); j++) {
+                            Respuesta_DTO respuesta_dto = encuesta_dto.getEncuesta_respuesta_dtos().get(j);
+                            switch (Integer.parseInt(respuesta_dto.getRespuesta_tipo())) {
+                                case 0:
+                                    Si_No_DTO si_no_dto = new Si_No_DTO();
+                                    si_no_dto.setRespuesta_dto(respuesta_dto);
+                                    si_no_dto.setSi_no_estado(false);
+                                    encuesta_dto.addSi_No_DTO(si_no_dto);
+                                    break;
+                                case 1:
+                                    Comentario_DTO comentario_dto = new Comentario_DTO();
+                                    comentario_dto.setRespuesta_dto(respuesta_dto);
+                                    comentario_dto.setcomentario_estado(false);
+                                    encuesta_dto.addComentario_DTO(comentario_dto);
+                                    break;
+                                case 2:
+                                    Sub_Comentario_DTO sub_comentario_dto = new Sub_Comentario_DTO();
+                                    sub_comentario_dto.setRespuesta_dto(respuesta_dto);
+                                    sub_comentario_dto.setsubcomentario_estado(false);
+                                    encuesta_dto.addSub_Comentario_DTO(sub_comentario_dto);
+                                    break;
+                                case 3:
+                                    Rango_DTO rango_dto = new Rango_DTO();
+                                    rango_dto.setRespuesta_dto(respuesta_dto);
+                                    rango_dto.setrango_estado(false);
+                                    encuesta_dto.addRango_DTO(rango_dto);
+                                    break;
+                                case 4:
+                                    Timer_DTO timer_dto = new Timer_DTO();
+                                    timer_dto.setRespuesta_dto(respuesta_dto);
+                                    timer_dto.settim_estado(false);
+                                    encuesta_dto.setTimer_dto(timer_dto);
+                                    break;
+                                case 5:
+                                    Directo_Indirecto_DTO directo_indirecto_dto = new Directo_Indirecto_DTO();
+                                    directo_indirecto_dto.setRespuesta_dto(respuesta_dto);
+                                    directo_indirecto_dto.setSi_no_estado(false);
+                                    encuesta_dto.setDirecto_indirecto_dto(directo_indirecto_dto);
+                                    break;
+                                case 6:
+                                    Atencion_DTO atencion_dto = new Atencion_DTO();
+                                    atencion_dto.setRespuesta_dto(respuesta_dto);
+                                    atencion_dto.setrango_estado(false);
+                                    encuesta_dto.setAtencion_dto(atencion_dto);
+                                    break;
+                                case 7:
+                                    Foto_DTO foto_dto = new Foto_DTO();
+                                    foto_dto.setRespuesta_dto(respuesta_dto);
+                                    foto_dto.setFoto_estado(false);
+                                    encuesta_dto.setFoto_dto(foto_dto);
+                                    break;
+                                case 8:
+                                    Precio_DTO precio_dto = new Precio_DTO();
+                                    precio_dto.setRespuesta_dto(respuesta_dto);
+                                    precio_dto.setprecio_estado(false);
+                                    encuesta_dto.addPrecio_DTO(precio_dto);
+                                    break;
+                            }
+                        }
+
+                        dialog_opino.hide();
+                        encuesta_dtos.add(encuesta_dto);
+                    }
+
+                    linearLayout = (LinearLayout) getView().findViewById(R.id.containerencuesta);
+                    for (int i = 0; i < encuesta_dtos.size(); i++) {
+                        View_Encuesta view_encuesta = new View_Encuesta(getOpino(), encuesta_dtos.get(i));
+                        view_encuesta.init();
+                        linearLayout.addView(view_encuesta);
+                    }
+
+                } catch (JSONException e) {
+                    dialog_opino.hide();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.e(Fragment_Locales.class.getName(), responseString);
+                dialog_opino.hide();
+            }
+        });
+    }
+
+    private void updateView() {
+
+        final Dialog_Opino dialog_opino = showDialog();
+        dialog_opino.setText("Obteniendo Información Interna.");
+        dialog_opino.show();
+
+        try {
+            /**
+             * Get Core to DB
+             */
+            Core_Service core_service = new Core_Service(getOpino());
+            String id_local = getOpino().getLocal_dto().getLocal_id();
+            String id_variable = getOpino().getVariable_dto().getVariable_id();
+
+            for (int i = 0; i < core_service.getCore(id_local, id_variable).getJson_core().length(); i++) {
+                Encuesta_DTO encuesta_dto = new Encuesta_DTO(core_service.getCore(id_local, id_variable).getJson_core().getJSONObject(i));
+
+                for (int j = 0; j < encuesta_dto.getEncuesta_respuesta_dtos().size(); j++) {
+                    Respuesta_DTO respuesta_dto = encuesta_dto.getEncuesta_respuesta_dtos().get(j);
+                    switch (Integer.parseInt(respuesta_dto.getRespuesta_tipo())) {
+                        case 0:
+                            Si_No_DTO si_no_dto = new Si_No_DTO();
+                            si_no_dto.setRespuesta_dto(respuesta_dto);
+                            si_no_dto.setSi_no_estado(false);
+                            encuesta_dto.addSi_No_DTO(si_no_dto);
+                            break;
+                        case 1:
+                            Comentario_DTO comentario_dto = new Comentario_DTO();
+                            comentario_dto.setRespuesta_dto(respuesta_dto);
+                            comentario_dto.setcomentario_estado(false);
+                            encuesta_dto.addComentario_DTO(comentario_dto);
+                            break;
+                        case 2:
+                            Sub_Comentario_DTO sub_comentario_dto = new Sub_Comentario_DTO();
+                            sub_comentario_dto.setRespuesta_dto(respuesta_dto);
+                            sub_comentario_dto.setsubcomentario_estado(false);
+                            encuesta_dto.addSub_Comentario_DTO(sub_comentario_dto);
+                            break;
+                        case 3:
+                            Rango_DTO rango_dto = new Rango_DTO();
+                            rango_dto.setRespuesta_dto(respuesta_dto);
+                            rango_dto.setrango_estado(false);
+                            encuesta_dto.addRango_DTO(rango_dto);
+                            break;
+                        case 4:
+                            Timer_DTO timer_dto = new Timer_DTO();
+                            timer_dto.setRespuesta_dto(respuesta_dto);
+                            timer_dto.settim_estado(false);
+                            encuesta_dto.setTimer_dto(timer_dto);
+                            break;
+                        case 5:
+                            Directo_Indirecto_DTO directo_indirecto_dto = new Directo_Indirecto_DTO();
+                            directo_indirecto_dto.setRespuesta_dto(respuesta_dto);
+                            directo_indirecto_dto.setSi_no_estado(false);
+                            encuesta_dto.setDirecto_indirecto_dto(directo_indirecto_dto);
+                            break;
+                        case 6:
+                            Atencion_DTO atencion_dto = new Atencion_DTO();
+                            atencion_dto.setRespuesta_dto(respuesta_dto);
+                            atencion_dto.setrango_estado(false);
+                            encuesta_dto.setAtencion_dto(atencion_dto);
+                            break;
+                        case 7:
+                            Foto_DTO foto_dto = new Foto_DTO();
+                            foto_dto.setRespuesta_dto(respuesta_dto);
+                            foto_dto.setFoto_estado(false);
+                            encuesta_dto.setFoto_dto(foto_dto);
+                            break;
+                        case 8:
+                            Precio_DTO precio_dto = new Precio_DTO();
+                            precio_dto.setRespuesta_dto(respuesta_dto);
+                            precio_dto.setprecio_estado(false);
+                            encuesta_dto.addPrecio_DTO(precio_dto);
+                            break;
+                    }
+                }
+
+                hideDialog();
+
+                encuesta_dtos.add(encuesta_dto);
+            }
+
+            dialog_opino.hide();
+            linearLayout = (LinearLayout) getView().findViewById(R.id.containerencuesta);
+
+            for (int i = 0; i < encuesta_dtos.size(); i++) {
+                View_Encuesta view_encuesta = new View_Encuesta(getOpino(), encuesta_dtos.get(i));
+                view_encuesta.init();
+                linearLayout.addView(view_encuesta);
+            }
+        } catch (JSONException e) {
+            dialog_opino.hide();
+            e.printStackTrace();
+        }
     }
 }
