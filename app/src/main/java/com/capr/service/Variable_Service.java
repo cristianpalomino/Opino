@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.capr.beans.Core_DTO;
 import com.capr.beans.Variable_DTO;
 import com.capr.dao.Variable_DAO;
 import com.capr.database.Opino_DB;
@@ -87,6 +89,18 @@ public class Variable_Service extends  Main_Service implements Variable_DAO {
             } while (cursor.moveToNext());
         }
         return variable_dtos;
+    }
+
+    @Override
+    public void updateVariable(String codigo_local,String nombre_variable,String estado) {
+        ContentValues values = new ContentValues();
+        values.put("estado_variable",estado);
+
+        getDatabase().update(Util_Database.TABLE_VARIABLES,
+                values,
+                "codigo_local = ? AND nombre_variable = ?",
+                new String[]{codigo_local,nombre_variable}
+        );
     }
 
     @Override

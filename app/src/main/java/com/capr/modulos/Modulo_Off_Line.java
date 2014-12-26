@@ -81,7 +81,7 @@ public class Modulo_Off_Line {
                         ArrayList<Variable_DTO> variable_dtos = new ArrayList<Variable_DTO>();
                         variable_dtos.add(new Variable_DTO(id_local, "sku", false, "Sku"));
                         variable_dtos.add(new Variable_DTO(id_local, "afiche", false, "Afiche"));
-                        variable_dtos.add(new Variable_DTO(id_local, "promocion", true, "Promoción"));
+                        variable_dtos.add(new Variable_DTO(id_local, "promocion", false, "Promoción"));
                         variable_dtos.add(new Variable_DTO(id_local, "calidad", false, "Calidad"));
                         local_dto.setVariable_dtos(variable_dtos, context,false);
 

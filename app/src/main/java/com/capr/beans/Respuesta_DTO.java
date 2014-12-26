@@ -1,5 +1,7 @@
 package com.capr.beans;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -66,6 +68,11 @@ public class Respuesta_DTO {
                 json_respuesta.put("variable_id", JSONObject.NULL);
             } else {
                 json_respuesta.put("variable_id", getRespuesta_variable_id());
+            }
+            if (getVariable_nombre().endsWith("null")) {
+                json_respuesta.put("variable_nombre", JSONObject.NULL);
+            } else {
+                json_respuesta.put("variable_nombre", getVariable_nombre());
             }
 
             if(getRespuesta_string() != null){

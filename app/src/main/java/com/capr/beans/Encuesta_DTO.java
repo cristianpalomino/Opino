@@ -1,6 +1,7 @@
 package com.capr.beans;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -42,6 +43,7 @@ public class Encuesta_DTO {
     private Atencion_DTO atencion_dto;
     private Directo_Indirecto_DTO directo_indirecto_dto;
     private Precio_DTO precio_dto;
+    private Presente_DTO presente_dto;
 
     public Encuesta_DTO() {
     }
@@ -117,6 +119,12 @@ public class Encuesta_DTO {
             if (getRango_dto() != null) {
                 for (int i = 0; i < getRango_dto().size(); i++) {
                     jsonArray.put(getRango_dto().get(i).getRespuesta_dto().getRespuesta_json());
+                }
+            }
+
+            if (getPrecio_dtos() != null) {
+                for (int i = 0; i < getPrecio_dtos().size(); i++) {
+                    jsonArray.put(getPrecio_dtos().get(i).getRespuesta_dto().getRespuesta_json());
                 }
             }
 
@@ -298,6 +306,14 @@ public class Encuesta_DTO {
 
     public void setPrecio_dto(Precio_DTO precio_dto) {
         this.precio_dto = precio_dto;
+    }
+
+    public Presente_DTO getPresente_dto() {
+        return presente_dto;
+    }
+
+    public void setPresente_dto(Presente_DTO presente_dto) {
+        this.presente_dto = presente_dto;
     }
 }
 

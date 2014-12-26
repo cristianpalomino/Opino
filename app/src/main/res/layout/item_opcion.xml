@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="49dp"
+    android:id="@+id/containeritemlocal"
+    android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <FrameLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:id="@+id/txtnombrevariable"
+                android:text="Opcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="false"
+                android:padding="3dp"
+                android:textColor="@color/color_negro"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold"
+                android:layout_marginLeft="30dp"
+                android:clickable="false"
+                android:layout_gravity="left|center_vertical" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox"
+                android:gravity="center"
+                android:layout_gravity="right|center" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+</FrameLayout>

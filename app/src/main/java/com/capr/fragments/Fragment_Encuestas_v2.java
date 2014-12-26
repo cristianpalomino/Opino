@@ -2,6 +2,7 @@ package com.capr.fragments;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,8 +16,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -32,16 +35,20 @@ import com.capr.beans.Foto_DTO;
 import com.capr.beans.Imagen_DTO;
 import com.capr.beans.Local_DTO;
 import com.capr.beans.Precio_DTO;
+import com.capr.beans.Presente_DTO;
 import com.capr.beans.Rango_DTO;
 import com.capr.beans.Respuesta_DTO;
 import com.capr.beans.Si_No_DTO;
 import com.capr.beans.Sub_Comentario_DTO;
 import com.capr.beans.Timer_DTO;
 import com.capr.dialog.Dialog_Opino;
+import com.capr.dialog.Dialog_Opino_Aviso;
 import com.capr.interfaces.Interface_Upload_Image;
 import com.capr.modulos.Modulo_Upload_Image;
+import com.capr.opino.Opino;
 import com.capr.opino.R;
 import com.capr.service.Core_Service;
+import com.capr.service.Variable_Service;
 import com.capr.session.Session_Manager;
 import com.capr.utils.Connectivity;
 import com.capr.utils.Util_Fonts;
@@ -65,7 +72,7 @@ import java.util.ArrayList;
 /**
  * Created by Gantz on 18/10/14.
  */
-public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView.OnItemClickListener {
+public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView.OnItemClickListener, Dialog_Opino_Aviso.I_Aviso, Opino.OnBackPressedListener {
 
     private LinearLayout linearLayout;
     private ArrayList<Encuesta_DTO> encuesta_dtos = new ArrayList<Encuesta_DTO>();
@@ -86,10 +93,16 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
+        getOpino().setOnBackPressedListener(this);
+        return super.onCreateView(inflater, viewGroup, bundle);
+    }
+
+    @Override
     protected void initView() {
         super.initView();
 
-        Dialog_Opino dialog_opino = showDialog();
+        final Dialog_Opino dialog_opino = showDialog();
         dialog_opino.setText("Espere por favor");
         dialog_opino.show();
 
@@ -110,42 +123,19 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
         btnenviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
-                try {
-                    Interface_Upload_Image interface_upload_image = new Modulo_Upload_Image();
-                    ArrayList<Imagen_DTO> imagen_dtos = new ArrayList<Imagen_DTO>();
 
-                    for (int i = 0; i < encuesta_dtos.size(); i++) {
-                        View_Encuesta view_encuesta = (View_Encuesta) linearLayout.getChildAt(i);
-                        Imagen_DTO imagen_dto = view_encuesta.getView_foto().getImagen_dto();
-                        if (imagen_dto != null) {
-                            imagen_dto.setImagenRecurso(encuesta_dtos.get(i).getEncuesta_recurso_id());
-
-                            Log.e("IMAGEN", imagen_dto.getImagenFile().getAbsolutePath());
-                            imagen_dtos.add(imagen_dto);
-                        }
-                    }
-
-                    interface_upload_image.uploadImages(getOpino(), imagen_dtos);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                JSONArray jsonArray = new JSONArray();
-                for (int i = 0; i < encuesta_dtos.size(); i++) {
-                    View_Encuesta view_encuesta = (View_Encuesta) linearLayout.getChildAt(i);
-                    Encuesta_DTO encuesta_dto = view_encuesta.getEncuesta_dto();
-                    jsonArray.put(encuesta_dto.getEncuesta_json());
-                }
-                try {
-                    uploadData(jsonArray, getOpino().getLocal_dto().getLocal_id(), getOpino().getVariable_dto().getVariable_id());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                /**
+                 * Dialogo de confirmacion
+                 */
+                Dialog_Opino_Aviso dialog_opino_aviso = new Dialog_Opino_Aviso(getOpino());
+                dialog_opino_aviso.setText("¿Esta Seguro\nde\nenviar la información?");
+                dialog_opino_aviso.setI_aviso(Fragment_Encuestas_v2.this);
+                dialog_opino_aviso.show();
             }
         });
-
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -191,7 +181,12 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
         getOpino().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.animator.izquierda_derecha_b, R.animator.izquierda_derecha_b).add(R.id.container, Fragment_Encuestas_v2.newInstance(), Fragment_Encuestas_v2.class.getName()).addToBackStack(null).commit();
     }
 
-    public void uploadData(final JSONArray jsonarray_encuesta_completa, String idLocal, String variable) throws JSONException {
+    public void uploadData(final JSONArray jsonarray_encuesta_completa, String idLocal, final String variable) throws JSONException {
+
+        final Dialog_Opino dialog_opino = showDialog();
+        dialog_opino.setText("Espere por favor");
+        dialog_opino.show();
+
         try {
             Session_Manager session_manager = new Session_Manager(getOpino());
             ByteArrayEntity entity = new ByteArrayEntity(jsonarray_encuesta_completa.toString().getBytes("UTF-8"));
@@ -204,20 +199,23 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Toast.makeText(getOpino(), response.toString(), Toast.LENGTH_SHORT).show();
-                    hideDialog();
+
+                    Variable_Service variable_service = new Variable_Service(getOpino());
+                    variable_service.updateVariable(getOpino().getLocal_dto().getLocal_id(), getOpino().getVariable_dto().getVariable_id(), "1");
+
+                    dialog_opino.hide();
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    dialog_opino.hide();
                     super.onFailure(statusCode, headers, responseString, throwable);
                     Log.e("ERROR", responseString.toString());
-                    hideDialog();
-
                 }
             });
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            hideDialog();
+            dialog_opino.hide();
         }
     }
 
@@ -240,7 +238,7 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    for (int i = 0; i <response.length(); i++) {
+                    for (int i = 0; i < response.length(); i++) {
                         Encuesta_DTO encuesta_dto = new Encuesta_DTO(response.getJSONObject(i));
 
                         for (int j = 0; j < encuesta_dto.getEncuesta_respuesta_dtos().size(); j++) {
@@ -299,6 +297,11 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
                                     precio_dto.setRespuesta_dto(respuesta_dto);
                                     precio_dto.setprecio_estado(false);
                                     encuesta_dto.addPrecio_DTO(precio_dto);
+                                    break;
+                                case 9:
+                                    Presente_DTO presente_dto = new Presente_DTO();
+                                    presente_dto.setRespuesta_dto(respuesta_dto);
+                                    encuesta_dto.setPresente_dto(presente_dto);
                                     break;
                             }
                         }
@@ -403,6 +406,11 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
                             precio_dto.setprecio_estado(false);
                             encuesta_dto.addPrecio_DTO(precio_dto);
                             break;
+                        case 9:
+                            Presente_DTO presente_dto = new Presente_DTO();
+                            presente_dto.setRespuesta_dto(respuesta_dto);
+                            encuesta_dto.setPresente_dto(presente_dto);
+                            break;
                     }
                 }
 
@@ -423,5 +431,79 @@ public class Fragment_Encuestas_v2 extends Fragment_Opino implements AdapterView
             dialog_opino.hide();
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onAvisoResult(boolean accept, Dialog_Opino_Aviso dialog_opino_aviso) {
+        if (accept) {
+            dialog_opino_aviso.hide();
+            try {
+                Interface_Upload_Image interface_upload_image = new Modulo_Upload_Image();
+                ArrayList<Imagen_DTO> imagen_dtos = new ArrayList<Imagen_DTO>();
+
+                for (int i = 0; i < encuesta_dtos.size(); i++) {
+                    View_Encuesta view_encuesta = (View_Encuesta) linearLayout.getChildAt(i);
+                    Imagen_DTO imagen_dto = view_encuesta.getView_foto().getImagen_dto();
+                    if (imagen_dto != null) {
+                        imagen_dto.setImagenRecurso(encuesta_dtos.get(i).getEncuesta_recurso_id());
+
+                        Log.e("IMAGEN", imagen_dto.getImagenFile().getAbsolutePath());
+                        imagen_dtos.add(imagen_dto);
+                    }
+                }
+
+                interface_upload_image.uploadImages(getOpino(), imagen_dtos);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            JSONArray jsonArray = new JSONArray();
+            for (int i = 0; i < encuesta_dtos.size(); i++) {
+                View_Encuesta view_encuesta = (View_Encuesta) linearLayout.getChildAt(i);
+                Encuesta_DTO encuesta_dto = view_encuesta.getEncuesta_dto();
+                jsonArray.put(encuesta_dto.getEncuesta_json());
+            }
+
+            /**
+             * Envia información
+             */
+            try {
+                uploadData(jsonArray, getOpino().getLocal_dto().getLocal_id(), getOpino().getVariable_dto().getVariable_id());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            dialog_opino_aviso.hide();
+        }
+    }
+
+    private void saveChanges() {
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < encuesta_dtos.size(); i++) {
+            View_Encuesta view_encuesta = (View_Encuesta) linearLayout.getChildAt(i);
+            Encuesta_DTO encuesta_dto = view_encuesta.getEncuesta_dto();
+            jsonArray.put(encuesta_dto.getEncuesta_json());
+        }
+
+        Core_DTO core_dto = new Core_DTO();
+        core_dto.setId_local(getOpino().getLocal_dto().getLocal_id());
+        core_dto.setId_variable(getOpino().getVariable_dto().getVariable_id());
+        core_dto.setJson_core(jsonArray);
+
+        Core_Service core_service = new Core_Service(getOpino());
+        core_service.updateCore(core_dto);
+    }
+
+    @Override
+    public void doBack() {
+        /*
+        saveChanges();
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.setCustomAnimations(R.animator.izquierda_derecha, R.animator.derecha_izquierda);
+        trans.remove(Fragment_Encuestas_v2.this);
+        trans.commit();
+        manager.popBackStack();
+        */
     }
 }

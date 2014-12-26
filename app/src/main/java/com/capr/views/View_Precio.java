@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -65,6 +66,10 @@ public class View_Precio extends View_Opino implements TextWatcher {
         TextView nombre = (TextView) getView().findViewById(R.id.nombre_subvariable);
         nombre.setTypeface(Util_Fonts.setPNALight(getOpino()));
         nombre.setText(precio_dto.getRespuesta_dto().getVariable_nombre());
+
+        if (precio_dto.getRespuesta_dto().getRespuesta_string() != null) {
+            edtcomentario.setText(precio_dto.getRespuesta_dto().getRespuesta_string());
+        }
         //edtcomentario.setHint(precio_dto.getRespuesta_dto().getVariable_nombre().toString());
     }
 

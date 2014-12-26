@@ -50,6 +50,8 @@ public class Opino extends ActionBarActivity {
     private String mCurrentPhotoPath = null;
     private Uri mCapturedImageURI = null;
 
+    protected OnBackPressedListener onBackPressedListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,22 +59,33 @@ public class Opino extends ActionBarActivity {
         session_manager = new Session_Manager(this);
 
         if (savedInstanceState == null) {
-            if(session_manager.isLogin()){
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,Fragment_Locales.newInstance()).commit();
-            }else{
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,Fragment_Login.newInstance()).commit();
+            if (session_manager.isLogin()) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, Fragment_Locales.newInstance()).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, Fragment_Login.newInstance()).commit();
             }
         }
     }
 
     @Override
     public void onBackPressed() {
-        FragmentManager fm = getSupportFragmentManager();
+        if (onBackPressedListener != null) {
+            FragmentManager fm = getSupportFragmentManager();
+            if (fm.getBackStackEntryCount() > 0) {
+                fm.popBackStack();
+                onBackPressedListener.doBack();
+            } else {
+                super.onBackPressed();
+            }
+        }
+
+        /*
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
         } else {
             super.onBackPressed();
         }
+        */
     }
 
     public void clearHistory() {
@@ -87,7 +100,7 @@ public class Opino extends ActionBarActivity {
      */
     public void dispatchTakePictureIntent(View_Foto view_foto) {
         PackageManager packageManager = getPackageManager();
-        if(packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA) == false){
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA) == false) {
             Toast.makeText(Opino.this, "This device does not have a camera.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -112,7 +125,7 @@ public class Opino extends ActionBarActivity {
                 Uri fileUri = Uri.fromFile(photoFile);
                 setCapturedImageURI(fileUri);
                 setCurrentPhotoPath(fileUri.getPath());
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,getCapturedImageURI());
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getCapturedImageURI());
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
                 this.view_foto = view_foto;
             }
@@ -121,6 +134,7 @@ public class Opino extends ActionBarActivity {
 
     /**
      * The activity returns with the photo.
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -144,6 +158,7 @@ public class Opino extends ActionBarActivity {
 
     /**
      * Creates the image file to which the image must be saved.
+     *
      * @return
      * @throws IOException
      */
@@ -251,4 +266,14 @@ public class Opino extends ActionBarActivity {
         return online;
     }
 
+    public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
+        this.onBackPressedListener = onBackPressedListener;
+    }
+
+    /**
+     *
+     */
+    public interface OnBackPressedListener {
+        public void doBack();
+    }
 }

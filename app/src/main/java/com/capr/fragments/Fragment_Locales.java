@@ -202,7 +202,7 @@ public class Fragment_Locales extends Fragment_Opino implements AdapterView.OnIt
                         ArrayList<Variable_DTO> variable_dtos = new ArrayList<Variable_DTO>();
                         variable_dtos.add(new Variable_DTO(id_local,"sku",false, "Sku"));
                         variable_dtos.add(new Variable_DTO(id_local,"afiche", false, "Afiche"));
-                        variable_dtos.add(new Variable_DTO(id_local,"promocion",true, "Promoción"));
+                        variable_dtos.add(new Variable_DTO(id_local,"promocion",false, "Promoción"));
                         variable_dtos.add(new Variable_DTO(id_local,"calidad", false, "Calidad"));
                         local_dto.setVariable_dtos(variable_dtos,getOpino(),false);
 

@@ -13,5 +13,5 @@ public interface Variable_DAO {
     public int addVariables(ArrayList<Variable_DTO> variable_dtos);
     public ArrayList<Variable_DTO> getVariables(String codigo_local);
     public void cleanTable(String local_id);
-
+    public void updateVariable(String codigo_local,String nombre_variable,String estado);
 }

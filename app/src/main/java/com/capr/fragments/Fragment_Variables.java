@@ -5,19 +5,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.capr.adapter.Adapter_Variables;
 import com.capr.beans.Local_DTO;
 import com.capr.beans.Variable_DTO;
 import com.capr.interfaces.Interface_Update_Location;
 import com.capr.modulos.Modulo_Update_Location;
+import com.capr.opino.Opino;
 import com.capr.opino.R;
 import com.capr.service.Variable_Service;
 import com.capr.utils.Util_Fonts;
@@ -27,7 +31,7 @@ import java.util.ArrayList;
 /**
  * Created by Gantz on 18/10/14.
  */
-public class Fragment_Variables extends Fragment_Opino implements AdapterView.OnItemClickListener {
+public class Fragment_Variables extends Fragment_Opino implements AdapterView.OnItemClickListener, Opino.OnBackPressedListener {
 
     protected ListView lista_variables;
     protected Adapter_Variables adapter_variables;
@@ -46,6 +50,12 @@ public class Fragment_Variables extends Fragment_Opino implements AdapterView.On
         setHasOptionsMenu(true);
         getOpino().getSupportActionBar().setIcon(R.drawable.logo_opino);
         getOpino().getSupportActionBar().setTitle("Variables");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
+        getOpino().setOnBackPressedListener(this);
+        return super.onCreateView(inflater, viewGroup, bundle);
     }
 
     @Override
@@ -73,7 +83,7 @@ public class Fragment_Variables extends Fragment_Opino implements AdapterView.On
             variable_dtos = variable_service.getVariables(getOpino().getLocal_dto().getLocal_id());
         }
 
-        adapter_variables = new Adapter_Variables(getOpino(),variable_dtos);
+        adapter_variables = new Adapter_Variables(getOpino(), variable_dtos);
         lista_variables.setAdapter(adapter_variables);
     }
 
@@ -126,10 +136,10 @@ public class Fragment_Variables extends Fragment_Opino implements AdapterView.On
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         /**
          * Validate if need location
-        Local_DTO local_dto = getOpino().getLocal_dto();
-        if (local_dto.getLocal_latitud().equals("") || local_dto.getLocal_latitud() == null) {
-            inflater.inflate(R.menu.menu_local, menu);
-        }
+         Local_DTO local_dto = getOpino().getLocal_dto();
+         if (local_dto.getLocal_latitud().equals("") || local_dto.getLocal_latitud() == null) {
+         inflater.inflate(R.menu.menu_local, menu);
+         }
          */
         inflater.inflate(R.menu.menu_local, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -140,7 +150,7 @@ public class Fragment_Variables extends Fragment_Opino implements AdapterView.On
         switch (item.getItemId()) {
             case R.id.action_update_location:
                 Interface_Update_Location interface_update_location = new Modulo_Update_Location();
-                interface_update_location.updateLocation(getOpino(),getOpino().getLocal_dto().getLocal_id());
+                interface_update_location.updateLocation(getOpino(), getOpino().getLocal_dto().getLocal_id());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -151,5 +161,17 @@ public class Fragment_Variables extends Fragment_Opino implements AdapterView.On
         menu.findItem(R.id.action_logout).setVisible(false).setEnabled(false);
         menu.findItem(R.id.action_modo).setVisible(false).setEnabled(false);
         super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void doBack() {
+        /*
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.setCustomAnimations(R.animator.izquierda_derecha, R.animator.derecha_izquierda);
+        trans.remove(Fragment_Variables.this);
+        trans.commit();
+        manager.popBackStack();
+        */
     }
 }
