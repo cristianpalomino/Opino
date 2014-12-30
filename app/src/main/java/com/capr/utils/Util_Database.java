@@ -17,9 +17,9 @@ public class Util_Database {
         return "CREATE TABLE `VARIABLES` (\n" +
                 "\t`_id`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
                 "\t`codigo_local`\tTEXT NOT NULL,\n" +
-                "\t`nombre_variable`\tTEXT NOT NULL,\n" +
                 "\t`codigo_variable`\tTEXT NOT NULL,\n" +
-                "\t`estado_variable`\tINTEGER NOT NULL\n" +
+                "\t`estado`\tTEXT NOT NULL,\n" +
+                "\t`json_variable`\tTEXT NOT NULL\n" +
                 ");";
     }
 
@@ -34,6 +34,8 @@ public class Util_Database {
     public static String createTableLocal() {
         return "CREATE TABLE `LOCAL` (\n" +
                 "\t`_id`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
+                "\t`id_local`\tTEXT NOT NULL,\n" +
+                "\t`estado`\tTEXT NOT NULL,\n" +
                 "\t`json_local`\tTEXT NOT NULL\n" +
                 ");";
     }
@@ -43,6 +45,7 @@ public class Util_Database {
                 "\t`_id`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
                 "\t`id_local`\tTEXT NOT NULL,\n" +
                 "\t`id_variable`\tTEXT NOT NULL,\n" +
+                "\t`foto`\tTEXT NOT NULL,\n" +
                 "\t`json_variable`\tTEXT NOT NULL\n" +
                 ");";
     }

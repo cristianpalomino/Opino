@@ -34,6 +34,7 @@ public class View_Foto extends View_Opino implements PopupMenu.OnMenuItemClickLi
     private Imagen_DTO imagen_dto;
     private Foto_DTO foto_dto;
 
+
     public View_Foto(Context context) {
         super(context,R.layout.view_foto);
     }
@@ -78,7 +79,7 @@ public class View_Foto extends View_Opino implements PopupMenu.OnMenuItemClickLi
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.menu_tomar_foto:
-                getOpino().dispatchTakePictureIntent(View_Foto.this);
+                //getOpino().dispatchTakePictureIntent(View_Foto.this);
                 break;
             case R.id.menu_ver_foto:
                 if(getImagen_dto() != null){

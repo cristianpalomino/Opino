@@ -16,16 +16,36 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:name="com.capr.application.Opino_Application"
         android:theme="@style/Theme.Opino" >
         <activity
-            android:name=".Opino"
+            android:name="com.capr.actividades.Opino"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.capr.actividades.Entrar"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.capr.actividades.Local"
+            android:label="@string/title_activity_local"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.capr.actividades.Encuestas"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/title_activity_encuestas"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.capr.actividades.Variable"
+            android:label="@string/title_activity_variable"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

@@ -8,7 +8,6 @@ import com.capr.beans.Core_DTO;
 import com.capr.beans.Local_DTO;
 import com.capr.beans.Variable_DTO;
 import com.capr.dialog.Dialog_OffLine;
-import com.capr.fragments.Fragment_Locales;
 import com.capr.service.Core_Service;
 import com.capr.service.Local_Service;
 import com.capr.service.Main_Service;
@@ -156,7 +155,6 @@ public class Modulo_Off_Line {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                Log.e(Fragment_Locales.class.getName(), responseString);
                 dialog_offLine.setText("Ocurrio un error, intentelo nuevamente");
             }
         });

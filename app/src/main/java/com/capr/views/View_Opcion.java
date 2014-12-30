@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.capr.adapter.Adapter_Presente;
 import com.capr.beans.Opcion_DTO;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 public class View_Opcion extends View_Opino implements AdapterView.OnItemClickListener {
     
     private ListView lista_opcion;
+    private OnItemClick onItemClick;
 
     public View_Opcion(Context context) {
         super(context, R.layout.view_opcion);
@@ -50,7 +53,9 @@ public class View_Opcion extends View_Opino implements AdapterView.OnItemClickLi
     @Override
     protected void initView() {
         super.initView();
+    }
 
+    public void init(){
         lista_opcion = (ListView) getView().findViewById(R.id.lista_opcion);
         lista_opcion.setAdapter(new Adapter_Presente(getOpino(), getOpciones()));
         lista_opcion.setOnItemClickListener(this);
@@ -72,7 +77,26 @@ public class View_Opcion extends View_Opino implements AdapterView.OnItemClickLi
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        onItemClick.onItemClick(parent,view,position,id);
+
+        View presente = parent.getChildAt(0);
+        View daniado = parent.getChildAt(1);
+        View invadido = parent.getChildAt(2);
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+
+        if(position == 0){
+            if(checkBox.isChecked()){
+                checkBox.setChecked(false);
+                daniado.setVisibility(GONE);
+                invadido.setVisibility(GONE);
+            }else{
+                checkBox.setChecked(true);
+                daniado.setVisibility(VISIBLE);
+                invadido.setVisibility(VISIBLE);
+            }
+        }
+
+        /*
         if(position == 0){
             if(checkBox.isActivated()){
                 checkBox.setChecked(false);
@@ -80,5 +104,14 @@ public class View_Opcion extends View_Opino implements AdapterView.OnItemClickLi
                 checkBox.setChecked(true);
             }
         }
+        */
+    }
+
+    public void setOnItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
+
+    public interface OnItemClick{
+        void onItemClick(AdapterView<?> parent, View view, int position, long id);
     }
 }

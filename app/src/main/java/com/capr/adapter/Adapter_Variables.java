@@ -1,17 +1,15 @@
 package com.capr.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.capr.beans.Variable_DTO;
-import com.capr.opino.Opino;
+import com.capr.beans_v2.Variable_DTO;
 import com.capr.opino.R;
 import com.capr.utils.Util_Fonts;
 
@@ -62,11 +60,15 @@ public class Adapter_Variables extends BaseAdapter {
         }
 
         holder.nombrevariable.setTypeface(Util_Fonts.setPNASemiBold(mContext));
-        holder.nombrevariable.setText(variable_dto.getVariable_nombre());
+        holder.nombrevariable.setText(variable_dto.getNombre());
         holder.checkBox.setClickable(false);
 
-        if(variable_dto.isCompletado()){
-            holder.checkBox.setChecked(true);
+        if(variable_dto.get_estado() != null){
+            if(variable_dto.get_estado().equals("NO")){
+                holder.checkBox.setChecked(false);
+            }else{
+                holder.checkBox.setChecked(true);
+            }
         }
 
         return view;

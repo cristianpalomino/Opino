@@ -13,5 +13,5 @@ import java.util.ArrayList;
  */
 public interface Interface_Upload_Image {
 
-    public void uploadImages(Context context,ArrayList<Imagen_DTO> imagen_dtos) throws Exception;
+    public void uploadImages(Context context,ArrayList<Imagen_DTO> imagen_dtos);
 }

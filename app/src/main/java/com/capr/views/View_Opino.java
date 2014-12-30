@@ -6,10 +6,10 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.capr.opino.Opino;
+import com.capr.actividades.Opino;
+import com.capr.beans_v2.Respuesta_DTO;
 
 /**
  * Created by Gantz on 21/10/14.
@@ -19,6 +19,8 @@ public class View_Opino extends LinearLayout {
     protected Opino opino;
     protected int id_layout;
     protected View view;
+
+    private Respuesta_DTO respuesta_dto;
 
     public View_Opino(Context context, int id_layout) {
         super(context);
@@ -32,13 +34,14 @@ public class View_Opino extends LinearLayout {
         initView();
     }
 
-    @TargetApi(Build.VERSION_CODES.L)
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public View_Opino(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes, int id_layout) {
         super(context, attrs, defStyleAttr, defStyleRes);
         this.id_layout = id_layout;
         initView();
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public View_Opino(Context context, AttributeSet attrs, int defStyleAttr, int id_layout) {
         super(context, attrs, defStyleAttr);
         this.id_layout = id_layout;
@@ -64,5 +67,13 @@ public class View_Opino extends LinearLayout {
 
     public View getView() {
         return view;
+    }
+
+    public Respuesta_DTO getRespuesta_dto() {
+        return respuesta_dto;
+    }
+
+    public void setRespuesta_dto(Respuesta_DTO respuesta_dto) {
+        this.respuesta_dto = respuesta_dto;
     }
 }

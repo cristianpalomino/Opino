@@ -59,7 +59,7 @@ public class Core_Service extends Main_Service implements Core_DAO {
         getDatabase().update(Util_Database.TABLE_CORE,
                 values,
                 "id_local = ? AND id_variable = ?",
-                new String[]{core_dto.getId_local(), core_dto.getId_variable()}
+                new String[]{core_dto.getId_local(),core_dto.getId_variable()}
         );
     }
 

@@ -84,7 +84,7 @@ public class Adapter_Encuesta extends RecyclerView.Adapter<Adapter_Encuesta.View
             super(view);
             nombreencuesta = (TextView)view.findViewById(R.id.txtnombreencuesta);
             containeritemencuesta = (LinearLayout)view.findViewById(R.id.containerencuesta);
-            view_foto = (View_Foto)view.findViewById(R.id.view_foto);
+            //view_foto = (View_Foto)view.findViewById(R.id.view_foto);
 
             /*
             view_si_no = (View_Si_No)view.findViewById(R.id.view_si_no);

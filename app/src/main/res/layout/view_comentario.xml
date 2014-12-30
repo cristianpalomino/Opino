@@ -39,6 +39,7 @@
             android:background="@drawable/edittext_registro"
             android:imeOptions="actionDone"
             android:padding="10dp"
+            android:textColor="@color/color_negro"
             android:textSize="14sp"
             android:id="@+id/edtcomentario" />
     </LinearLayout>

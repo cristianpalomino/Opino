@@ -31,7 +31,7 @@ public class Modulo_Upload_Image implements Interface_Upload_Image {
     private Interface_Notification interface_notification = new Modulo_Notificacion();
 
     @Override
-    public void uploadImages(Context context, ArrayList<Imagen_DTO> imagen_dtos) throws Exception {
+    public void uploadImages(Context context, ArrayList<Imagen_DTO> imagen_dtos) {
         if (imagen_dtos.size() > 0) {
             interface_notification.createNotification(context);
             interface_notification.getBuilder().setContentTitle("Subiendo " + (COUNT + 1) + " de " + imagen_dtos.size());
@@ -40,69 +40,72 @@ public class Modulo_Upload_Image implements Interface_Upload_Image {
         }
     }
 
-    public void upload(final Context context, final ArrayList<Imagen_DTO> imagen_dtos) throws Exception {
-        Session_Manager session_manager = new Session_Manager(context);
-        AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-        asyncHttpClient.setTimeout(9000000);
-        RequestParams params = new RequestParams();
+    public void upload(final Context context, final ArrayList<Imagen_DTO> imagen_dtos) {
+        try {
+            Session_Manager session_manager = new Session_Manager(context);
+            AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+            asyncHttpClient.setTimeout(9000000);
+            RequestParams params = new RequestParams();
 
-        asyncHttpClient.addHeader("Token", session_manager.getSession().getUsuario_token());
-        params.put("file", imagen_dtos.get(COUNT).getImagenFile());
-        params.put("recurso_id", imagen_dtos.get(COUNT).getImagenRecurso());
+            asyncHttpClient.addHeader("Token", session_manager.getSessionv2().getToken());
+            params.put("file", imagen_dtos.get(COUNT).getImagenFile());
+            params.put("recurso_id", imagen_dtos.get(COUNT).getImagenRecurso());
+            asyncHttpClient.post(context, Opino_WS.WS_SUBIR_IMAGENES.replace("%", imagen_dtos.get(COUNT).getImagenLocal()), params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.e(Modulo_Upload_Image.class.getName(), response.toString());
 
-        asyncHttpClient.post(context, Opino_WS.WS_SUBIR_IMAGENES.replace("%", imagen_dtos.get(COUNT).getImagenLocal()), params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                Log.e(Modulo_Upload_Image.class.getName(), response.toString());
+                    COUNT++;
 
-                COUNT++;
-
-                if (COUNT < imagen_dtos.size()) {
-                    try {
-                        upload(context, imagen_dtos);
-                        interface_notification.getBuilder().setContentTitle("Subiendo " + (COUNT + 1) + " de " + imagen_dtos.size());
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if (COUNT < imagen_dtos.size()) {
+                        try {
+                            upload(context, imagen_dtos);
+                            interface_notification.getBuilder().setContentTitle("Subiendo " + (COUNT + 1) + " de " + imagen_dtos.size());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        interface_notification.getBuilder().setContentTitle("Listo").setProgress(0, 0, false);
+                        interface_notification.invalidate();
                     }
-                }else {
-                    interface_notification.getBuilder().setContentTitle("Listo").setProgress(0,0,false);
-                    interface_notification.invalidate();
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                Log.e(Modulo_Upload_Image.class.getName(), responseString);
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.e(Modulo_Upload_Image.class.getName(), responseString);
 
-                COUNT++;
-                interface_notification.getBuilder().setContentTitle("Subiendo " + (COUNT + 1) + " de " + imagen_dtos.size());
+                    COUNT++;
+                    interface_notification.getBuilder().setContentTitle("Subiendo " + (COUNT + 1) + " de " + imagen_dtos.size());
 
-                if (COUNT <= imagen_dtos.size()) {
-                    try {
-                        upload(context, imagen_dtos);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if (COUNT <= imagen_dtos.size()) {
+                        try {
+                            upload(context, imagen_dtos);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        interface_notification.getBuilder().setContentTitle("Listo").setProgress(0, 0, false);
+                        interface_notification.invalidate();
                     }
-                } else {
-                    interface_notification.getBuilder().setContentTitle("Listo").setProgress(0,0,false);
-                    interface_notification.invalidate();
                 }
-            }
 
-            @Override
-            public void onProgress(int bytesWritten, int totalSize) {
-                super.onProgress(bytesWritten, totalSize);
+                @Override
+                public void onProgress(int bytesWritten, int totalSize) {
+                    super.onProgress(bytesWritten, totalSize);
 
-                int progressPercentage = 100 * bytesWritten / totalSize;
-                if (progressPercentage > 95 && progressPercentage < 101) {
-                    interface_notification.getBuilder().setProgress(0, 0, true);
-                    interface_notification.getManager().notify(1, interface_notification.getBuilder().build());
-                } else {
-                    interface_notification.setProgress(100, progressPercentage);
+                    int progressPercentage = 100 * bytesWritten / totalSize;
+                    if (progressPercentage > 95 && progressPercentage < 101) {
+                        interface_notification.getBuilder().setProgress(0, 0, true);
+                        interface_notification.getManager().notify(1, interface_notification.getBuilder().build());
+                    } else {
+                        interface_notification.setProgress(100, progressPercentage);
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

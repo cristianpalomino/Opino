@@ -50,7 +50,7 @@ public class View_Precio extends View_Opino implements TextWatcher {
         edtcomentario.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(getOpino(), precio_dto.getRespuesta_dto().getVariable_nombre(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getOpino(), precio_dto.getRespuesta_dto().getRespuesta_json().toString(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });

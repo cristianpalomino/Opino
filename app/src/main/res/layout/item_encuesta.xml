@@ -17,7 +17,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:gravity="center"
             android:layout_gravity="center">
 
@@ -25,41 +25,36 @@
                 android:id="@+id/txtnombreencuesta"
                 android:text="Encuesta"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:textIsSelectable="false"
                 android:paddingLeft="5dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
+                android:gravity="center|left"
                 android:textColor="@android:color/darker_gray"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:lines="1"
+                android:layout_gravity="center_vertical" />
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/container_general">
+            <LinearLayout
+                android:id="@+id/container_calidad"
+                android:orientation="horizontal"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"></LinearLayout>
 
-            </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/container_general_v2"
             android:orientation="horizontal"
+            android:id="@+id/container_general"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="3dp"
-            android:layout_gravity="center_horizontal">
-
-            <view
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                class="com.capr.views.View_Foto"
-                android:layout_gravity="center"
-                android:visibility="invisible"
-                android:gravity="center"
-                android:id="@+id/view_foto" />
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -67,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="3dp"
+            android:visibility="gone"
             android:layout_gravity="center_horizontal">
 
         </LinearLayout>

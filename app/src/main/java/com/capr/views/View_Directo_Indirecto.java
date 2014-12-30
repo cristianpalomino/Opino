@@ -17,8 +17,6 @@ import com.capr.utils.Util_Fonts;
  */
 public class View_Directo_Indirecto extends View_Opino implements CompoundButton.OnCheckedChangeListener {
 
-    private Directo_Indirecto_DTO directo_indirecto_dto;
-
 
     public View_Directo_Indirecto(Context context) {
         super(context, R.layout.view_si_no);
@@ -36,7 +34,6 @@ public class View_Directo_Indirecto extends View_Opino implements CompoundButton
         super(context, attrs, R.layout.view_si_no);
     }
 
-
     @Override
     protected void initView() {
         super.initView();
@@ -50,18 +47,10 @@ public class View_Directo_Indirecto extends View_Opino implements CompoundButton
         switch_si_no.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(getOpino(), directo_indirecto_dto.getRespuesta_dto().getVariable_nombre(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getOpino(), directo_indirecto_dto.getRespuesta_dto().getVariable_nombre(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
-    }
-
-    public Directo_Indirecto_DTO getDirecto_Indirecto_DTO() {
-        return directo_indirecto_dto;
-    }
-
-    public void setDirecto_Indirecto_DTO(Directo_Indirecto_DTO directo_indirecto_dto) {
-        this.directo_indirecto_dto = directo_indirecto_dto;
     }
 
     /**
@@ -74,10 +63,8 @@ public class View_Directo_Indirecto extends View_Opino implements CompoundButton
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
             ((TextView)getView().findViewById(R.id.txtsino)).setText("Si");
-            getDirecto_Indirecto_DTO().getRespuesta_dto().setRespuesta_string("1");
         } else {
             ((TextView)getView().findViewById(R.id.txtsino)).setText("No");
-            getDirecto_Indirecto_DTO().getRespuesta_dto().setRespuesta_string("0");
         }
     }
 }

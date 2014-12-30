@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Name"
-            android:visibility="gone"
+            android:visibility="visible"
             android:gravity="center"
             android:lines="1"
             android:maxLines="1"

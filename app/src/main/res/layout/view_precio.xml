@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
+    android:paddingBottom="5dp"
+    android:gravity="center"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Name"
+            android:lines="1"
+            android:maxLines="1"
+            android:ems="7"
+            android:gravity="center"
+            android:id="@+id/nombre_subvariable"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="...."
+            android:layout_gravity="center"
+            android:maxLines="5"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:background="@drawable/edittext_registro"
+            android:imeOptions="actionDone"
+            android:padding="10dp"
+            android:textColor="@color/color_negro"
+            android:textSize="14sp"
+            android:id="@+id/edtcomentario" />
+    </LinearLayout>
+
+</LinearLayout>

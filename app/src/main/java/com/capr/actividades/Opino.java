@@ -1,48 +1,36 @@
-package com.capr.opino;
+package com.capr.actividades;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.Toast;
 
+import com.capr.application.Opino_Application;
 import com.capr.beans.Imagen_DTO;
-import com.capr.beans.Local_DTO;
-import com.capr.beans.Variable_DTO;
-import com.capr.fragments.Fragment_Locales;
-import com.capr.fragments.Fragment_Login;
-import com.capr.session.Session_Manager;
-import com.capr.views.View_Foto;
-import com.shamanland.fab.FloatingActionButton;
+import com.capr.beans_v2.Encuesta_DTO;
+import com.capr.beans_v2.Local_DTO;
+import com.capr.beans_v2.Variable_DTO;
+import com.capr.views_v2.View_Foto_v2;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
-
+/**
+ * Created by Gantz on 30/12/14.
+ */
 public class Opino extends ActionBarActivity {
 
-    protected boolean online;
-    protected Session_Manager session_manager;
-    protected Local_DTO local_dto;
-    protected Variable_DTO variable_dto;
+    private Opino_Application opino_application;
     protected Imagen_DTO imagen_dto;
-    protected View_Foto view_foto;
+    protected View_Foto_v2 view_foto;
 
     static final int REQUEST_TAKE_PHOTO = 11111;
     private final static String CAPTURED_PHOTO_PATH_KEY = "mCurrentPhotoPath";
@@ -50,55 +38,16 @@ public class Opino extends ActionBarActivity {
     private String mCurrentPhotoPath = null;
     private Uri mCapturedImageURI = null;
 
-    protected OnBackPressedListener onBackPressedListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_opino);
-        session_manager = new Session_Manager(this);
-
-        if (savedInstanceState == null) {
-            if (session_manager.isLogin()) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, Fragment_Locales.newInstance()).commit();
-            } else {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, Fragment_Login.newInstance()).commit();
-            }
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (onBackPressedListener != null) {
-            FragmentManager fm = getSupportFragmentManager();
-            if (fm.getBackStackEntryCount() > 0) {
-                fm.popBackStack();
-                onBackPressedListener.doBack();
-            } else {
-                super.onBackPressed();
-            }
-        }
-
-        /*
-        if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-        */
-    }
-
-    public void clearHistory() {
-        FragmentManager fm = getSupportFragmentManager();
-        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-            fm.popBackStack();
-        }
+        opino_application = (Opino_Application) getApplication();
     }
 
     /**
      * Start the camera by dispatching a camera intent.
      */
-    public void dispatchTakePictureIntent(View_Foto view_foto) {
+    public void dispatchTakePictureIntent(View_Foto_v2 view_foto) {
         PackageManager packageManager = getPackageManager();
         if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA) == false) {
             Toast.makeText(Opino.this, "This device does not have a camera.", Toast.LENGTH_SHORT).show();
@@ -146,10 +95,8 @@ public class Opino extends ActionBarActivity {
 
             Imagen_DTO imagen_dto = new Imagen_DTO(Opino.this);
             imagen_dto.setImagenData(getCurrentPhotoPath());
-            imagen_dto.setImagenLocal(getLocal_dto().getLocal_id());
-
+            imagen_dto.setImagenLocal(getLocal_dto().getId());
             view_foto.setImagen_dto(imagen_dto);
-
             Toast.makeText(Opino.this, "Imagen Guardada", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(Opino.this, "Image Capture Failed", Toast.LENGTH_SHORT).show();
@@ -234,46 +181,39 @@ public class Opino extends ActionBarActivity {
         this.mCapturedImageURI = mCapturedImageURI;
     }
 
-    public void setLocal_dto(Local_DTO local_dto) {
-        this.local_dto = local_dto;
-    }
-
-    public Local_DTO getLocal_dto() {
-        return local_dto;
-    }
-
-    public void setVariable_dto(Variable_DTO variable_dto) {
-        this.variable_dto = variable_dto;
+    public Encuesta_DTO getEncuesta_dto() {
+        return opino_application.getEncuesta_dto();
     }
 
     public Variable_DTO getVariable_dto() {
-        return variable_dto;
+        return opino_application.getVariable_dto();
     }
 
-    public void setImagen_dto(Imagen_DTO imagen_dto) {
-        this.imagen_dto = imagen_dto;
+    public Local_DTO getLocal_dto() {
+        return opino_application.getLocal_dto();
     }
 
-    public Imagen_DTO getImagen_dto() {
-        return imagen_dto;
+    public void setLocal_dto(Local_DTO local_dto) {
+        opino_application.setLocal_dto(local_dto);
     }
 
-    public void setOnline(boolean online) {
-        this.online = online;
+    public void setVariable_dto(Variable_DTO variable_dto) {
+        opino_application.setVariable_dto(variable_dto);
     }
 
-    public boolean isOnline() {
-        return online;
+    public void setEncuesta_dto(Encuesta_DTO encuesta_dto) {
+        opino_application.setEncuesta_dto(encuesta_dto);
     }
 
-    public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
-        this.onBackPressedListener = onBackPressedListener;
+    public ArrayList<Encuesta_DTO> getEncuesta_dtos() {
+        return opino_application.getEncuesta_dtos();
     }
 
-    /**
-     *
-     */
-    public interface OnBackPressedListener {
-        public void doBack();
+    public void setEncuesta_dtos(ArrayList<Encuesta_DTO> encuesta_dtos) {
+        opino_application.setEncuesta_dtos(encuesta_dtos);
+    }
+
+    public Opino_Application getOpino_application() {
+        return opino_application;
     }
 }

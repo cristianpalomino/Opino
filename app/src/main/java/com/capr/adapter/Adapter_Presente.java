@@ -61,8 +61,13 @@ public class Adapter_Presente extends BaseAdapter {
 
         holder.nombrevariable.setText(opcion_dto.getNombre());
         holder.nombrevariable.setTypeface(Util_Fonts.setPNASemiBold(mContext));
+        holder.checkBox.setClickable(false);
 
-
+        if(position == 0){
+            view.setVisibility(View.VISIBLE);
+        }else{
+            view.setVisibility(View.GONE);
+        }
 
         return view;
     }

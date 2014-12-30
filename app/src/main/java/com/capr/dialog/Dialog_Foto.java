@@ -6,17 +6,14 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.capr.actividades.Opino;
 import com.capr.beans.Imagen_DTO;
-import com.capr.opino.Opino;
 import com.capr.opino.R;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by Gantz on 22/10/14.

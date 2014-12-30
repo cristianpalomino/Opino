@@ -48,7 +48,6 @@ public class Modulo_Update_Location implements Interface_Update_Location {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                             super.onFailure(statusCode, headers, responseString, throwable);
-                            Log.e("ERROR", responseString.toString());
                         }
                     });
                 } catch (UnsupportedEncodingException e) {

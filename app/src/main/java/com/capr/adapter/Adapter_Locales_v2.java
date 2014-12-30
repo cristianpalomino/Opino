@@ -2,14 +2,16 @@ package com.capr.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.capr.beans.Local_DTO;
+import com.capr.beans_v2.Local_DTO;
 import com.capr.opino.R;
 import com.capr.utils.Util_Fonts;
 
@@ -54,6 +56,7 @@ public class Adapter_Locales_v2 extends BaseAdapter {
             holder.nombrelocal = (TextView) view.findViewById(R.id.txtnombrelocal);
             holder.direccionlocal = (TextView) view.findViewById(R.id.txtdireccionlocal);
             holder.containeritemlocal = (FrameLayout) view.findViewById(R.id.containeritemlocal);
+            holder.checkBox = (CheckBox) view.findViewById(R.id.checkBox);
 
             view.setTag(holder);
         } else {
@@ -63,9 +66,18 @@ public class Adapter_Locales_v2 extends BaseAdapter {
         holder.nombrelocal.setTypeface(Util_Fonts.setPNASemiBold(mContext));
         holder.direccionlocal.setTypeface(Util_Fonts.setPNALight(mContext));
 
-        holder.nombrelocal.setText(local_dto.getLocal_nombre().toUpperCase());
-        holder.direccionlocal.setText(local_dto.getLocal_direccion() + ", " + local_dto.getLocal_distrito());
-        holder.containeritemlocal.setBackgroundColor(Color.parseColor(local_dto.getLocal_canal()));
+        holder.nombrelocal.setText(local_dto.getNombre().toUpperCase());
+        holder.direccionlocal.setText(local_dto.getDireccion() + ", " + local_dto.getDistrito());
+        holder.containeritemlocal.setBackgroundColor(Color.parseColor(local_dto.getCanal()));
+        holder.checkBox.setClickable(false);
+
+        if(local_dto.get_estado() != null){
+            if(local_dto.get_estado().equals("NO")){
+                holder.checkBox.setChecked(false);
+            }else{
+                holder.checkBox.setChecked(true);
+            }
+        }
 
         return view;
     }
@@ -74,5 +86,6 @@ public class Adapter_Locales_v2 extends BaseAdapter {
         TextView nombrelocal;
         TextView direccionlocal;
         FrameLayout containeritemlocal;
+        CheckBox checkBox;
     }
 }

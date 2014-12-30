@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="65dp"
     android:id="@+id/containeritemlocal"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    >
 
     <LinearLayout
         android:orientation="vertical"
