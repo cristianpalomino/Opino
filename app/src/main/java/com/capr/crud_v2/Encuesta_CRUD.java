@@ -124,7 +124,33 @@ public class Encuesta_CRUD extends Main_CRUD implements Encuesta_DAO_v2 {
 
     @Override
     public ArrayList<Encuesta_DTO> getEncuestas() {
-        return null;
+        try {
+            ArrayList<Encuesta_DTO> encuesta_dtos = new ArrayList<Encuesta_DTO>();
+            String selectQuery = "SELECT * FROM " + Util_Database.TABLE_CORE;
+            Cursor cursor = getDatabase().rawQuery(selectQuery, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    String _id = String.valueOf(cursor.getInt(0));
+                    String id_local = cursor.getString(1);
+                    String id_variable = cursor.getString(2);
+                    String uri = cursor.getString(3);
+                    JSONObject data = new JSONObject(cursor.getString(4));
+
+                    Encuesta_DTO mencuesta_dto = new Encuesta_DTO();
+                    mencuesta_dto.setDataSource(data);
+                    mencuesta_dto.set_id(_id);
+                    mencuesta_dto.set_idlocal(id_local);
+                    mencuesta_dto.set_idvariable(id_variable);
+                    mencuesta_dto.set_uri(uri);
+                    encuesta_dtos.add(mencuesta_dto);
+
+                } while (cursor.moveToNext());
+            }
+            return encuesta_dtos;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

@@ -22,7 +22,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enviar"
+        android:text="Guardar"
         android:id="@+id/btnenviar"
         android:background="@drawable/holo_flat_button_verde_claro"
         android:textStyle="bold"

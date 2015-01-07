@@ -68,14 +68,16 @@ public class Adapter_Locales_v2 extends BaseAdapter {
 
         holder.nombrelocal.setText(local_dto.getNombre().toUpperCase());
         holder.direccionlocal.setText(local_dto.getDireccion() + ", " + local_dto.getDistrito());
-        holder.containeritemlocal.setBackgroundColor(Color.parseColor(local_dto.getCanal()));
+        holder.containeritemlocal.setBackgroundColor(mContext.getResources().getColor(R.color.rojo_alizarin));
         holder.checkBox.setClickable(false);
 
         if(local_dto.get_estado() != null){
             if(local_dto.get_estado().equals("NO")){
                 holder.checkBox.setChecked(false);
+                holder.containeritemlocal.setBackgroundColor(mContext.getResources().getColor(R.color.rojo_alizarin));
             }else{
                 holder.checkBox.setChecked(true);
+                holder.containeritemlocal.setBackgroundColor(mContext.getResources().getColor(R.color.color_verde_boton));
             }
         }
 

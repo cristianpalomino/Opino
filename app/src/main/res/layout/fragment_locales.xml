@@ -31,17 +31,33 @@
         android:gravity="center"
         android:textColor="@color/azul_oscuro_midnight_blue" />
 
-    <com.shamanland.fab.FloatingActionButton
-        android:id="@+id/flatbutton"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_update"
-        app:floatingActionButtonColor="@color/verde_claro_emerald"
-        app:floatingActionButtonSize="normal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="right|bottom" />
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        >
+
+        <com.shamanland.fab.FloatingActionButton
+            android:id="@+id/uploader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/uploader"
+            app:floatingActionButtonColor="@color/verde_claro_emerald"
+            app:floatingActionButtonSize="normal"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right" />
+
+        <com.shamanland.fab.FloatingActionButton
+            android:id="@+id/downloader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/downloader"
+            app:floatingActionButtonColor="@color/rojo_alizarin"
+            app:floatingActionButtonSize="normal"
+            android:layout_gravity="right" />
+    </LinearLayout>
+
 </FrameLayout>

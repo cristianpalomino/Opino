@@ -64,6 +64,7 @@ public class Encuestas extends Opino {
             public void onClick(View v) {
                 saveChanges();
 
+                /*
                 Encuesta_CRUD encuesta_crud = new Encuesta_CRUD(Encuestas.this);
                 ArrayList<Encuesta_DTO> encuesta_dtos = encuesta_crud.getEncuestas(idLocal, idVariable);
                 JSONArray jsonArray = new JSONArray();
@@ -92,7 +93,6 @@ public class Encuestas extends Opino {
                                 variable_crud.updateVariable(variable_dto);
                                 Toast.makeText(Encuestas.this, message, Toast.LENGTH_SHORT).show();
 
-
                                 Encuesta_CRUD encuesta_crud = new Encuesta_CRUD(Encuestas.this);
                                 ArrayList<Encuesta_DTO> encuesta_dtos = encuesta_crud.getEncuestas(idLocal,idVariable);
                                 ArrayList<Imagen_DTO> imagen_dtos = new ArrayList<Imagen_DTO>();
@@ -116,6 +116,7 @@ public class Encuestas extends Opino {
                         }
                     });
                 }
+                */
             }
         });
     }

@@ -22,6 +22,7 @@ import com.capr.modulos_v2.Modulo_Off;
 import com.capr.modulos_v2.Modulo_On;
 import com.capr.opino.R;
 import com.capr.services_v2.Downloader;
+import com.capr.services_v2.Uploader;
 import com.capr.session.Session_Manager;
 import com.shamanland.fab.FloatingActionButton;
 
@@ -47,14 +48,26 @@ public class Local extends Opino implements AdapterView.OnItemClickListener,
         lista_locales.setOnItemClickListener(Local.this);
 
         /**
-         * Flatbutton
+         * Downloader
          */
-        flatbutton = (FloatingActionButton) findViewById(R.id.flatbutton);
+        flatbutton = (FloatingActionButton) findViewById(R.id.downloader);
         flatbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Downloader downloader = new Downloader(Local.this);
                 downloader.initDownloader(Local.this);
+            }
+        });
+
+        /**
+         * Uploader
+         */
+        flatbutton = (FloatingActionButton) findViewById(R.id.uploader);
+        flatbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uploader uploader = new Uploader(Local.this);
+                uploader.initUploader(Local.this);
             }
         });
     }

@@ -31,6 +31,7 @@ public class Downloader {
     private int max_local = 0;
     private int counter_local = 0;
     private int counter_variable = 0;
+    private int counter_general = 0;
 
     public Downloader(Context context) {
         this.context = context;
@@ -39,7 +40,7 @@ public class Downloader {
 
     public void initDownloader(final Activity activity) {
         dialog_offLine = new Dialog_OffLine(context);
-        dialog_offLine.setText("Calculando...");
+        dialog_offLine.setText("Localizando...!");
         dialog_offLine.show();
 
         final Service_Locales service_locales = new Service_Locales(context);
@@ -64,7 +65,6 @@ public class Downloader {
 
                 Modulo_Off modulo_off = new Modulo_Off(activity);
                 modulo_off.startLocalesOff();
-
                 downloadCore(local_dtos);
             }
         });
@@ -95,9 +95,15 @@ public class Downloader {
 
                         Encuesta_CRUD encuesta_crud = new Encuesta_CRUD(context);
                         encuesta_crud.addEncuesta(encuesta_dto);
+
                     }
 
+                    dialog_offLine.getProgressBar().setProgress((int)100*counter_general/(local_dtos.size()*4));
+                    dialog_offLine.getProgreso().setText(String.valueOf((int)100*counter_general/(local_dtos.size()*4))+"%");
+
+                    counter_general++;
                     counter_variable++;
+
                     if(counter_variable < variable_crud.getVariables(local_dtos.get(counter_local)).size()){
                         downloadCore(local_dtos);
                     }else{
