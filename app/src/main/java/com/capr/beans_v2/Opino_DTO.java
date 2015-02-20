@@ -1,5 +1,7 @@
 package com.capr.beans_v2;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,12 +23,16 @@ public class Opino_DTO {
 
     public ArrayList<Local_DTO> getLocal_dtos() {
         ArrayList<Local_DTO> local_dtos = new ArrayList<Local_DTO>();
-        JSONArray jsonArray = parseJSONArray(KEY_JSON_ARRAY_LOCAL, getDataSource());
-        for (int i = 0; i < jsonArray.length(); i++) {
-            Local_DTO local_dto = parseLocalDTO(i, jsonArray);
-            local_dtos.add(local_dto);
+        try {
+            JSONArray jsonArray = parseJSONArray(KEY_JSON_ARRAY_LOCAL, getDataSource());
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Local_DTO local_dto = parseLocalDTO(i, jsonArray);
+                local_dtos.add(local_dto);
+            }
+            return local_dtos;
+        } catch (Exception e) {
+            return local_dtos;
         }
-        return local_dtos;
     }
 
     /**
@@ -125,6 +131,24 @@ public class Opino_DTO {
             Encuesta_DTO encuesta_dto = new Encuesta_DTO();
             encuesta_dto.setDataSource(dataSource.getJSONObject(index));
             return encuesta_dto;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Parse Data(JSON) to Child_DTO
+     *
+     * @param index
+     * @param dataSource
+     * @return
+     */
+    public Child_DTO parseChild_dto(int index, JSONArray dataSource) {
+        try {
+            Child_DTO child_dto = new Child_DTO();
+            child_dto.setDataSource(dataSource.getJSONObject(index));
+            return child_dto;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

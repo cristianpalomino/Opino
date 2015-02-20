@@ -39,9 +39,13 @@ public class Encuestas extends Opino {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_encuesta_v2);
-        setTitle(getVariable_dto().getNombre().toUpperCase());
-        hideSoftKeyboard();
+        try {
+            setTitle(getVariable_dto().getNombre().toUpperCase());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        hideSoftKeyboard();
         container_encuestas = (LinearLayout) findViewById(R.id.containerencuesta);
 
         Session_Manager session_manager = new Session_Manager(Encuestas.this);

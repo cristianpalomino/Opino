@@ -65,12 +65,12 @@ public class View_Opino extends LinearLayout {
         this.view = view;
     }
 
-    public View getView() {
-        return view;
-    }
-
     public Respuesta_DTO getRespuesta_dto() {
         return respuesta_dto;
+    }
+
+    public View getView() {
+        return view;
     }
 
     public void setRespuesta_dto(Respuesta_DTO respuesta_dto) {

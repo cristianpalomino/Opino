@@ -1,8 +1,10 @@
 package com.capr.views_v2;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -62,6 +64,13 @@ public class View_Foto_v2 extends View_Opino implements PopupMenu.OnMenuItemClic
                 popupMenu.show();
             }
         });
+
+        if(getImagen_dto() != null){
+            String uri = getImagen_dto().getImagenId();
+            if(!uri.equals("NONE")){
+                imageButton.setBackgroundColor(getResources().getColor(R.color.verde_claro_emerald));
+            }
+        }
     }
 
     @Override

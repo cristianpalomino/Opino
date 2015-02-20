@@ -71,7 +71,7 @@ public class View_Encuesta_v2 extends View_Opino implements View.OnLongClickList
             container_main.setVisibility(VISIBLE);
             container_second.setVisibility(VISIBLE);
             sku();
-        } else if (variable_name.equals("afiche")) {
+        } else if (variable_name.equals("pop")) {
             container_main.setVisibility(VISIBLE);
             container_second.setVisibility(VISIBLE);
             afiche();
@@ -134,10 +134,10 @@ public class View_Encuesta_v2 extends View_Opino implements View.OnLongClickList
             String tipo = respuesta_dto.getTipo();
             switch (Integer.parseInt(tipo)) {
                 case 0:
-                    View_Si_No_v2 view_si_no_v2 = new View_Si_No_v2(getContext());
-                    view_si_no_v2.setRespuesta_dto(respuesta_dto);
-                    view_si_no_v2.init();
-                    validateViewAfiche(respuesta_dto.getVariable_nombre(), view_si_no_v2);
+                    View_Presente_v2 v2 = new View_Presente_v2(getContext());
+                    v2.setRespuesta_dto(respuesta_dto);
+                    v2.init();
+                    validateViewAfiche(respuesta_dto.getVariable_nombre(), v2);
                     break;
                 case 1:
                     View_Comentario_v2 view_comentario_v2 = new View_Comentario_v2(getContext());
@@ -157,12 +157,6 @@ public class View_Encuesta_v2 extends View_Opino implements View.OnLongClickList
                     view_foto_v2.setEncuesta_dto(encuesta_dto);
                     view_foto_v2.init();
                     validateViewAfiche(respuesta_dto.getVariable_nombre(), view_foto_v2);
-                    break;
-                case 9:
-                    View_Presente_v2 view_presente_v2 = new View_Presente_v2(getContext());
-                    view_presente_v2.setRespuesta_dto(respuesta_dto);
-                    view_presente_v2.init();
-                    validateViewAfiche(respuesta_dto.getVariable_nombre(), view_presente_v2);
                     break;
             }
         }
@@ -237,7 +231,7 @@ public class View_Encuesta_v2 extends View_Opino implements View.OnLongClickList
     }
 
     private void validateViewAfiche(String variable_nombre, View view) {
-        if (variable_nombre.equals("AFICHE") ||
+        if (variable_nombre.equals("PRESENTE") ||
                 variable_nombre.equals("FOTO")) {
             container_main.addView(view);
         } else {
@@ -288,7 +282,7 @@ public class View_Encuesta_v2 extends View_Opino implements View.OnLongClickList
         try {
             JSONArray jsonArray = new JSONArray();
             String variable = ((Encuestas) getContext()).getVariable_dto().getIdvariable();
-            if(variable.equals("calidad")){
+            if (variable.equals("calidad")) {
                 for (int i = 0; i < container_calidad.getChildCount(); i++) {
                     View child = container_calidad.getChildAt(i);
                     if (child instanceof View_Opino) {
@@ -304,7 +298,46 @@ public class View_Encuesta_v2 extends View_Opino implements View.OnLongClickList
                 encuesta_dto.setDataSource(json_encuenta);
 
                 return encuesta_dto;
-            }else{
+            }
+            if (variable.equals("pop")) {
+                for (int i = 0; i < container_main.getChildCount(); i++) {
+                    View child = container_main.getChildAt(i);
+                    if (child instanceof View_Opino) {
+                        View_Opino view_opino = (View_Opino) child;
+                        for (int j = 0; j < view_opino.getChildCount(); j++) {
+                            if (view_opino instanceof View_Presente_v2) {
+                                jsonArray.put(view_opino.getRespuesta_dto().getDataSourceRespuestaPop());
+                            } else {
+                                jsonArray.put(view_opino.getRespuesta_dto().getDataSourceRespuesta());
+                            }
+                        }
+                    }
+                }
+
+                for (int i = 0; i < container_second.getChildCount(); i++) {
+                    View child = container_second.getChildAt(i);
+                    if (child instanceof View_Opino) {
+                        View_Opino view_opino = (View_Opino) child;
+                        for (int j = 0; j < view_opino.getChildCount(); j++) {
+                            View subchild = view_opino.getChildAt(j);
+                            if (subchild instanceof View_Presente_v2) {
+                                jsonArray.put(view_opino.getRespuesta_dto().getDataSourceRespuestaPop());
+                            } else {
+                                jsonArray.put(view_opino.getRespuesta_dto().getDataSourceRespuesta());
+                            }
+                        }
+                    }
+                }
+
+                JSONObject json_encuenta = new JSONObject();
+                json_encuenta.put(encuesta_dto.campana_id, encuesta_dto.getCampana_id());
+                json_encuenta.put(encuesta_dto.recurso_id, encuesta_dto.getRecurso_id());
+                json_encuenta.put(encuesta_dto.descripcion, encuesta_dto.getDescripcion());
+                json_encuenta.put(encuesta_dto.KEY_JSON_ARRAY_RESPUESTA, jsonArray);
+                encuesta_dto.setDataSource(json_encuenta);
+
+                return encuesta_dto;
+            } else {
                 for (int i = 0; i < container_main.getChildCount(); i++) {
                     View child = container_main.getChildAt(i);
                     if (child instanceof View_Opino) {
@@ -331,7 +364,7 @@ public class View_Encuesta_v2 extends View_Opino implements View.OnLongClickList
                 return encuesta_dto;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("ERROR SAVE",e.getMessage());
             return null;
         }
     }

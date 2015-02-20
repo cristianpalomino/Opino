@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId "com.capr.opino"
@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.loopj.android:android-async-http:1.4.6'
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:palette-v7:+'

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.capr.actividades.Variable;
+import com.capr.beans.Imagen_DTO;
 import com.capr.beans_v2.Encuesta_DTO;
 import com.capr.beans_v2.Local_DTO;
 import com.capr.beans_v2.Sender_DTO;
@@ -15,9 +16,11 @@ import com.capr.crud_v2.Local_CRUD;
 import com.capr.crud_v2.Main_CRUD;
 import com.capr.crud_v2.Variable_CRUD;
 import com.capr.dialog.Dialog_OffLine;
+import com.capr.interfaces.Interface_Upload_Image;
 import com.capr.interfaces_v2.OnSuccessEncuestas;
 import com.capr.interfaces_v2.OnSuccessLocales;
 import com.capr.interfaces_v2.OnSuccessRespuesta;
+import com.capr.modulos.Modulo_Upload_Image;
 import com.capr.modulos_v2.Modulo_Off;
 import com.capr.opino.R;
 
@@ -54,19 +57,34 @@ public class Uploader {
 
         ArrayList<Sender_DTO> sender_dtos = new ArrayList<Sender_DTO>();
         ArrayList<Encuesta_DTO> encuesta_dtos = new ArrayList<Encuesta_DTO>();
+        ArrayList<Imagen_DTO> imagen_dtos = new ArrayList<Imagen_DTO>();
         ArrayList<Local_DTO> local_dtos = local_crud.getLocales();
 
-        String[] vars = {"sku", "afiche", "promocion", "calidad"};
+        String[] vars = {"sku", "pop", "promocion", "calidad"};
 
 
         for (int x = 0; x < local_dtos.size(); x++) {
             Local_DTO local_dto = local_dtos.get(x);
+
             for (int i = 0; i < vars.length; i++) {
                 encuesta_dtos = encuesta_crud.getEncuestas(local_dto.getId(), vars[i]);
                 JSONArray jsonArray = new JSONArray();
+
                 for (int j = 0; j < encuesta_dtos.size(); j++) {
+
+                    String uri = encuesta_dtos.get(j).get_uri();
+                    if (!uri.equals("NONE")) {
+                        Imagen_DTO imagen_dto = new Imagen_DTO(context);
+                        imagen_dto.setImagenId(encuesta_dtos.get(j).get_uri());
+                        imagen_dto.setImagenData(encuesta_dtos.get(j).get_uri());
+                        imagen_dto.setImagenRecurso(encuesta_dtos.get(j).getRecurso_id());
+                        imagen_dto.setImagenLocal(local_dtos.get(x).getId());
+                        imagen_dtos.add(imagen_dto);
+                    }
+
                     jsonArray.put(encuesta_dtos.get(j).getDataSource());
                 }
+
                 Sender_DTO sender_dto = new Sender_DTO();
                 sender_dto.setLocal_dto(local_dto);
                 sender_dto.setIdVariable(vars[i]);
@@ -76,7 +94,15 @@ public class Uploader {
         }
 
         max_local = sender_dtos.size();
+
         uploadCore(sender_dtos);
+
+
+        if(!imagen_dtos.isEmpty()){
+            Interface_Upload_Image interface_upload_image = new Modulo_Upload_Image();
+            interface_upload_image.uploadImages(context, imagen_dtos);
+        }
+
     }
 
     private void uploadCore(final ArrayList<Sender_DTO> sender_dtos) {
@@ -99,7 +125,9 @@ public class Uploader {
 
                     if (counter_general < sender_dtos.size()) {
                         uploadCore(sender_dtos);
-                    }else{
+                    } else {
+
+
                         dialog_offLine.hide();
                     }
                 }

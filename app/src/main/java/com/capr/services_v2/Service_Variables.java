@@ -93,7 +93,7 @@ public class Service_Variables {
     private ArrayList<String> names() {
         ArrayList<String> names = new ArrayList<String>();
         names.add("Sku");
-        names.add("Afiche");
+        names.add("Pop");
         names.add("Promoción");
         names.add("Calidad");
         return names;
@@ -102,7 +102,7 @@ public class Service_Variables {
     private ArrayList<String> codes() {
         ArrayList<String> codes = new ArrayList<String>();
         codes.add("sku");
-        codes.add("afiche");
+        codes.add("pop");
         codes.add("promocion");
         codes.add("calidad");
         return codes;

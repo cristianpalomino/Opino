@@ -1,6 +1,7 @@
 package com.capr.modulos_v2;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 
 import com.capr.actividades.Encuestas;
@@ -79,6 +80,11 @@ public class Modulo_Off implements OnSuccessLocales, OnSuccessVariables, OnSucce
 
     @Override
     public void onSuccessEncuestas(boolean success, ArrayList<Encuesta_DTO> encuesta_dtos, String message) {
+
+        for (int i = 0; i < encuesta_dtos.size(); i++) {
+            Log.e(i+"",encuesta_dtos.get(i).getDataSource().toString());
+        }
+
         Encuestas encuestas = ((Encuestas)activity);
         if (success) {
             try {

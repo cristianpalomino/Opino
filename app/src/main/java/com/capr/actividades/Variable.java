@@ -29,19 +29,22 @@ public class Variable extends Opino implements AdapterView.OnItemClickListener {
     public ListView lista_variables;
     private Modulo_On modulo_on;
     private Modulo_Off modulo_off;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_variables);
-        setTitle(getLocal_dto().getNombre().toUpperCase());
+        try {
+            setTitle(getLocal_dto().getNombre().toUpperCase());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        TextView titulo = (TextView)findViewById(R.id.txtvariableslocal);
+        TextView titulo = (TextView) findViewById(R.id.txtvariableslocal);
         titulo.setTypeface(Util_Fonts.setPNASemiBold(Variable.this));
 
-        lista_variables = (ListView)findViewById(R.id.lista_variables);
+        lista_variables = (ListView) findViewById(R.id.lista_variables);
         lista_variables.setOnItemClickListener(this);
-
     }
 
     @Override
@@ -50,9 +53,9 @@ public class Variable extends Opino implements AdapterView.OnItemClickListener {
         Session_Manager session_manager = new Session_Manager(Variable.this);
         modulo_on = new Modulo_On(this);
         modulo_off = new Modulo_Off(this);
-        if(session_manager.getMode()){
+        if (session_manager.getMode()) {
             modulo_on.startVariablesOn();
-        }else{
+        } else {
             modulo_off.startVariablesOff();
         }
     }
@@ -68,7 +71,7 @@ public class Variable extends Opino implements AdapterView.OnItemClickListener {
         int id = item.getItemId();
         if (id == R.id.action_check) {
             Modulo_Update_Location modulo_update_location = new Modulo_Update_Location();
-            modulo_update_location.updateLocation(Variable.this,getLocal_dto().getId());
+            modulo_update_location.updateLocation(Variable.this, getLocal_dto().getId());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -92,7 +95,7 @@ public class Variable extends Opino implements AdapterView.OnItemClickListener {
         Variable_DTO variable_dto = (Variable_DTO) parent.getItemAtPosition(position);
         setVariable_dto(variable_dto);
 
-        Intent intent = new Intent(Variable.this,Encuestas.class);
+        Intent intent = new Intent(Variable.this, Encuestas.class);
         startActivity(intent);
     }
 
@@ -109,7 +112,7 @@ public class Variable extends Opino implements AdapterView.OnItemClickListener {
             if (variable_dtos.get(0).get_estado().equals("SI") &&
                     variable_dtos.get(1).get_estado().equals("SI") &&
                     variable_dtos.get(2).get_estado().equals("SI") &&
-                    variable_dtos.get(3).get_estado().equals("SI")){
+                    variable_dtos.get(3).get_estado().equals("SI")) {
                 local_dto.set_estado("SI");
                 local_crud.updateLocal(local_dto);
             }

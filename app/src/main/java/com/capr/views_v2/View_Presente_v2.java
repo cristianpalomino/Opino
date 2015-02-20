@@ -14,10 +14,15 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.capr.beans.Presente_DTO;
+import com.capr.beans_v2.Child_DTO;
 import com.capr.opino.R;
 import com.capr.utils.Util_Fonts;
 import com.capr.views.View_Opcion;
 import com.capr.views.View_Opino;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
 
 /**
  * Created by Gantz on 21/12/14.
@@ -26,6 +31,10 @@ public class View_Presente_v2 extends View_Opino implements View_Opcion.OnItemCl
 
     private TextView btnpresente;
     private TextView nombre;
+
+    private boolean flag_presente = true;
+    private boolean flag_daniado = true;
+    private boolean flag_invadido = true;
 
     private Point p;
 
@@ -58,7 +67,32 @@ public class View_Presente_v2 extends View_Opino implements View_Opcion.OnItemCl
         btnpresente = (TextView) getView().findViewById(R.id.btn_presente);
         btnpresente.setTypeface(Util_Fonts.setPNASemiBold(getContext()));
 
-        String rpta = getRespuesta_dto().getRespuesta();
+        getRespuesta_dto().updateChild();
+
+        String r_presente = getRespuesta_dto().getRespuesta();
+        String r_daniado = getRespuesta_dto().getRespuestaDaniado();
+        String r_invadido = getRespuesta_dto().getRespuestaInvadido();
+
+        Log.e("RESPUESTAS", r_presente + " * " + r_daniado + " * " + r_invadido);
+
+        if (r_presente.equals("1")) {
+            btnpresente.setText("Presente");
+
+            if (r_daniado.equals("1")) {
+                btnpresente.setText("Dañado");
+            }
+
+            if (r_invadido.equals("1")) {
+                btnpresente.setText("Invadido");
+            }
+
+        }else{
+            btnpresente.setText("Opciones");
+        }
+
+
+
+        /*
         switch (Integer.parseInt(rpta)) {
             case 0:
                 btnpresente.setText("Presente");
@@ -70,6 +104,7 @@ public class View_Presente_v2 extends View_Opino implements View_Opcion.OnItemCl
                 btnpresente.setText("Invadido");
                 break;
         }
+        */
 
         btnpresente.setOnClickListener(new OnClickListener() {
             @Override
@@ -84,23 +119,85 @@ public class View_Presente_v2 extends View_Opino implements View_Opcion.OnItemCl
             }
         });
 
+        Log.e("DATASOURCE PRESENTE", getRespuesta_dto().getDataSource().toString());
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (position) {
-            case 0:
+
+        if (flag_presente) {
+            if (position == 0) {
+                flag_presente = false;
                 btnpresente.setText("Presente");
-                getRespuesta_dto().setRespuesta("0");
-                break;
-            case 1:
+                getRespuesta_dto().setRespuestaPop("1");
+            }
+        } else {
+            if (position == 0) {
+                flag_presente = true;
+                btnpresente.setText("Opciones");
+                getRespuesta_dto().setRespuestaPop("0");
+
+                /**
+                 * 0 - Child
+                 */
+                Child_DTO c0 = getRespuesta_dto().getHijos_reales().get(0);
+                c0.setRespuesta("1");
+                getRespuesta_dto().getHijos_reales().set(0, c0);
+            }
+        }
+
+        if (flag_daniado) {
+            if (position == 1) {
+                flag_daniado = false;
                 btnpresente.setText("Dañado");
-                getRespuesta_dto().setRespuesta("1");
-                break;
-            case 2:
+
+                Child_DTO c0 = getRespuesta_dto().getHijos_reales().get(0);
+                c0.setRespuesta("1");
+                getRespuesta_dto().getHijos_reales().set(0, c0);
+
+
+                Log.e("DAÑADO A", getRespuesta_dto().getHijos_reales().get(0).getDataSourceRespuesta().toString());
+            }
+        } else {
+            if (position == 1) {
+                flag_daniado = true;
+                btnpresente.setText("Presente");
+
+                Child_DTO c0 = getRespuesta_dto().getHijos_reales().get(0);
+                c0.setRespuesta("0");
+                getRespuesta_dto().getHijos_reales().set(0, c0);
+
+                Child_DTO c1 = getRespuesta_dto().getHijos_reales().get(1);
+                c1.setRespuesta("0");
+                getRespuesta_dto().getHijos_reales().set(1, c1);
+
+                Log.e("DAÑADO A", getRespuesta_dto().getHijos_reales().get(0).getDataSourceRespuesta().toString());
+            }
+        }
+
+
+        if (flag_invadido) {
+            if (position == 2) {
+                flag_invadido = false;
                 btnpresente.setText("Invadido");
-                getRespuesta_dto().setRespuesta("2");
-                break;
+
+                Child_DTO c1 = getRespuesta_dto().getHijos_reales().get(1);
+                c1.setRespuesta("1");
+                getRespuesta_dto().getHijos_reales().set(1, c1);
+
+                Log.e("DAÑADO A", getRespuesta_dto().getHijos_reales().get(1).getDataSourceRespuesta().toString());
+            }
+        } else {
+            if (position == 2) {
+                flag_invadido = true;
+                btnpresente.setText("Presente");
+
+                Child_DTO c1 = getRespuesta_dto().getHijos_reales().get(1);
+                c1.setRespuesta("0");
+                getRespuesta_dto().getHijos_reales().set(1, c1);
+
+                Log.e("DAÑADO A", getRespuesta_dto().getHijos_reales().get(1).getDataSourceRespuesta().toString());
+            }
         }
     }
 

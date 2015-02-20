@@ -63,9 +63,15 @@ public class Downloader {
                     service_variables.sendRequestOff(local_dto);
                 }
 
-                Modulo_Off modulo_off = new Modulo_Off(activity);
-                modulo_off.startLocalesOff();
-                downloadCore(local_dtos);
+                if(!local_dtos.isEmpty()){
+                    Modulo_Off modulo_off = new Modulo_Off(activity);
+                    modulo_off.startLocalesOff();
+                    downloadCore(local_dtos);
+                }else{
+                    Toast.makeText(activity,"No hay locales.",Toast.LENGTH_SHORT).show();
+                    dialog_offLine.dismiss();
+                    dialog_offLine.hide();
+                }
             }
         });
     }
