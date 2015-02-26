@@ -26,7 +26,7 @@
                 android:textIsSelectable="false"
                 android:padding="3dp"
                 android:textColor="@color/color_negro"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold"
                 android:layout_marginLeft="30dp"
                 android:clickable="false"

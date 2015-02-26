@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.capr.beans_v2.Local_DTO;
@@ -24,6 +25,7 @@ import com.capr.opino.R;
 import com.capr.services_v2.Downloader;
 import com.capr.services_v2.Uploader;
 import com.capr.session.Session_Manager;
+import com.capr.utils.Connectivity;
 import com.shamanland.fab.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -54,8 +56,12 @@ public class Local extends Opino implements AdapterView.OnItemClickListener,
         flatbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Downloader downloader = new Downloader(Local.this);
-                downloader.initDownloader(Local.this);
+                if (isOnline()) {
+                    Downloader downloader = new Downloader(Local.this);
+                    downloader.initDownloader(Local.this);
+                } else {
+                    showMessage("Se necesita una conexión a internet...!");
+                }
             }
         });
 
@@ -66,8 +72,12 @@ public class Local extends Opino implements AdapterView.OnItemClickListener,
         flatbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uploader uploader = new Uploader(Local.this);
-                uploader.initUploader(Local.this);
+                if (isOnline()) {
+                    Uploader uploader = new Uploader(Local.this);
+                    uploader.initUploader(Local.this);
+                } else {
+                    showMessage("Se necesita una conexión a internet...!");
+                }
             }
         });
     }
@@ -75,12 +85,16 @@ public class Local extends Opino implements AdapterView.OnItemClickListener,
     @Override
     protected void onResume() {
         super.onResume();
+
         Session_Manager session_manager = new Session_Manager(Local.this);
         modulo_on = new Modulo_On(Local.this);
         modulo_off = new Modulo_Off(Local.this);
-
         if (session_manager.getMode()) {
-            modulo_on.startLocalesOn();
+            if (isOnline()) {
+                modulo_on.startLocalesOn();
+            } else {
+                showMessage("Se necesita una conexión a internet...!");
+            }
         } else {
             modulo_off.startLocalesOff();
         }
@@ -141,13 +155,20 @@ public class Local extends Opino implements AdapterView.OnItemClickListener,
     public void onAvisoResult(boolean accept, Dialog_Opino_Aviso dialog_opino_aviso) {
         dialog_opino_aviso.hide();
         if (accept) {
-            Session_Manager session_manager = new Session_Manager(Local.this);
-            session_manager.setMode(true);
-            modulo_on.startLocalesOn();
+            if (isOnline()) {
+                Session_Manager session_manager = new Session_Manager(Local.this);
+                session_manager.setMode(true);
+                modulo_on.startLocalesOn();
 
-            modo.setOnCheckedChangeListener(null);
-            modo.setChecked(true);
-            modo.setOnCheckedChangeListener(Local.this);
+                modo.setOnCheckedChangeListener(null);
+                modo.setChecked(true);
+                modo.setOnCheckedChangeListener(Local.this);
+            } else {
+                showMessage("Se necesita una conexión a internet...!");
+                modo.setOnCheckedChangeListener(null);
+                modo.setChecked(false);
+                modo.setOnCheckedChangeListener(Local.this);
+            }
         } else {
             Session_Manager session_manager = new Session_Manager(Local.this);
             session_manager.setMode(false);

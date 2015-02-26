@@ -95,6 +95,7 @@ public class View_Encuesta_v2 extends View_Opino implements View.OnLongClickList
                 case 0:
                     View_Si_No_v2 view_si_no_v2 = new View_Si_No_v2(getContext());
                     view_si_no_v2.setRespuesta_dto(respuesta_dto);
+                    view_si_no_v2.setPadre(container_main);
                     view_si_no_v2.init();
                     validateViewSku(respuesta_dto.getVariable_nombre(), view_si_no_v2);
                     break;

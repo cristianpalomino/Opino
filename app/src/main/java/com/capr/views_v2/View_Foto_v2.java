@@ -26,6 +26,7 @@ public class View_Foto_v2 extends View_Opino implements PopupMenu.OnMenuItemClic
 
     private Imagen_DTO imagen_dto;
     private TextView nombre;
+    private ImageButton imageButton;
     private Encuesta_DTO encuesta_dto;
 
     public View_Foto_v2(Context context) {
@@ -54,7 +55,7 @@ public class View_Foto_v2 extends View_Opino implements PopupMenu.OnMenuItemClic
         nombre.setTypeface(Util_Fonts.setPNALight(getOpino()));
         nombre.setText(getRespuesta_dto().getVariable_nombre());
 
-        ImageButton imageButton = (ImageButton) getView().findViewById(R.id.imageButton);
+        imageButton = (ImageButton) getView().findViewById(R.id.imageButton);
         imageButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,5 +116,9 @@ public class View_Foto_v2 extends View_Opino implements PopupMenu.OnMenuItemClic
 
     public Encuesta_DTO getEncuesta_dto() {
         return encuesta_dto;
+    }
+
+    public ImageButton getImageButton() {
+        return imageButton;
     }
 }

@@ -87,12 +87,22 @@ public class View_Opcion extends View_Opino implements AdapterView.OnItemClickLi
         if(position == 0){
             if(checkBox.isChecked()){
                 checkBox.setChecked(false);
+
                 daniado.setVisibility(GONE);
                 invadido.setVisibility(GONE);
             }else{
                 checkBox.setChecked(true);
                 daniado.setVisibility(VISIBLE);
                 invadido.setVisibility(VISIBLE);
+            }
+
+            ((CheckBox)daniado.findViewById(R.id.checkBox)).setChecked(false);
+            ((CheckBox)invadido.findViewById(R.id.checkBox)).setChecked(false);
+        }else{
+            if(checkBox.isChecked()){
+                checkBox.setChecked(false);
+            }else{
+                checkBox.setChecked(true);
             }
         }
 

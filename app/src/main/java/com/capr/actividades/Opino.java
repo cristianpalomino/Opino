@@ -15,6 +15,8 @@ import com.capr.beans.Imagen_DTO;
 import com.capr.beans_v2.Encuesta_DTO;
 import com.capr.beans_v2.Local_DTO;
 import com.capr.beans_v2.Variable_DTO;
+import com.capr.opino.R;
+import com.capr.utils.Connectivity;
 import com.capr.views_v2.View_Foto_v2;
 
 import java.io.File;
@@ -97,6 +99,8 @@ public class Opino extends ActionBarActivity {
             imagen_dto.setImagenData(getCurrentPhotoPath());
             imagen_dto.setImagenLocal(getLocal_dto().getId());
             view_foto.setImagen_dto(imagen_dto);
+            view_foto.getImageButton().setBackgroundColor(getResources().getColor(R.color.verde_claro_emerald));
+
             Toast.makeText(Opino.this, "Imagen Guardada", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(Opino.this, "Image Capture Failed", Toast.LENGTH_SHORT).show();
@@ -159,6 +163,14 @@ public class Opino extends ActionBarActivity {
             mCapturedImageURI = Uri.parse(savedInstanceState.getString(CAPTURED_PHOTO_URI_KEY));
         }
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    public boolean isOnline(){
+        return new Connectivity().isConnected(this);
+    }
+
+    public void showMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     /**

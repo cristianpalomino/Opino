@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -90,22 +91,6 @@ public class View_Presente_v2 extends View_Opino implements View_Opcion.OnItemCl
             btnpresente.setText("Opciones");
         }
 
-
-
-        /*
-        switch (Integer.parseInt(rpta)) {
-            case 0:
-                btnpresente.setText("Presente");
-                break;
-            case 1:
-                btnpresente.setText("Dañado");
-                break;
-            case 2:
-                btnpresente.setText("Invadido");
-                break;
-        }
-        */
-
         btnpresente.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +109,6 @@ public class View_Presente_v2 extends View_Opino implements View_Opcion.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
         if (flag_presente) {
             if (position == 0) {
                 flag_presente = false;

@@ -12,6 +12,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Name"
         android:gravity="center"
+        android:textSize="12sp"
         android:id="@+id/nombre_subvariable"
         android:layout_gravity="center_vertical" />
 
