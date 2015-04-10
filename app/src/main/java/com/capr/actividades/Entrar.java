@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,19 +19,27 @@ import com.capr.opino.R;
 import com.capr.services_v2.Service_Login;
 import com.capr.session.Session_Manager;
 import com.capr.utils.Util_Fonts;
+import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Required;
 
 public class Entrar extends Opino implements View.OnClickListener {
 
+    @Required(order = 1, message = "Ingrese su Usuario")
     protected EditText edtusuario;
+    @Required(order = 1, message = "Ingrese su Contraseña")
     protected EditText edtpassword;
     protected Button btnentrar;
 
     private ProgressDialog progressDialog;
+    private Validator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_login);
+
+        validator = new Validator(this);
 
         Session_Manager session_manager = new Session_Manager(this);
         if (session_manager.isLogin()) {
@@ -43,28 +52,14 @@ public class Entrar extends Opino implements View.OnClickListener {
             edtpassword = (EditText) findViewById(R.id.edtpassword);
             btnentrar = (Button) findViewById(R.id.btnentrar);
 
+            edtusuario.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+            edtpassword.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
             btnentrar.setOnClickListener(this);
 
             edtusuario.setTypeface(Util_Fonts.setPNALight(this));
             edtpassword.setTypeface(Util_Fonts.setPNALight(this));
             btnentrar.setTypeface(Util_Fonts.setPNASemiBold(this));
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_entrar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -74,6 +69,21 @@ public class Entrar extends Opino implements View.OnClickListener {
      */
     @Override
     public void onClick(View v) {
+        validator.setValidationListener(new Validator.ValidationListener() {
+            @Override
+            public void onValidationSucceeded() {
+                validate();
+            }
+
+            @Override
+            public void onValidationFailed(View failedView, Rule<?> failedRule) {
+                ((EditText) failedView).setError(failedRule.getFailureMessage());
+            }
+        });
+        validator.validate();
+    }
+
+    private void validate() {
         progressDialog = ProgressDialog.show(Entrar.this, null, "Validando ususario...!", true, false);
         progressDialog.show();
 

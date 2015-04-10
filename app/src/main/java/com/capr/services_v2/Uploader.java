@@ -48,9 +48,6 @@ public class Uploader {
     }
 
     public void initUploader(final Activity activity) {
-        dialog_offLine = new Dialog_OffLine(context);
-        dialog_offLine.setText("Obteniendo Resultados...!");
-        dialog_offLine.show();
 
         Encuesta_CRUD encuesta_crud = new Encuesta_CRUD(context);
         Local_CRUD local_crud = new Local_CRUD(context);
@@ -95,8 +92,15 @@ public class Uploader {
 
         max_local = sender_dtos.size();
 
-        uploadCore(sender_dtos);
+        if(sender_dtos.isEmpty()){
+            Toast.makeText(activity,"No hay locales =(",Toast.LENGTH_SHORT).show();
+        }else{
+            dialog_offLine = new Dialog_OffLine(context);
+            dialog_offLine.setText("Obteniendo Resultados...!");
+            dialog_offLine.show();
 
+            uploadCore(sender_dtos);
+        }
 
         if(!imagen_dtos.isEmpty()){
             Interface_Upload_Image interface_upload_image = new Modulo_Upload_Image();

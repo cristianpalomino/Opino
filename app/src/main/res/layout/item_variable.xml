@@ -32,6 +32,9 @@
                 android:textColor="@android:color/darker_gray"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"
+                android:lines="2"
+                android:layout_gravity="center"
+                android:gravity="left|center"
                 android:layout_weight="1" />
 
             <CheckBox

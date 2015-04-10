@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class Variable extends Opino implements AdapterView.OnItemClickListener {
 
     public ListView lista_variables;
-    private Modulo_On modulo_on;
+    //private Modulo_On modulo_on;
     private Modulo_Off modulo_off;
 
     @Override
@@ -51,10 +51,11 @@ public class Variable extends Opino implements AdapterView.OnItemClickListener {
     protected void onResume() {
         super.onResume();
         Session_Manager session_manager = new Session_Manager(Variable.this);
-        modulo_on = new Modulo_On(this);
+        //modulo_on = new Modulo_On(this);
         modulo_off = new Modulo_Off(this);
         if (session_manager.getMode()) {
-            modulo_on.startVariablesOn();
+            //modulo_on.startVariablesOn();
+            //modulo_off.startVariablesOff();
         } else {
             modulo_off.startVariablesOff();
         }

@@ -49,6 +49,12 @@ public class Service_Login {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 onSuccessLogin.onSuccessLogin(false,null,context.getString(R.string.message_api_error));
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                onSuccessLogin.onSuccessLogin(false,null,context.getString(R.string.message_api_error));
+            }
         });
     }
 }

@@ -68,7 +68,7 @@ public class Downloader {
                     modulo_off.startLocalesOff();
                     downloadCore(local_dtos);
                 }else{
-                    Toast.makeText(activity,"No hay locales.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity,"No hay locales =(",Toast.LENGTH_SHORT).show();
                     dialog_offLine.dismiss();
                     dialog_offLine.hide();
                 }

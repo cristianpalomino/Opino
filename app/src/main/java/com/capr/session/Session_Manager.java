@@ -44,7 +44,7 @@ public class Session_Manager {
     }
 
     public boolean getMode() {
-        return preferences.getBoolean(USER_MODE,true);
+        return preferences.getBoolean(USER_MODE,false);
     }
 
     public void setMode(boolean mode){

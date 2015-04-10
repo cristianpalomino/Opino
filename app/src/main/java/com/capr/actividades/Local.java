@@ -37,7 +37,7 @@ public class Local extends Opino implements AdapterView.OnItemClickListener,
     public ListView lista_locales;
     public FloatingActionButton flatbutton;
     public ToggleButton modo;
-    private Modulo_On modulo_on;
+    //private Modulo_On modulo_on;
     private Modulo_Off modulo_off;
 
     @Override
@@ -87,11 +87,13 @@ public class Local extends Opino implements AdapterView.OnItemClickListener,
         super.onResume();
 
         Session_Manager session_manager = new Session_Manager(Local.this);
-        modulo_on = new Modulo_On(Local.this);
+        session_manager.setMode(false);
+        //modulo_on = new Modulo_On(Local.this);
         modulo_off = new Modulo_Off(Local.this);
         if (session_manager.getMode()) {
             if (isOnline()) {
-                modulo_on.startLocalesOn();
+                modulo_off.startLocalesOff();
+                //modulo_on.startLocalesOn();
             } else {
                 showMessage("Se necesita una conexión a internet...!");
             }
@@ -110,8 +112,10 @@ public class Local extends Opino implements AdapterView.OnItemClickListener,
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         modo = (ToggleButton) menu.findItem(R.id.action_modo).getActionView();
+        modo.setOnClickListener(null);
+        modo.setClickable(false);
         if (new Session_Manager(Local.this).getMode()) {
-            modo.setChecked(true);
+            modo.setChecked(false);
         } else {
             modo.setChecked(false);
         }
@@ -157,12 +161,19 @@ public class Local extends Opino implements AdapterView.OnItemClickListener,
         if (accept) {
             if (isOnline()) {
                 Session_Manager session_manager = new Session_Manager(Local.this);
-                session_manager.setMode(true);
+                session_manager.setMode(false);
+
+                modo.setOnCheckedChangeListener(null);
+                modo.setChecked(false);
+                modo.setOnCheckedChangeListener(Local.this);
+
+                /*
                 modulo_on.startLocalesOn();
 
                 modo.setOnCheckedChangeListener(null);
                 modo.setChecked(true);
                 modo.setOnCheckedChangeListener(Local.this);
+                */
             } else {
                 showMessage("Se necesita una conexión a internet...!");
                 modo.setOnCheckedChangeListener(null);

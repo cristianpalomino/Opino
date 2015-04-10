@@ -20,12 +20,12 @@
         android:theme="@style/Theme.Opino" >
         <activity
             android:name="com.capr.actividades.Opino"
-            android:label="@string/app_name"
+            android:label="OPINO"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.capr.actividades.Entrar"
-            android:label="@string/app_name" >
+            android:label="OPINO" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 public class Encuestas extends Opino {
 
-    private Modulo_On modulo_on;
+    //private Modulo_On modulo_on;
     private Modulo_Off modulo_off;
     public LinearLayout container_encuestas;
 
@@ -49,14 +49,15 @@ public class Encuestas extends Opino {
         container_encuestas = (LinearLayout) findViewById(R.id.containerencuesta);
 
         Session_Manager session_manager = new Session_Manager(Encuestas.this);
-        modulo_on = new Modulo_On(this);
+        //modulo_on = new Modulo_On(this);
         modulo_off = new Modulo_Off(this);
 
         final String idLocal = getLocal_dto().getId();
         final String idVariable = getVariable_dto().getIdvariable();
 
         if (session_manager.getMode()) {
-            modulo_on.startEncuestasOn(idLocal, idVariable);
+            //modulo_on.startEncuestasOn(idLocal, idVariable);
+            //modulo_off.startEncuestasOff(idLocal, idVariable);
         } else {
             modulo_off.startEncuestasOff(idLocal, idVariable);
         }
@@ -68,7 +69,6 @@ public class Encuestas extends Opino {
             public void onClick(View v) {
                 saveChanges();
 
-
                 Variable_CRUD variable_crud = new Variable_CRUD(Encuestas.this);
                 Variable_DTO variable_dto = getVariable_dto();
                 variable_dto.set_estado("SI");
@@ -76,7 +76,6 @@ public class Encuestas extends Opino {
                 Toast.makeText(Encuestas.this,"Guardado", Toast.LENGTH_SHORT).show();
 
                 Encuestas.this.finish();
-
 
                 /*
                 Encuesta_CRUD encuesta_crud = new Encuesta_CRUD(Encuestas.this);
