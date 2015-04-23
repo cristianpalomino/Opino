@@ -17,6 +17,7 @@ import com.capr.crud_v2.Main_CRUD;
 import com.capr.crud_v2.Variable_CRUD;
 import com.capr.dialog.Dialog_OffLine;
 import com.capr.interfaces.Interface_Upload_Image;
+import com.capr.interfaces_v2.OnSendAlert;
 import com.capr.interfaces_v2.OnSuccessEncuestas;
 import com.capr.interfaces_v2.OnSuccessLocales;
 import com.capr.interfaces_v2.OnSuccessRespuesta;
@@ -95,6 +96,18 @@ public class Uploader {
         if(sender_dtos.isEmpty()){
             Toast.makeText(activity,"No hay locales =(",Toast.LENGTH_SHORT).show();
         }else{
+            /**
+             * ENVIANDO ALERTAS
+             */
+            Service_Alerta service_alerta = new Service_Alerta(activity);
+            service_alerta.sendRequest();
+            service_alerta.setOnSendAlert(new OnSendAlert() {
+                @Override
+                public void onSuccessAlert(boolean success, String message) {
+                    Log.e("CALLBACK",message);
+                }
+            });
+
             dialog_offLine = new Dialog_OffLine(context);
             dialog_offLine.setText("Obteniendo Resultados...!");
             dialog_offLine.show();
