@@ -26,4 +26,9 @@
         android:showAsAction="ifRoom|withText"
         android:title="5"
         android:visible="true"/>
+    <item
+        android:id="@+id/menu_rango_6"
+        android:showAsAction="ifRoom|withText"
+        android:title="6"
+        android:visible="true"/>
 </menu>

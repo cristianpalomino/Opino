@@ -51,11 +51,13 @@ public class View_Opcion_Directo extends View_Opino implements AdapterView.OnIte
     }
 
     private ArrayList<Opcion_DTO> getOpciones(){
+        Opcion_DTO no_aplica = new Opcion_DTO(true,"No Aplica",false,false);
         Opcion_DTO presente = new Opcion_DTO(true,"Indirecta",false,false);
         Opcion_DTO daniado = new Opcion_DTO(false,"Mixta",false,false);
         Opcion_DTO invadido = new Opcion_DTO(false,"Directa",false,false);
 
         ArrayList<Opcion_DTO> opcion_dtos = new ArrayList<Opcion_DTO>();
+        opcion_dtos.add(no_aplica);
         opcion_dtos.add(presente);
         opcion_dtos.add(daniado);
         opcion_dtos.add(invadido);

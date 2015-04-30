@@ -65,11 +65,13 @@ public class View_Directa extends View_Opino implements View_Opcion_Directo.OnIt
 
         String rpta = getRespuesta_dto().getRespuesta();
         switch (Integer.parseInt(rpta)){
-            case 0: btnrango.setText("Indirecta");
+            case 0: btnrango.setText("No Aplica");
                 break;
-            case 1: btnrango.setText("Mixta");
+            case 1: btnrango.setText("Indirecta");
                 break;
-            case 2: btnrango.setText("Directa");
+            case 2: btnrango.setText("Mixta");
+                break;
+            case 3: btnrango.setText("Directa");
                 break;
         }
 
@@ -93,7 +95,7 @@ public class View_Directa extends View_Opino implements View_Opcion_Directo.OnIt
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void showPopup(final Point p) {
         int popupWidth = btnrango.getWidth();
-        int popupHeight = btnrango.getHeight() * 3;
+        int popupHeight = btnrango.getHeight() * 4;
 
         // Inflate the popup_layout.xml
         /*
@@ -128,12 +130,15 @@ public class View_Directa extends View_Opino implements View_Opcion_Directo.OnIt
         popup.dismiss();
         switch (position){
             case 0: getRespuesta_dto().setRespuestaCalidad("0");
-                btnrango.setText("Indirecta");
+                btnrango.setText("No Aplica");
                 break;
             case 1: getRespuesta_dto().setRespuestaCalidad("1");
-                btnrango.setText("Mixta");
+                btnrango.setText("Indirecta");
                 break;
             case 2: getRespuesta_dto().setRespuestaCalidad("2");
+                btnrango.setText("Mixta");
+                break;
+            case 3: getRespuesta_dto().setRespuestaCalidad("3");
                 btnrango.setText("Directa");
                 break;
         }

@@ -65,15 +65,17 @@ public class View_Rango_Calidad extends View_Opino implements PopupMenu.OnMenuIt
 
         String rpta = getRespuesta_dto().getRespuesta();
         switch (Integer.parseInt(rpta)){
-            case 0: btnrango.setText("1");
+            case 0: btnrango.setText("0");
                 break;
-            case 1: btnrango.setText("2");
+            case 1: btnrango.setText("1");
                 break;
-            case 2: btnrango.setText("3");
+            case 2: btnrango.setText("2");
                 break;
-            case 3: btnrango.setText("4");
+            case 3: btnrango.setText("3");
                 break;
-            case 4: btnrango.setText("5");
+            case 4: btnrango.setText("4");
+                break;
+            case 5: btnrango.setText("5");
                 break;
         }
 
@@ -95,18 +97,21 @@ public class View_Rango_Calidad extends View_Opino implements PopupMenu.OnMenuIt
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.menu_rango_1:
-                btnrango.setText(String.valueOf(1));
+                btnrango.setText(String.valueOf(0));
                 break;
             case R.id.menu_rango_2:
-                btnrango.setText(String.valueOf(2));
+                btnrango.setText(String.valueOf(1));
                 break;
             case R.id.menu_rango_3:
-                btnrango.setText(String.valueOf(3));
+                btnrango.setText(String.valueOf(2));
                 break;
             case R.id.menu_rango_4:
-                btnrango.setText(String.valueOf(4));
+                btnrango.setText(String.valueOf(3));
                 break;
             case R.id.menu_rango_5:
+                btnrango.setText(String.valueOf(4));
+                break;
+            case R.id.menu_rango_6:
                 btnrango.setText(String.valueOf(5));
                 break;
         }
@@ -119,7 +124,7 @@ public class View_Rango_Calidad extends View_Opino implements PopupMenu.OnMenuIt
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void showPopup(final Point p) {
         int popupWidth = btnrango.getWidth();
-        int popupHeight = btnrango.getHeight() * 5;
+        int popupHeight = btnrango.getHeight() * 6;
 
         // Inflate the popup_layout.xml
         /*
