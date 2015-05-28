@@ -54,11 +54,11 @@ public class View_Opcion_Rango extends View_Opino implements AdapterView.OnItemC
 
     private ArrayList<Opcion_DTO> getOpciones(){
         Opcion_DTO _a = new Opcion_DTO(true,"0",false,false);
-        Opcion_DTO a = new Opcion_DTO(false,"1",false,false);
+        Opcion_DTO a = new Opcion_DTO(false,"Muy Malo",false,false);
         Opcion_DTO b = new Opcion_DTO(false,"2",false,false);
         Opcion_DTO c = new Opcion_DTO(false,"3",false,false);
         Opcion_DTO d = new Opcion_DTO(false,"4",false,false);
-        Opcion_DTO e = new Opcion_DTO(false,"5",false,false);
+        Opcion_DTO e = new Opcion_DTO(false,"Muy Bueno",false,false);
 
         ArrayList<Opcion_DTO> opcion_dtos = new ArrayList<Opcion_DTO>();
         opcion_dtos.add(_a);

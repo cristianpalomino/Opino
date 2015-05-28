@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingLeft="3dp"
-    android:paddingRight="3dp"
-    android:paddingBottom="5dp"
     android:gravity="center"
-    >
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="65dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/nombre_subvariable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Name"
+            android:layout_gravity="center_vertical"
+            android:ems="7"
+            android:gravity="center"
             android:lines="1"
             android:maxLines="1"
-            android:ems="7"
+            android:text="Name"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="12sp"
-            android:gravity="center"
-            android:id="@+id/nombre_subvariable"
-            android:layout_gravity="center_vertical"
             android:visibility="visible" />
 
         <EditText
+            android:id="@+id/edtcomentario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="."
             android:layout_gravity="center"
-            android:maxLines="5"
-            android:gravity="right"
-            android:inputType="numberDecimal"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
             android:background="@drawable/edittext_registro"
+            android:gravity="left"
+            android:hint="0.00"
             android:imeOptions="actionDone"
-            android:padding="10dp"
+            android:inputType="numberDecimal"
+            android:maxLines="5"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:textColor="@color/color_negro"
-            android:textSize="14sp"
-            android:id="@+id/edtcomentario" />
+            android:textSize="14sp" />
     </LinearLayout>
 
 </LinearLayout>

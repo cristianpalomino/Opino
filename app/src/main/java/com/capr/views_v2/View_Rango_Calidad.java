@@ -23,7 +23,7 @@ import com.capr.views.View_Opino;
 /**
  * Created by Gantz on 21/10/14.
  */
-public class View_Rango_Calidad extends View_Opino implements PopupMenu.OnMenuItemClickListener, View_Opcion_Rango.OnItemClick {
+public class View_Rango_Calidad extends View_Opino implements  View_Opcion_Rango.OnItemClick {
 
     private TextView btnrango;
     private TextView nombre;
@@ -67,7 +67,7 @@ public class View_Rango_Calidad extends View_Opino implements PopupMenu.OnMenuIt
         switch (Integer.parseInt(rpta)){
             case 0: btnrango.setText("0");
                 break;
-            case 1: btnrango.setText("1");
+            case 1: btnrango.setText("Muy Malo");
                 break;
             case 2: btnrango.setText("2");
                 break;
@@ -75,7 +75,7 @@ public class View_Rango_Calidad extends View_Opino implements PopupMenu.OnMenuIt
                 break;
             case 4: btnrango.setText("4");
                 break;
-            case 5: btnrango.setText("5");
+            case 5: btnrango.setText("Muy Bueno");
                 break;
         }
 
@@ -91,31 +91,6 @@ public class View_Rango_Calidad extends View_Opino implements PopupMenu.OnMenuIt
                 showPopup(p);
             }
         });
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.menu_rango_1:
-                btnrango.setText(String.valueOf(0));
-                break;
-            case R.id.menu_rango_2:
-                btnrango.setText(String.valueOf(1));
-                break;
-            case R.id.menu_rango_3:
-                btnrango.setText(String.valueOf(2));
-                break;
-            case R.id.menu_rango_4:
-                btnrango.setText(String.valueOf(3));
-                break;
-            case R.id.menu_rango_5:
-                btnrango.setText(String.valueOf(4));
-                break;
-            case R.id.menu_rango_6:
-                btnrango.setText(String.valueOf(5));
-                break;
-        }
-        return false;
     }
 
     /**
@@ -158,20 +133,23 @@ public class View_Rango_Calidad extends View_Opino implements PopupMenu.OnMenuIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         popup.dismiss();
         switch (position){
-            case 0: getRespuesta_dto().setRespuestaCalidad("1");
-                btnrango.setText("1");
+            case 0: getRespuesta_dto().setRespuestaCalidad("0");
+                btnrango.setText("0");
                 break;
-            case 1: getRespuesta_dto().setRespuestaCalidad("2");
+            case 1: getRespuesta_dto().setRespuestaCalidad("1");
+                btnrango.setText("Muy Malo");
+                break;
+            case 2: getRespuesta_dto().setRespuestaCalidad("2");
                 btnrango.setText("2");
                 break;
-            case 2: getRespuesta_dto().setRespuestaCalidad("3");
+            case 3: getRespuesta_dto().setRespuestaCalidad("3");
                 btnrango.setText("3");
                 break;
-            case 3: getRespuesta_dto().setRespuestaCalidad("4");
+            case 4: getRespuesta_dto().setRespuestaCalidad("4");
                 btnrango.setText("4");
                 break;
-            case 4: getRespuesta_dto().setRespuestaCalidad("5");
-                btnrango.setText("5");
+            case 5: getRespuesta_dto().setRespuestaCalidad("5");
+                btnrango.setText("Muy Bueno");
                 break;
         }
     }

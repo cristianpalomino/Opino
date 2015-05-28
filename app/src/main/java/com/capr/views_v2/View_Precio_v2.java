@@ -43,7 +43,7 @@ public class View_Precio_v2 extends View_Opino implements TextWatcher {
         super.initView();
     }
 
-    public void init(){
+    public void init() {
         nombre = (TextView) getView().findViewById(R.id.nombre_subvariable);
         nombre.setTypeface(Util_Fonts.setPNALight(getOpino()));
         nombre.setText(getRespuesta_dto().getVariable_nombre());
@@ -51,7 +51,10 @@ public class View_Precio_v2 extends View_Opino implements TextWatcher {
         edtcomentario = (EditText) getView().findViewById(R.id.edtcomentario);
         edtcomentario.setTypeface(Util_Fonts.setPNALight(getOpino()));
         edtcomentario.addTextChangedListener(this);
-        edtcomentario.setText(getRespuesta_dto().getRespuesta());
+
+        if (!getRespuesta_dto().getRespuesta().equals("0")) {
+            edtcomentario.setText(getRespuesta_dto().getRespuesta());
+        }
     }
 
     /**
