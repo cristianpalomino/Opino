@@ -88,7 +88,7 @@ public class View_Presente_v2 extends View_Opino implements View_Opcion.OnItemCl
             }
 
         }else{
-            btnpresente.setText("Opciones");
+            btnpresente.setText("No presente");
         }
 
         btnpresente.setOnClickListener(new OnClickListener() {
@@ -118,7 +118,7 @@ public class View_Presente_v2 extends View_Opino implements View_Opcion.OnItemCl
         } else {
             if (position == 0) {
                 flag_presente = true;
-                btnpresente.setText("Opciones");
+                btnpresente.setText("No presente");
                 getRespuesta_dto().setRespuestaPop("0");
 
                 /**

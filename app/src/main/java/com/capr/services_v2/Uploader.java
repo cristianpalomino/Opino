@@ -137,16 +137,14 @@ public class Uploader {
                 if (success) {
                     dialog_offLine.getProgressBar().setProgress(100 * counter_general / max_local);
                     dialog_offLine.getProgreso().setText(String.valueOf(100 * counter_general / max_local) + "%");
-
                     counter_general++;
-
                     if (counter_general < sender_dtos.size()) {
                         uploadCore(sender_dtos);
                     } else {
-
-
                         dialog_offLine.hide();
                     }
+                }else{
+                    dialog_offLine.hide();
                 }
             }
         });

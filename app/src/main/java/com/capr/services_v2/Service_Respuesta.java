@@ -14,6 +14,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.entity.ByteArrayEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,6 +43,7 @@ public class Service_Respuesta {
             Session_Manager session_manager = new Session_Manager(context);
             ByteArrayEntity entity = new ByteArrayEntity(respuesta.toString().getBytes("UTF-8"));
             AsyncHttpClient asyncHttpClient_response = new AsyncHttpClient();
+            asyncHttpClient_response.setMaxRetriesAndTimeout(3, 60000);
             asyncHttpClient_response.addHeader("Token", session_manager.getSession().getUsuario_token());
             asyncHttpClient_response.addHeader("Content-Type", "application/json");
 
@@ -59,9 +61,14 @@ public class Service_Respuesta {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     super.onFailure(statusCode, headers, responseString, throwable);
-                    onSuccessRespuesta.onSuccessRespuesta(false,context.getString(R.string.message_api_error));
+                    onSuccessRespuesta.onSuccessRespuesta(false, context.getString(R.string.message_api_error));
+                    if (throwable.getCause() instanceof ConnectTimeoutException) {
+                        onSuccessRespuesta.onSuccessRespuesta(false, context.getString(R.string.message_api_error));
+                    }
                 }
             });
+
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             onSuccessRespuesta.onSuccessRespuesta(false,context.getString(R.string.message_api_error));
