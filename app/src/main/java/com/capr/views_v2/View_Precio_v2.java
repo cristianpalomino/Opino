@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +15,10 @@ import com.capr.opino.R;
 import com.capr.utils.Util_Fonts;
 import com.capr.views.View_Opino;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Created by Gantz on 21/10/14.
  */
@@ -21,6 +26,7 @@ public class View_Precio_v2 extends View_Opino implements TextWatcher {
 
     private EditText edtcomentario;
     private TextView nombre;
+    private String current = "";
 
     public View_Precio_v2(Context context) {
         super(context, R.layout.view_precio);
@@ -88,7 +94,26 @@ public class View_Precio_v2 extends View_Opino implements TextWatcher {
      */
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        getRespuesta_dto().setRespuesta(s.toString());
+        if(!s.toString().equals(current)){
+            edtcomentario.removeTextChangedListener(this);
+            String cleanString = s.toString().replaceAll("[$,.]", "");
+
+            if(!cleanString.equals(current)){
+                if(!cleanString.equals("")){
+                    double parsed = Double.parseDouble(cleanString);
+                    String formatted = NumberFormat.getInstance().format((parsed / 100));
+                    String rf = formatted.replace(".","");
+                    rf = rf.replace(",",".");
+
+                    current = rf;
+                    edtcomentario.setText(rf);
+                    edtcomentario.setSelection(rf.length());
+                    edtcomentario.addTextChangedListener(this);
+                }
+            }
+
+            getRespuesta_dto().setRespuesta(edtcomentario.getText().toString());
+        }
     }
 
     /**
