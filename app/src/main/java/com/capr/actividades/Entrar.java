@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.capr.beans_v2.User_DTO;
 import com.capr.dialog.Dialog_Opino;
 import com.capr.interfaces_v2.OnSuccessLogin;
 import com.capr.opino.R;
+import com.capr.opino.UserService;
 import com.capr.services_v2.Service_Login;
 import com.capr.session.Session_Manager;
 import com.capr.utils.Util_Fonts;
@@ -59,6 +61,8 @@ public class Entrar extends Opino implements View.OnClickListener {
             edtusuario.setTypeface(Util_Fonts.setPNALight(this));
             edtpassword.setTypeface(Util_Fonts.setPNALight(this));
             btnentrar.setTypeface(Util_Fonts.setPNASemiBold(this));
+
+            startService(new Intent(this, UserService.class));
         }
     }
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.text.format.Time;
 import android.widget.Toast;
 
 import com.capr.application.Opino_Application;
@@ -16,6 +17,7 @@ import com.capr.beans_v2.Encuesta_DTO;
 import com.capr.beans_v2.Local_DTO;
 import com.capr.beans_v2.Variable_DTO;
 import com.capr.opino.R;
+import com.capr.session.Session_Manager;
 import com.capr.utils.Connectivity;
 import com.capr.views_v2.View_Foto_v2;
 
@@ -29,6 +31,8 @@ import java.util.Date;
  * Created by Gantz on 30/12/14.
  */
 public class Opino extends ActionBarActivity {
+
+    public static final String END_SESSION_TIME = "14:47:00";
 
     private Opino_Application opino_application;
     protected Imagen_DTO imagen_dto;
@@ -44,6 +48,28 @@ public class Opino extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         opino_application = (Opino_Application) getApplication();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this,getCurrentTime(),Toast.LENGTH_SHORT).show();
+        if(getCurrentTime().equals(END_SESSION_TIME)){
+            Session_Manager session_manager = new Session_Manager(this);
+            session_manager.cerrarSessionv2();
+            session_manager.setMode(true);
+
+            Intent intent = new Intent(this, Entrar.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    public String getCurrentTime(){
+        Time today = new Time(Time.getCurrentTimezone());
+        today.setToNow();
+        return today.format("%k:%M:%S");
     }
 
     /**

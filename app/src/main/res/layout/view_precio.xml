@@ -38,7 +38,6 @@
             android:gravity="right"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
-            android:digits="0123456789.,"
             android:maxLength="7"
             android:ellipsize="end"
             android:singleLine="true"
@@ -48,7 +47,8 @@
             android:paddingRight="8dp"
             android:paddingTop="10dp"
             android:textColor="@color/color_negro"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            />
     </LinearLayout>
 
 </LinearLayout>

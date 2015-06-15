@@ -94,26 +94,25 @@ public class View_Precio_v2 extends View_Opino implements TextWatcher {
      */
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if(!s.toString().equals(current)){
-            edtcomentario.removeTextChangedListener(this);
-            String cleanString = s.toString().replaceAll("[$,.]", "");
-
-            if(!cleanString.equals(current)){
-                if(!cleanString.equals("")){
-                    double parsed = Double.parseDouble(cleanString);
-                    String formatted = NumberFormat.getInstance().format((parsed / 100));
-                    String rf = formatted.replace(".","");
-                    rf = rf.replace(",",".");
-
-                    current = rf;
-                    edtcomentario.setText(rf);
-                    edtcomentario.setSelection(rf.length());
-                    edtcomentario.addTextChangedListener(this);
+        edtcomentario.removeTextChangedListener(this);
+        String clean = s.toString().replace(",", "").trim();
+        String string = "0";
+        if (!clean.toString().equals(current)) {
+            try {
+                int your_integer = Integer.parseInt(clean.toString());
+                string = String.valueOf(your_integer);
+                if (String.valueOf(your_integer).trim().length() > 2) {
+                    string = String.format("%6.2f", your_integer / 100.0);
                 }
+            } catch (Exception e) {} finally {
+                current = string;
+                edtcomentario.setText(string);
+                edtcomentario.setSelection(string.length());
+                edtcomentario.addTextChangedListener(this);
             }
-
-            getRespuesta_dto().setRespuesta(edtcomentario.getText().toString());
         }
+
+        getRespuesta_dto().setRespuesta(edtcomentario.getText().toString());
     }
 
     /**
