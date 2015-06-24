@@ -44,11 +44,11 @@ public class Session_Manager {
     }
 
     public boolean getMode() {
-        return preferences.getBoolean(USER_MODE,false);
+        return preferences.getBoolean(USER_MODE, false);
     }
 
-    public void setMode(boolean mode){
-        editor.putBoolean(USER_MODE,mode);
+    public void setMode(boolean mode) {
+        editor.putBoolean(USER_MODE, mode);
         editor.commit();
     }
 
@@ -71,13 +71,13 @@ public class Session_Manager {
     public void crearSessionv2(User_DTO user_dto) {
         editor.putBoolean(USER_LOGIN, true);
         editor.putBoolean(USER_MODE, true);
-        editor.putString(USER_DATA,user_dto.getDataSource().toString());
+        editor.putString(USER_DATA, user_dto.getDataSource().toString());
         editor.commit();
 
-        Intent intent = new Intent(context,Local.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent intent = new Intent(context, Local.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
-        ((Entrar)context).finish();
+        //((Entrar) context).finish();
     }
 
     public void cerrarSessionv2() {
@@ -86,10 +86,9 @@ public class Session_Manager {
         editor.putString(USER_DATA, null);
         editor.commit();
 
-        Intent intent = new Intent(context,Entrar.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent intent = new Intent(context, Entrar.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
-        ((Local)context).finish();
 
         Toast.makeText(context, "Cerrando sessión", Toast.LENGTH_SHORT).show();
     }

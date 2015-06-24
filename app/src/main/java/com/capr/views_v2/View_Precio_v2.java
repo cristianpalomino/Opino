@@ -95,7 +95,10 @@ public class View_Precio_v2 extends View_Opino implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         edtcomentario.removeTextChangedListener(this);
-        String clean = s.toString().replace(",", "").trim();
+
+        String mclean = s.toString().replace(".", ",").trim();
+        String clean = mclean.toString().replace(",", "").trim();
+
         String string = "0";
         if (!clean.toString().equals(current)) {
             try {
@@ -105,6 +108,7 @@ public class View_Precio_v2 extends View_Opino implements TextWatcher {
                     string = String.format("%6.2f", your_integer / 100.0);
                 }
             } catch (Exception e) {} finally {
+                string = string.replace(",",".");
                 current = string;
                 edtcomentario.setText(string);
                 edtcomentario.setSelection(string.length());

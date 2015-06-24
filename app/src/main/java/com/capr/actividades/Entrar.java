@@ -40,6 +40,7 @@ public class Entrar extends Opino implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_login);
+        startService(new Intent(this, UserService.class));
 
         validator = new Validator(this);
 
@@ -61,8 +62,6 @@ public class Entrar extends Opino implements View.OnClickListener {
             edtusuario.setTypeface(Util_Fonts.setPNALight(this));
             edtpassword.setTypeface(Util_Fonts.setPNALight(this));
             btnentrar.setTypeface(Util_Fonts.setPNASemiBold(this));
-
-            startService(new Intent(this, UserService.class));
         }
     }
 

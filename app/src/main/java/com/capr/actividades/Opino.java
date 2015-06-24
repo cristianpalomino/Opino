@@ -53,8 +53,7 @@ public class Opino extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this,getCurrentTime(),Toast.LENGTH_SHORT).show();
-        if(getCurrentTime().equals(END_SESSION_TIME)){
+        if (getCurrentTime().equals(END_SESSION_TIME)) {
             Session_Manager session_manager = new Session_Manager(this);
             session_manager.cerrarSessionv2();
             session_manager.setMode(true);
@@ -66,7 +65,7 @@ public class Opino extends ActionBarActivity {
         }
     }
 
-    public String getCurrentTime(){
+    public String getCurrentTime() {
         Time today = new Time(Time.getCurrentTimezone());
         today.setToNow();
         return today.format("%k:%M:%S");
@@ -191,12 +190,12 @@ public class Opino extends ActionBarActivity {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    public boolean isOnline(){
+    public boolean isOnline() {
         return new Connectivity().isConnected(this);
     }
 
-    public void showMessage(String message){
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     /**
